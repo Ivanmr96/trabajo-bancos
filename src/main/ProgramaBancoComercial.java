@@ -1,14 +1,16 @@
 /* ANALISIS
- * 
- * Programa que podrá gestionar un banco comercial para hacer distintas cosas, como realizar transferencia a otro banco,
- * ver el saldo de su cuenta en el banco central, etc.
- * 
+ * Comentario: Programa destinado al uso por trabajadores de un banco comercial para que gestionen su cuenta en el banco central o bien
+ * 				que puedan gestionar las cuentas de sus clientes.
+ * Entradas: entradas del usuario: opcion menus, iban de la cuenta en el banco central para iniciar sesion, iban de la cuenta en el banco comercial para gestionar la cuenta de un cliente
+ * Salidas: eco de los datos, mensajes de ayuda al usuario
+ * Restricciones: No se podra iniciar sesion con un IBAN que no pertenezca a una cuenta del banco central. No se podra gestionar
+ * 					una cuenta que no esté creada. Las opciones de los menus estarán delimitadas por el programador.
  */
 
 /* PSEUDOCODIGO
  * Inicio
- * 	Leer y validar inicio de sesion
- * 	Mostrar menu y validar opcion elegida
+ * 	pedirValidarInicioSesion
+ * 	mostrarMenuPedirValidarOpcion
  * 	Mientras (opcionElegida no sea salir)
  * 		Segun(opcionElegida)
  * 			caso 1: realizar transferencia bancaria
@@ -16,7 +18,6 @@
  * 			caso 3: buscar movimientos de la cuenta en el banco central
  * 			caso 4: cliente nuevo
  * 			caso 5: gestionar una cuenta determinada
- * 			caso 6: Eliminar permanentemente las cuentas marcadas
  * 		FinSegun
  * 		Mostrar menu y validar opcion elegida
  * 	FinMientras
@@ -201,23 +202,6 @@ public class ProgramaBancoComercial
 			  			opcionMenuCliente = validaciones.mostrarMenuYValidarOpcionMenuCliente();
 		  			}
 		  			break;
-	  			case 6:
-	  				//Eliminar permanentemente las cuentas marcadas
-	  				
-	  				//Leer y validar borrar cuenta
-	  				respuestaBorrarCuentas = validaciones.leerYValidarBorrarCuentas();
-	  				
-	  				/*if(respuestaBorrarCuentas == 'S')
-	  				{
-	  					borradoDefinitivo = gestionComercial.eliminarCuentasBorradasDefinitivamente(BIC); //TODO algun mensaje de ayuda al usuario para que sepa si se borró bien o no
-	  					if(borradoDefinitivo)
-	  						System.out.println("Las cuentas del banco han sido borradas permanentemente");
-	  					else
-	  						System.out.println("No se ha podido borrar permanententemente las cuentas, intentelo de nuevo");
-	  				}
-
-	  				 */
-	  				break;
     		}
 	  		
 	  		//Mostrar menu y validar opcion elegida
