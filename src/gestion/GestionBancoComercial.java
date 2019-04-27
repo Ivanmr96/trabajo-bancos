@@ -495,10 +495,11 @@ public class GestionBancoComercial {
         ObjectInputStream leer = null;
         ObjectOutputStream escribir = null;
         MyObjectOutputStream escribirMyObject = null;
-        List<TransferenciaImpl> registros = new ArrayList<TransferenciaImpl>();    //arraylist - considerar cambiar a array
+        List<TransferenciaImpl> registros = new ArrayList<TransferenciaImpl>();
         TransferenciaImpl registro = null;
-        TransferenciaImpl aux = null; //para el bubblesort de mÃƒÂ¡s abajo
+        TransferenciaImpl aux = null;
         boolean cont = true;
+        Utilidades util = new Utilidades();
 
         try {
             leer = new ObjectInputStream(new FileInputStream(ficheroMovimientosCuenta));
@@ -519,7 +520,7 @@ public class GestionBancoComercial {
 
         for (int i = 0; i < registros.size()-1;i++){
             for (int j = registros.size()-1; j>i; j--){
-                if (registros.get(j).getFecha().before(registros.get(j-1).getFecha()) || registros.get(j).getFecha().equals(registros.get(j-1).getFecha()) ) {
+                if (registros.get(j-1).getFecha().before(registros.get(j).getFecha()) || registros.get(j).getFecha().equals(registros.get(j-1).getFecha()) ) {
                     //se produce el intercambio de elementos
                     aux = registros.get(j);
                     registros.set(j,registros.get(j-1));
@@ -528,28 +529,6 @@ public class GestionBancoComercial {
             }
         }
 
-/*
-        try{
-            escribir = new ObjectOutputStream(new FileOutputStream(ficheroMovimientosCuenta));
-            escribir.close();
-        }catch ( IOException e ){
-            e.printStackTrace();
-        }
-
-
-        try{
-           escribirMyObject = new MyObjectOutputStream(new FileOutputStream(ficheroMovimientosCuenta));
-
-            for(int i = 0; i < registros.size(); i ++){
-                escribir.writeObject(registros.get(i));
-
-            }
-            escribir.close();
-        }catch ( IOException e ){
-            e.printStackTrace();
-        }
-
- */
         try{
             escribir = new ObjectOutputStream(new FileOutputStream(temp));
 
@@ -561,30 +540,9 @@ public class GestionBancoComercial {
         }catch ( IOException e ){
             e.printStackTrace();
         }
-        Path source = Paths.get(temp.getPath());
-        Path dest = Paths.get(ficheroMovimientosCuenta.getPath());
-        System.out.println("Existe carpeta destino: ->" + ficheroMovimientosCuenta.getParentFile().exists() );
-        System.out.println("ES carpeta? destino: ->" + ficheroMovimientosCuenta.getParentFile().isDirectory() );
-        System.out.println("Existe fichero original (no el temp): ->" + ficheroMovimientosCuenta.exists() );
-        System.out.println("Existe fichero temp (el temp): ->" + temp.exists() );
-        ficheroMovimientosCuenta.delete();
-        
-        if(temp.renameTo(ficheroMovimientosCuenta) == false)
-        {
-	        try
-	        {
-	            Files.move(source, dest, StandardCopyOption.REPLACE_EXISTING);
-	        }
-	        catch(FileSystemException e)
-	        {
-	        	System.out.println("error");
-	        }
-	        catch(IOException e)
-	        {
-	            e.printStackTrace();
-	        }
-        }
 
+        util.borrarFichero(ficheroMovimientosCuenta.getPath());
+        util.renombrarFicheroBinario(temp.getPath(),ficheroMovimientosCuenta.getPath(),registro);
 
     }
 

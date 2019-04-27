@@ -67,8 +67,8 @@ public class ProgramaCliente {
 
                 case 3:
                     //ver movimientos de la cuenta propia
-                    System.out.println("Ultimos diez movimientos de la cuenta:");
-                    //gestion.ordenarMovimientosPorFecha(iban_cuenta); Este método no funciona por error documentado (delete y renameTo)
+                    System.out.println("Movimientos de la cuenta:");
+                    gestion.ordenarMovimientosPorFecha(iban_cuenta);    //YA FUNCIONA! =D
                     utilidad.imprimirMovimientos(gestion.ultimosDiezMovimientos(iban_cuenta));
 
                     break;
