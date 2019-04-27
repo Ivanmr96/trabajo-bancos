@@ -190,4 +190,68 @@ public class Utilidades {
     	return renombrado;
     }
 
+
+    //Este metodo sustituye File.renameTo() (pero funciona) -- VERSION PARA ARCHIVOS BINARIOS
+    public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
+    {
+        boolean renombrado = false;
+        File file = new File(fichero);
+        File newName = new File (nuevoNombre);
+        ObjectInputStream leer = null;
+        ObjectOutputStream escribir = null;
+        MyObjectOutputStream myoos = null;
+        List<Object> registros = new ArrayList<Object>();
+        Object registro = null;
+        boolean cont = true;
+
+
+        if(file.exists() && newName.exists())
+        {
+
+            try
+            {
+                leer = new ObjectInputStream(new FileInputStream(file));
+
+                while(cont)
+                {
+                    registro = leer.readObject();
+
+                    registros.add(registro);
+                }
+
+                leer.close();
+
+            } catch (EOFException e){
+
+            }catch (ClassNotFoundException e){
+
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+
+
+            borrarFichero(fichero);
+
+            try
+            {
+                newName.createNewFile();
+                escribir = new ObjectOutputStream(new FileOutputStream(newName));
+                for(int i = 0; i < registros.size(); i ++){
+                    escribir.writeObject(registros.get(i));
+                }
+                escribir.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+
+        }
+
+        return renombrado;
+    }
+
 }
