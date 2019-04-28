@@ -9,7 +9,7 @@ public class Utilidades {
 
     /*
      *Signatura: public void imprimirMovimientos(TransferenciaImpl movimientos)
-     * Comentario: imprime un movimiento. MÈtodo sobrecargado
+     * Comentario: imprime un movimiento. M√©todo sobrecargado
      * */
     public void imprimirMovimientos(TransferenciaImpl element){
 
@@ -50,11 +50,11 @@ public class Utilidades {
     /*
     * INTERFAZ
     * Signatura: public void ordenarFicheroPorClave(String ruta, int campoClave)
-    * Comentario: ordena el fichero de una ruta en base a la lexicografÌa de un campo de un fichero
+    * Comentario: ordena el fichero de una ruta en base a la lexicograf√≠a de un campo de un fichero
     * Precondiciones:
-    * Entradas: Se pasar· como String la ruta del fichero a ordenar y como entero el campo clave que se evaluar· para ordenar
+    * Entradas: Se pasar√° como String la ruta del fichero a ordenar y como entero el campo clave que se evaluar√° para ordenar
     * Salidas:
-    * Postcondiciones: El fichero quedar· ordenado en base a ese campo lexicogr·ficamente.
+    * Postcondiciones: El fichero quedar√° ordenado en base a ese campo lexicogr√°ficamente.
     * */
     public void ordenarFicheroPorClave(String ruta, int campoClave){
         File ficheroAOrdenar = new File(ruta);
@@ -64,7 +64,7 @@ public class Utilidades {
         BufferedWriter bw = null;
         List<String> registros = new ArrayList<String>();    //arraylist - considerar cambiar a array
         String registro = " ";
-        String aux=" "; //para el bubblesort de m√°s abajo
+        String aux=" "; //para el bubblesort de m√É¬°s abajo
 
         try{
             fr = new FileReader(ficheroAOrdenar);
@@ -120,13 +120,13 @@ public class Utilidades {
     
     /*
     * INTERFAZ
-    * Comentario: MÈtodo que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+    * Comentario: M√©todo que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
     * Signatura: public boolean renombrarFichero(String fichero, String nuevoNombre)
     * Precondiciones: Los ficheros deben ser de texto
     * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta
     * Salidas: boolean
-    * Postcondiciones: asociado al nombre se devuelve un boolean que ser· true si se ha renombrado con Èxito y false si no. Si alguna de las rutas
-    *   no existen, no se renombrar· el fichero.
+    * Postcondiciones: asociado al nombre se devuelve un boolean que ser√° true si se ha renombrado con √©xito y false si no. Si alguna de las rutas
+    *   no existen, no se renombrar√° el fichero.
     * */
 
     public boolean renombrarFichero(String fichero, String nuevoNombre)
@@ -151,7 +151,6 @@ public class Utilidades {
 	    		fr = new FileReader(file);
 	    		br = new BufferedReader(fr);
 	    		
-
 	    		while(br.ready())
 	    		{
 	    			registro = br.readLine();
@@ -202,14 +201,14 @@ public class Utilidades {
 
     /*
      * INTERFAZ
-     * Comentario: MÈtodo que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+     * Comentario: M√©todo que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
      * Signatura: public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
      * Precondiciones: Los ficheros deben ser binarios
      * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta, y Object obj, para saber el tipo de objeto que
      *          se encuentra dentro del fichero de origen
      * Salidas: boolean
-     * Postcondiciones: asociado al nombre se devuelve un boolean que ser· true si se ha renombrado con Èxito y false si no. Si alguna de las rutas
-     *   no existen, no se renombrar· el fichero.
+     * Postcondiciones: asociado al nombre se devuelve un boolean que ser√° true si se ha renombrado con √©xito y false si no. Si alguna de las rutas
+     *   no existen, no se renombrar√° el fichero.
      * */
     public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
     {

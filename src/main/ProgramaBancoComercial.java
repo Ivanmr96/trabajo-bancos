@@ -65,7 +65,8 @@ public class ProgramaBancoComercial
     	String cuentaDestino, IBAN, DNI, BIC, concepto, IBANNuevoCliente, IBANCliente;
     	GregorianCalendar fecha, fechaActual;
     	char respuestaBorrarCuentas;
-    	boolean cuentaBorrada, borradoDefinitivo, ingresado;
+    	boolean borradoDefinitivo, ingresado;
+    	boolean cuentaBorrada = false;
     	int dia, mes, anyo;
     	List<TransferenciaImpl> movimientos = new ArrayList<TransferenciaImpl>();
     	
@@ -142,7 +143,7 @@ public class ProgramaBancoComercial
 	  				//Mostrar menu y validar opcionMenuCliente
 		  			opcionMenuCliente = validaciones.mostrarMenuYValidarOpcionMenuCliente();
 		  			
-		  			while(opcionMenuCliente != 0)
+		  			while(opcionMenuCliente != 0 && !cuentaBorrada)
 		  			{
 		  				switch(opcionMenuCliente)
 		  				{
@@ -153,7 +154,11 @@ public class ProgramaBancoComercial
 		  						
 	  						case 2: 
 	  							//ver movimientos de la cuenta
-	  							System.out.println(gestionComercial.ultimosDiezMovimientos(IBANCliente));
+	  							gestionComercial.ordenarMovimientosPorFecha(IBANCliente);
+	  							if(gestionComercial.ultimosDiezMovimientos(IBANCliente) != null)
+	  								utils.imprimirMovimientos(gestionComercial.ultimosDiezMovimientos(IBANCliente));
+	  							else
+	  								System.out.println("No existen transferencias.");
 	  							break;
 	  							
 	  			  			case 3: 
@@ -202,8 +207,10 @@ public class ProgramaBancoComercial
 		  				}
 		  				
 		  				//Mostrar menu y validar opcionMenuCliente
-			  			opcionMenuCliente = validaciones.mostrarMenuYValidarOpcionMenuCliente();
+		  				if(!cuentaBorrada)
+		  					opcionMenuCliente = validaciones.mostrarMenuYValidarOpcionMenuCliente();
 		  			}
+		  			cuentaBorrada = false;
 		  			break;
     		}
 	  		
