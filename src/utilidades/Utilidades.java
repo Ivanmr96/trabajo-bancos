@@ -237,9 +237,14 @@ public class Utilidades {
                     registros.add(registro);
                 }
 
-                leer.close();
+                //leer.close(); AQUI NO LLEGA PORQUE SALTA LA EXCEPCION
 
             } catch (EOFException e){
+                try{
+                    leer.close();
+                }catch (IOException i){
+                    i.printStackTrace();
+                }
 
             }catch (ClassNotFoundException e){
 
