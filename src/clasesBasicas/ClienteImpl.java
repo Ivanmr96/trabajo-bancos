@@ -10,19 +10,12 @@
  *
  *   -Compartidas:
  *
- * Restricciones: El DNI debe ser válido y el ingreso mensual debe ser igual o mayor que 0
+ * Restricciones: El ingreso mensual debe ser igual o mayor que 0
  * Metodos interface:
  *   public String getDNI();
  *   public double getIngresoMensual();
  *
  *   public void setIngresoMensual(double ingresoMensual);
- * Metodos añadidos:
- *   public void sacarDinero(Cuenta cuenta)
- *   public void ingresarDinero(Cuenta cuenta)
- *   public void realizarTransferencia(Cuenta origen, Cuenta destino)
- *   public void verHistorialTransferencias(Cuenta cuenta)
- * Metodos object:
- *   public String toString();
  * */
 package clasesBasicas;
 import interfaces.Cliente;

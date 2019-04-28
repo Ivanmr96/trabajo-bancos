@@ -49,10 +49,10 @@ public class crearFicheros {
         }
 
 
-        BancoComercial bancos[] = new BancoComercial[3];
-        bancos[0] = new BancoComercial("ESP","CAIXESBBXXX", "LaCaixa");
-        bancos[1] = new BancoComercial("ESP","BSCHESMMXXX", "Santander");
-        bancos[2] = new BancoComercial("ESP","INGDESMMXXX", "INGDirect");
+        BancoComercialImpl bancos[] = new BancoComercialImpl[3];
+        bancos[0] = new BancoComercialImpl("ESP","CAIXESBBXXX", "LaCaixa");
+        bancos[1] = new BancoComercialImpl("ESP","BSCHESMMXXX", "Santander");
+        bancos[2] = new BancoComercialImpl("ESP","INGDESMMXXX", "INGDirect");
 
 
             try{
@@ -81,7 +81,7 @@ public class crearFicheros {
         //FIN
 
         //Esto es para el fichero que contiene los datos del propio banco central
-        BancoCentral banco_central = new BancoCentral("ESP",1.5, 5);
+            BancoCentralImpl banco_central = new BancoCentralImpl("ESP",1.5, 5);
         File datosBancoCentral = new File(carpetaBancoCentral, "Datos_BancoCentral.txt");
         try{
             escribir = new FileWriter(datosBancoCentral);

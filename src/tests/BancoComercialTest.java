@@ -1,14 +1,14 @@
 package tests;
 
-import clasesBasicas.BancoComercial;
+import clasesBasicas.BancoComercialImpl;
 
 public class BancoComercialTest {
 
 	public static void main(String[] args) 
 	{
-		BancoComercial porDefecto = new BancoComercial();
-		BancoComercial conParametros = new BancoComercial("ESP", "BNCPRBMMXXX", "Banco Prueba");
-		BancoComercial deCopia = new BancoComercial(conParametros);
+		BancoComercialImpl porDefecto = new BancoComercialImpl();
+		BancoComercialImpl conParametros = new BancoComercialImpl("ESP", "BNCPRBMMXXX", "Banco Prueba");
+		BancoComercialImpl deCopia = new BancoComercialImpl(conParametros);
 		
 		System.out.println("conParametros.getBIC(): " + conParametros.getBIC());
 		System.out.println("deCopia.getNombre(): " + deCopia.getNombre());
