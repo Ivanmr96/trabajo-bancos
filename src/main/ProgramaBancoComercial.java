@@ -102,7 +102,7 @@ public class ProgramaBancoComercial
 		  			break;
 		  		case 2: 
 		  			//ver datos de la cuenta en el banco central
-		  			utils.imprimirDatosCuenta(gestionCentral.datosCuenta(IBAN));		//TODO Estaría bien hacerle un pretty print en la clase de utilidad a este metodo
+		  			utils.imprimirDatosCuenta(gestionCentral.datosCuenta(IBAN));
 		  			break;
 		  		case 3:
 		  			//buscar movimientos por fecha de la cuenta en el banco central
@@ -178,13 +178,16 @@ public class ProgramaBancoComercial
 	  			  							if(ingresado)
 	  			  								System.out.println("Dinero ingresado con exito");
 	  			  							else
-	  			  								System.out.println("No se pudo ingresar el dinero intentelo de nuevo");
+	  			  								System.out.println("No se pudo ingresar el dinero, intentelo de nuevo");
 	  			  							break;
 	  			  						case 2:
 	  			  							//Sacar dinero
 	  			  							cantidad = validaciones.leerYValidarCantidadSacar(IBANCliente);
 		  			  						fechaActual = new GregorianCalendar();
-	  			  							gestionComercial.sacarDinero(IBANCliente, "Retirada" , cantidad, fechaActual); 	//TODO Algun mensaje de ayuda al usuario para que sepa si se realizó bien la operación o no
+	  			  							if(gestionComercial.sacarDinero(IBANCliente, "Retirada" , cantidad, fechaActual))
+	  			  								System.out.println("Dinero sacado con exito");
+	  			  							else
+	  			  								System.out.println("No se pudo sacar el dinero, intentelo de nuevo");
 	  			  							break;
 	  			  					}
 	  			  					
@@ -194,7 +197,7 @@ public class ProgramaBancoComercial
 	  			  				
 	  			  			case 4: 
 	  			  				//Eliminar cuenta
-	  			  				cuentaBorrada = gestionComercial.eliminarCuenta(IBANCliente);	//TODO Algun mensaje de ayuda al usuario para que sepa si se realizó bien la operación o no
+	  			  				cuentaBorrada = gestionComercial.eliminarCuenta(IBANCliente);
 	  			  				if(cuentaBorrada)
 	  			  				{
 	  			  					System.out.println("Cuenta con IBAN " + IBANCliente + " borrada");
