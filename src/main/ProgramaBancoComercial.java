@@ -93,7 +93,10 @@ public class ProgramaBancoComercial
 		  			
 		  			fechaActual = new GregorianCalendar();
 
-		  			gestionCentral.realizarMovimiento(IBAN, cuentaDestino, concepto, cantidad, fechaActual); //TODO Aqui pondría que devolviera un boolean para saber si se realizo el movimiento bien o no.
+		  			if(gestionCentral.realizarMovimiento(IBAN, cuentaDestino, concepto, cantidad, fechaActual))
+		  				System.out.println("La transferencia se hizo correctamente.");
+		  			else
+		  				System.out.println("La trasferencia no pudo hacerse, intentelo de nuevo.");
 		  			
 		  			break;
 		  		case 2: 

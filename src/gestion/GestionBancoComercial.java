@@ -1065,6 +1065,8 @@ public class GestionBancoComercial {
         BufferedReader brMovimientos = null;
         BufferedWriter bwMaestroAct = null;
         Utilidades utils = new Utilidades();
+        
+        utils.ordenarFicheroPorClave(ficheroMaestro.getPath(), 0);
 
         try
         {
@@ -1170,7 +1172,7 @@ public class GestionBancoComercial {
             brMovimientos.close();
             bwMaestroAct.close();
             
-            utils.borrarFichero(ficheroMaestro.getPath());
+            //utils.borrarFichero(ficheroMaestro.getPath());
             utils.renombrarFichero(ficheroMaestroAct.getPath(), ficheroMaestro.getPath());
             
 //            ficheroMaestro.delete();
