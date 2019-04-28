@@ -1,7 +1,7 @@
 # trabajo-bancos
 
 ## ¿Qué es?
-Proyecto para la asignatura de 1º de CFGS Desarrollo de aplicaciones multiplataforma, trata la gestión entre los diferentes bancos comerciales y sus clientes.
+Proyecto para el módulo de 1º de CFGS Desarrollo de aplicaciones multiplataforma, trata la gestión entre los diferentes bancos comerciales y sus clientes.
 
 
 ### Funcionalidades:
@@ -21,7 +21,7 @@ Proyecto para la asignatura de 1º de CFGS Desarrollo de aplicaciones multiplata
     * Buscar movimientos
     * Cancelar cuenta
 
-###Próximamente
+### Próximamente
    * Añadir programa para banco central
    * Implementar préstamos y créditos
    * Añadir posibilidad de clientes con varias cuentas
