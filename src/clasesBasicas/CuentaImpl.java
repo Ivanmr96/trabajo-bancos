@@ -18,9 +18,6 @@
  *   public double getCantidadDinero();
  *
  *   public void setCantidadDinero(double cantidadDinero);
- * Metodos añadidos:
- * Metodos object:
- *   public String toString();
  * */
 package clasesBasicas;
 
