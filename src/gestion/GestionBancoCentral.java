@@ -695,7 +695,8 @@ public class GestionBancoCentral {
         BufferedWriter bwMaestroAct = null;
         Utilidades utils = new Utilidades();
 
-        utils.ordenarFicheroPorClave(ficheroMovimientos.getPath(), 0);
+        //utils.ordenarFicheroPorClave(ficheroMovimientos.getPath(), 0);
+        utils.ordenarFicheroPorClave(ficheroMaestro.getPath(), 0);
 
         try {
             frMaestro = new FileReader(ficheroMaestro);
@@ -786,7 +787,7 @@ public class GestionBancoCentral {
             brMovimientos.close();
             bwMaestroAct.close();
 
-            utils.borrarFichero(ficheroMaestro.getPath());
+            //utils.borrarFichero(ficheroMaestro.getPath());
             utils.renombrarFichero(ficheroMaestroAct.getPath(), ficheroMaestro.getPath());
             
 //            ficheroMaestro.delete();
