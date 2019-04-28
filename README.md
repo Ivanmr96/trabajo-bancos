@@ -20,3 +20,8 @@ Proyecto para la asignatura de 1º de CFGS Desarrollo de aplicaciones multiplata
     * Ver datos
     * Buscar movimientos
     * Cancelar cuenta
+
+###Próximamente
+   * Añadir programa para banco central
+   * Implementar préstamos y créditos
+   * Añadir posibilidad de clientes con varias cuentas
