@@ -179,7 +179,7 @@ public class ValidacionesProgramaBancoComercial
 		{
 			System.out.print("IBAN Cliente: ");
 			IBAN = teclado.next();
-			BICInsertado = gestion.obtenerBICporIBAN(IBAN);
+			BICInsertado = gestion.obtenerBICporIBAN(IBAN);			//TODO Aqui salta StringIndexOutOfBoundsException si se introduce una cadena mas pequeña.
 			
 		}while(gestion.isIBANvalido(IBAN) == false || BICInsertado.equals(BIC) == false );
 		
