@@ -141,7 +141,6 @@ public class Utilidades {
 	    		fr = new FileReader(file);
 	    		br = new BufferedReader(fr);
 	    		
-	    		System.out.println("ready(leer)? " + br.ready());
 	    		while(br.ready())
 	    		{
 	    			registro = br.readLine();
@@ -168,7 +167,6 @@ public class Utilidades {
 				fw = new FileWriter(newName);
 				bw = new BufferedWriter(fw);
 				
-				System.out.println("longitud: " + registros.size());
 				for(int i = 0 ; i < registros.size(); i++)
 				{
 					bw.write(registros.get(i));

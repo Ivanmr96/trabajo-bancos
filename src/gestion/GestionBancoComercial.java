@@ -134,14 +134,16 @@ public class GestionBancoComercial {
         
         if(marcarCuentaComoBorrada(IBAN))
         {
+        	Utilidades utils = new Utilidades();
         	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
         	boolean cuentaEliminada = actualizarFichero("./Files/BancosComerciales/"+nombreBanco+"/Cuentas_"+nombreBanco, 0);
         	boolean clienteEliminado = actualizarFichero("./Files/BancosComerciales/"+nombreBanco+"/Clientes_"+nombreBanco, 1);
         	boolean cuentaClienteEliminado = actualizarFichero("./Files/BancosComerciales/"+nombreBanco+"/Clientes_Cuentas_"+nombreBanco, 0);
         	
         	//Eliminar el fichero de las transferencias.
-        	File ficheroTransferencias = new File("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
-        	boolean borrado = ficheroTransferencias.delete();
+        	//File ficheroTransferencias = new File("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
+        	//boolean borrado = ficheroTransferencias.delete();
+        	boolean borrado = utils.borrarFichero("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
         	
         	if(cuentaEliminada && clienteEliminado && cuentaClienteEliminado && borrado)
         		eliminada = true;

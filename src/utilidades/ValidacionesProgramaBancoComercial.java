@@ -54,14 +54,13 @@ public class ValidacionesProgramaBancoComercial
 		System.out.println("3) Buscar movimientos de la cuenta en el banco central");
 		System.out.println("4) Cliente nuevo");
 		System.out.println("5) Gestionar una cuenta determinada");
-		System.out.println("6) Eliminar permanentemente las cuentas marcadas");
 		System.out.println("0) Salir del programa");
 		
 		do
 		{
 			System.out.println("Elige una opcion:");
 			opcion = teclado.nextInt();
-		}while(opcion < 0 || opcion > 6);
+		}while(opcion < 0 || opcion > 5);
 		
 		return opcion;
 	}

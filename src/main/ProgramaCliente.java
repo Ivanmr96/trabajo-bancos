@@ -69,7 +69,10 @@ public class ProgramaCliente {
                     //ver movimientos de la cuenta propia
                     System.out.println("Movimientos de la cuenta:");
                     gestion.ordenarMovimientosPorFecha(iban_cuenta);    //YA FUNCIONA! =D
-                    utilidad.imprimirMovimientos(gestion.ultimosDiezMovimientos(iban_cuenta));
+                    if(gestion.ultimosDiezMovimientos(iban_cuenta) != null)
+							utilidad.imprimirMovimientos(gestion.ultimosDiezMovimientos(iban_cuenta));
+						else
+							System.out.println("No existen transferencias.");
 
                     break;
                 case 4:
