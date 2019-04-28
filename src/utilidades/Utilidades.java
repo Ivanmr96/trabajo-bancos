@@ -237,9 +237,17 @@ public class Utilidades {
                     registros.add(registro);
                 }
 
-                leer.close();
+                //leer.close();
 
             } catch (EOFException e){
+            	try
+            	{
+            		leer.close();
+            	}
+            	catch(IOException err)
+            	{
+            		err.printStackTrace();
+            	}
 
             }catch (ClassNotFoundException e){
 
@@ -248,8 +256,7 @@ public class Utilidades {
             {
                 e.printStackTrace();
             }
-
-
+            
             borrarFichero(fichero);
 
             try
