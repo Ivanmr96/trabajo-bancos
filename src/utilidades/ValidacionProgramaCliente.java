@@ -37,7 +37,7 @@ public class ValidacionProgramaCliente {
         GestionBancoComercial gbc = new GestionBancoComercial();
         String dni, iban_cuenta;
     do {
-        System.out.println("Inicio de sesión: ");
+        System.out.println("Inicio de sesion: ");
         System.out.println("Introduce el IBAN de la cuenta:");
         iban_cuenta = this.iban();
 
@@ -47,7 +47,7 @@ public class ValidacionProgramaCliente {
         } while (!gbc.DNIRegistrado(dni,gbc.obtenerBICporIBAN(iban_cuenta)));
 
     }while (!gbc.isPropietario(dni,iban_cuenta));
-        System.out.println("Sesión iniciada correctamente");
+        System.out.println("Sesion iniciada correctamente");
         System.out.println("Datos: ");
         System.out.println("DNI: "+dni);
         System.out.println("IBAN: "+iban_cuenta);

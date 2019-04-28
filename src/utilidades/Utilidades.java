@@ -118,7 +118,17 @@ public class Utilidades {
     	return borrado;
     }
     
-    //Este metodo sustituye File.renameTo() (pero funciona)
+    /*
+    * INTERFAZ
+    * Comentario: Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+    * Signatura: public boolean renombrarFichero(String fichero, String nuevoNombre)
+    * Precondiciones: Los ficheros deben ser de texto
+    * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta
+    * Salidas: boolean
+    * Postcondiciones: asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas
+    *   no existen, no se renombrará el fichero.
+    * */
+
     public boolean renombrarFichero(String fichero, String nuevoNombre)
     {
     	boolean renombrado = false;
@@ -141,7 +151,7 @@ public class Utilidades {
 	    		fr = new FileReader(file);
 	    		br = new BufferedReader(fr);
 	    		
-	    		System.out.println("ready(leer)? " + br.ready());
+
 	    		while(br.ready())
 	    		{
 	    			registro = br.readLine();
@@ -167,8 +177,7 @@ public class Utilidades {
 				
 				fw = new FileWriter(newName);
 				bw = new BufferedWriter(fw);
-				
-				System.out.println("longitud: " + registros.size());
+
 				for(int i = 0 ; i < registros.size(); i++)
 				{
 					bw.write(registros.get(i));
@@ -191,7 +200,17 @@ public class Utilidades {
     }
 
 
-    //Este metodo sustituye File.renameTo() (pero funciona) -- VERSION PARA ARCHIVOS BINARIOS
+    /*
+     * INTERFAZ
+     * Comentario: Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+     * Signatura: public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
+     * Precondiciones: Los ficheros deben ser binarios
+     * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta, y Object obj, para saber el tipo de objeto que
+     *          se encuentra dentro del fichero de origen
+     * Salidas: boolean
+     * Postcondiciones: asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas
+     *   no existen, no se renombrará el fichero.
+     * */
     public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
     {
         boolean renombrado = false;
