@@ -9,7 +9,7 @@ public class Utilidades {
 
     /*
      *Signatura: public void imprimirMovimientos(TransferenciaImpl movimientos)
-     * Comentario: imprime un movimiento. M�todo sobrecargado
+     * Comentario: imprime un movimiento. Método sobrecargado
      * */
     public void imprimirMovimientos(TransferenciaImpl element){
 
@@ -50,11 +50,11 @@ public class Utilidades {
     /*
     * INTERFAZ
     * Signatura: public void ordenarFicheroPorClave(String ruta, int campoClave)
-    * Comentario: ordena el fichero de una ruta en base a la lexicograf�a de un campo de un fichero
+    * Comentario: ordena el fichero de una ruta en base a la lexicografía de un campo de un fichero
     * Precondiciones:
-    * Entradas: Se pasar� como String la ruta del fichero a ordenar y como entero el campo clave que se evaluar� para ordenar
+    * Entradas: Se pasará como String la ruta del fichero a ordenar y como entero el campo clave que se evaluará para ordenar
     * Salidas:
-    * Postcondiciones: El fichero quedar� ordenado en base a ese campo lexicogr�ficamente.
+    * Postcondiciones: El fichero quedará ordenado en base a ese campo lexicográficamente.
     * */
     public void ordenarFicheroPorClave(String ruta, int campoClave){
         File ficheroAOrdenar = new File(ruta);
@@ -64,7 +64,7 @@ public class Utilidades {
         BufferedWriter bw = null;
         List<String> registros = new ArrayList<String>();    //arraylist - considerar cambiar a array
         String registro = " ";
-        String aux=" "; //para el bubblesort de más abajo
+        String aux=" "; //para el bubblesort de mÃ¡s abajo
 
         try{
             fr = new FileReader(ficheroAOrdenar);
@@ -118,7 +118,17 @@ public class Utilidades {
     	return borrado;
     }
     
-    //Este metodo sustituye File.renameTo() (pero funciona)
+    /*
+    * INTERFAZ
+    * Comentario: Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+    * Signatura: public boolean renombrarFichero(String fichero, String nuevoNombre)
+    * Precondiciones: Los ficheros deben ser de texto
+    * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta
+    * Salidas: boolean
+    * Postcondiciones: asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas
+    *   no existen, no se renombrará el fichero.
+    * */
+
     public boolean renombrarFichero(String fichero, String nuevoNombre)
     {
     	boolean renombrado = false;
@@ -166,7 +176,7 @@ public class Utilidades {
 				
 				fw = new FileWriter(newName);
 				bw = new BufferedWriter(fw);
-				
+
 				for(int i = 0 ; i < registros.size(); i++)
 				{
 					bw.write(registros.get(i));
@@ -189,7 +199,17 @@ public class Utilidades {
     }
 
 
-    //Este metodo sustituye File.renameTo() (pero funciona) -- VERSION PARA ARCHIVOS BINARIOS
+    /*
+     * INTERFAZ
+     * Comentario: Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+     * Signatura: public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
+     * Precondiciones: Los ficheros deben ser binarios
+     * Entradas: String fichero, que es el fichero de origen, String nuevoNombre, que es la nueva ruta, y Object obj, para saber el tipo de objeto que
+     *          se encuentra dentro del fichero de origen
+     * Salidas: boolean
+     * Postcondiciones: asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas
+     *   no existen, no se renombrará el fichero.
+     * */
     public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
     {
         boolean renombrado = false;

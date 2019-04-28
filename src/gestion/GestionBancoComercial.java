@@ -543,7 +543,7 @@ public class GestionBancoComercial {
             e.printStackTrace();
         }
 
-        util.borrarFichero(ficheroMovimientosCuenta.getPath());
+        //util.borrarFichero(ficheroMovimientosCuenta.getPath());
         util.renombrarFicheroBinario(temp.getPath(),ficheroMovimientosCuenta.getPath(),registro);
 
     }
