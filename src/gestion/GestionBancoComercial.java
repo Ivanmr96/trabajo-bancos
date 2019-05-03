@@ -16,6 +16,185 @@ import utilidades.Utilidades;
 
 
 public class GestionBancoComercial {
+    /*
+    * INTERFAZ
+    * Signatura: public String obtenerNuevoNumeroCuenta(String bic)
+    * Comentario: Obtiene un nuevo numero de cuenta, siguiente al último actual
+    * Precondiciones:
+    * Entradas: String bic
+    * Salidas: String numero de cuenta
+    * Postcondiciones: Asociado al nombre devuelve un String con el nuevo numero de cuenta
+    *
+    * */
+    public String obtenerNuevoNumeroCuenta(String bic){
+        String nombreBanco = this.obtenerNombrePorBIC(bic);
+        File ficheroCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Maestro.txt");
+        File ficheroCuentasMov = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
+
+        FileReader fr = null;
+        BufferedReader br = null;
+        String registro = null;
+        String[] campos = null;
+        String IBANUltimaCuenta = null;
+        String IBANUltimaCuentaMov = null;
+        String numeroCuentaUltima = null;
+        String numeroCuentaUltimaMov = null;
+        String IBAN = null;
+
+        //Ultima numero de cuenta
+        try {
+            fr = new FileReader(ficheroCuentas);
+            br = new BufferedReader(fr);
+
+            while (br.ready()) {
+                registro = br.readLine();
+
+                if (br.ready() == false) {
+                    campos = registro.split(",");
+                    if (campos != null) {
+                        IBANUltimaCuenta = campos[0];
+
+                        numeroCuentaUltima = this.obtenerNumCuentaPorIBAN(IBANUltimaCuenta);
+                    }
+                    // System.out.println( "Cuenta ->"+IBANUltimaCuenta);
+                }
+            }
+            br.close();
+            fr.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            fr = new FileReader(ficheroCuentasMov);
+            br = new BufferedReader(fr);
+
+            while (br.ready()) {
+                registro = br.readLine();
+                if (br.ready() == false) {
+                    campos = registro.split(",");
+                    if (campos != null) {
+                        IBANUltimaCuentaMov = campos[0];
+                        numeroCuentaUltimaMov = this.obtenerNumCuentaPorIBAN(IBANUltimaCuentaMov);
+
+                    }
+
+                }
+            }
+            br.close();
+            fr.close();
+        }
+
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+          if (IBANUltimaCuenta == null){
+              IBANUltimaCuenta = "ESP" + bic + "0000000";
+          }
+
+            //He modificado esto para que realmente coja el ultimo numero de cuenta dado, mirando tanto en el fichero maestro como en el de movimientos
+            if(IBANUltimaCuentaMov != null && IBANUltimaCuenta != null) {
+
+                if (Integer.parseInt(numeroCuentaUltimaMov) > Integer.parseInt(numeroCuentaUltima)) {
+                    IBANUltimaCuenta = IBANUltimaCuentaMov;
+                    numeroCuentaUltima = numeroCuentaUltimaMov;
+                }
+            }
+
+        numeroCuentaUltima = String.valueOf((Integer.parseInt(numeroCuentaUltima) + 1));
+
+        while (numeroCuentaUltima.length() < 7) {
+            numeroCuentaUltima = "0" + numeroCuentaUltima;
+        }
+        IBANUltimaCuenta = "ESP"+bic+numeroCuentaUltima;
+
+
+        return IBANUltimaCuenta;
+
+    }
+
+
+
+    /* INTERFAZ
+     * Comentario: registra un nuevo cliente en el fichero de Movimientos. Es una solicitud de alta.
+     * Prototipo: public boolean solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
+     * Entrada:
+     * 		-> Un string con el BIC del banco donde se insertara el nuevo cliente
+     * 		-> un String con el DNI del cliente
+     * 		-> un double con los ingresos mensuales del cliente
+     * Precondiciones: Los datos del cliente deben ser válidos (se validará el DNI en el main)
+     * Salida: Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
+     * Postcondiciones: Asociado al nombre devuelve un String, que serÃ¡ el IBAN de la cuenta asociada al cliente nuevo, o null
+     * 					Si no se crea correctamente.
+     */
+    public boolean solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
+    {
+        //Insertar marca de alta en el fichero de movimientos
+        String registroCliente = new ClienteImpl(BIC, DNI,ingresosMensuales).toString();
+        String nombreBanco = this.obtenerNombrePorBIC(BIC);
+        File ficheroClientes = new File("./Files/BancosComerciales/" + nombreBanco + "/Clientes_" + nombreBanco + "_Movimientos.txt");
+        File ficheroCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
+        File ficheroClientesCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Clientes_Cuentas_" + nombreBanco + "_Movimientos.txt");
+
+        boolean exito = false;
+        String IBAN = this.obtenerNuevoNumeroCuenta(BIC);
+
+        CuentaImpl cuenta = new CuentaImpl(IBAN);
+        String registroCuenta = cuenta.toString();
+        String registroClienteCuenta = DNI + "," + cuenta.getIBAN();
+        if(ficheroClientes.exists() && ficheroCuentas.exists() && ficheroClientesCuentas.exists()) {
+            escribirRegistroEnMovimientos(registroCliente, ficheroClientes.getPath());
+            escribirRegistroEnMovimientos(registroCuenta, ficheroCuentas.getPath());
+            escribirRegistroEnMovimientos(registroClienteCuenta, ficheroClientesCuentas.getPath());
+            exito = true;
+        }
+
+      return exito;
+    }
+
+
+    /*
+    * Signatura: public void aceptarAltasClientes (String bic)
+    * Comentario: Este método da de alta todos los clientes que estuvieran en el fichero de movimientos pasándolos al maestro.
+    * Precondiciones: debe haber solicitudes de alta
+    * Entradas: String bic del banco
+    * Salidas:
+    * Postcondiciones: quedarán añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
+    *
+    * */
+    public void aceptarAltasClientes (String BIC) {
+
+        String nombreBanco = this.obtenerNombrePorBIC(BIC);
+        File ficheroCuentas = new File("./Files/BancosComerciales/"+nombreBanco+"/Cuentas_"+nombreBanco+"_Movimientos.txt");
+        String IBAN = " ";
+        String registro = " ";
+        FileReader fr = null;
+        BufferedReader br = null;
+        //Crear fichero Transferencias
+        try{
+            fr = new FileReader(ficheroCuentas);
+            br = new BufferedReader(fr);
+            while(br.ready()){
+                registro = br.readLine();
+                IBAN = registro.split(",")[0];
+                this.crearFicheroCuentaTransferencias(IBAN);
+            }
+
+            br.close();
+            fr.close();
+        }catch ( IOException e){
+            e.printStackTrace();
+        }
+
+        //Actualizar fichero maestro
+        actualizarFichero("./Files/BancosComerciales/" + nombreBanco + "/Clientes_" + nombreBanco, 1);
+        actualizarFichero("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco, 0);
+        actualizarFichero("./Files/BancosComerciales/" + nombreBanco + "/Clientes_Cuentas_" + nombreBanco, 0);
+
+    }
+
 
       /*
      * INTERFAZ
@@ -843,6 +1022,7 @@ public class GestionBancoComercial {
 			bw = new BufferedWriter(fw);
 			
 			bw.write(registro);
+			bw.newLine();
 			escrito = true;
 			
 			bw.close();
