@@ -129,7 +129,7 @@ public class ProgramaBancoComercial
 		  			
 		  			ingresosMensuales = validaciones.leerYValidarIngresosMensuales();
 		  			
-		  			IBANNuevoCliente = gestionComercial.insertarCliente(BIC, DNI,ingresosMensuales);
+		  			IBANNuevoCliente = gestionComercial.insertarCliente(BIC, DNI,ingresosMensuales);		//TODO Cuando el banco quiera hacer un alta nueva, que se haga directamente.
 		  			if(IBANNuevoCliente != null)
 		  				System.out.println("Nuevo cliente creado, apunta el IBAN de su cuenta: " + IBANNuevoCliente);
 		  			else
@@ -215,6 +215,8 @@ public class ProgramaBancoComercial
 		  			}
 		  			cuentaBorrada = false;
 		  			break;
+		  		//case 6:		//TODO 6ta opcion: actualizar altas/bajas.
+		  			//break;
     		}
 	  		
 	  		//Mostrar menu y validar opcion elegida
