@@ -103,7 +103,7 @@ public class ProgramaCliente {
                     //cancelar cuenta
                     if(validar.borrarCuenta()){
 
-                    	if(gestion.eliminarCuenta(iban_cuenta))
+                    	if(gestion.eliminarCuenta(iban_cuenta))		//TODO Cambiar por una llamada a un metodo que solo la marque como borrada
                     	{
 	                        System.out.println("Su cuenta ha sido borrada.");
 	                        System.out.println("Se le forzara el cierre de sesion.");

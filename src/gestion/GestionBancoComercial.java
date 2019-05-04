@@ -24,7 +24,7 @@ public class GestionBancoComercial {
     * Entradas: String bic
     * Salidas: String numero de cuenta
     * Postcondiciones: Asociado al nombre devuelve un String con el nuevo numero de cuenta
-    *
+    *					* Puede lanzar IOException si hay algun error al leer
     * */
     public String obtenerNuevoNumeroCuenta(String bic){
         String nombreBanco = this.obtenerNombrePorBIC(bic);
@@ -128,6 +128,7 @@ public class GestionBancoComercial {
      * Salida: Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
      * Postcondiciones: Asociado al nombre devuelve un String, que serÃ¡ el IBAN de la cuenta asociada al cliente nuevo, o null
      * 					Si no se crea correctamente.
+     * 					* Puede lanzar IOException si hay algun error al escribir
      */
     public boolean solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
     {
@@ -162,7 +163,7 @@ public class GestionBancoComercial {
     * Entradas: String bic del banco
     * Salidas:
     * Postcondiciones: quedarán añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
-    *
+    *					* Puede lanzar IOException si hay algun error al leer o escribir
     * */
     public void aceptarAltasClientes (String BIC) {
 
@@ -205,6 +206,7 @@ public class GestionBancoComercial {
      * Salida: boolean
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve false si el fichero ya existe o si no se pudo crear. True si sí lo creó.
+     * 					* Puede lanzar IOException si hay algun error al leer.
      * */
     public boolean crearFicheroCuentaTransferencias(String nuevo_iban){
         String nombreBanco = obtenerNombreBancoComercialPorIBAN(nuevo_iban);
@@ -275,6 +277,7 @@ public class GestionBancoComercial {
      * Salida:
      * Entrada/Salida:
      * Postcondiciones: modifica el fichero de cuentas borradas
+     * 					* Puede lanzar IOException si hay algun error al escribir.
      * */
     public boolean marcarCuentaComoBorrada(String iban_cuenta)
     {
@@ -305,6 +308,7 @@ public class GestionBancoComercial {
      * Salida:
      * Entrada/Salida:
      * Postcondiciones: modifica varios ficheros
+     * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * */
     
     public boolean eliminarCuenta(String IBAN) 
@@ -342,6 +346,8 @@ public class GestionBancoComercial {
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
+     * 					* Puede lanzar IOException si hay algun error al leer
+     * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
@@ -378,6 +384,8 @@ public class GestionBancoComercial {
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
+     * 					* Puede lanzar IOException si hay algun error al leer
+     * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int mes, int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
@@ -416,6 +424,8 @@ public class GestionBancoComercial {
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
+     * 					* Puede lanzar IOException si hay algun error al leer
+     * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int dia,int mes,int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
@@ -452,6 +462,8 @@ public class GestionBancoComercial {
      * Salida: una lista de String
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve una lista de String
+     * 					* Puede lanzar IOException si hay algun error al leer
+     * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
  public List<TransferenciaImpl> ultimosDiezMovimientos(String iban_cuenta){
 
@@ -524,6 +536,7 @@ public class GestionBancoComercial {
      * Salida: boolean
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre se devuelve un boolean que devuelve true si existe y false si no
+     * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public boolean isIBANvalido(String iban_cuenta){
         String nombre_banco = " ";
@@ -561,6 +574,7 @@ public class GestionBancoComercial {
      * Salida: boolean
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre se devuelve true si este iban pertenece a este cliente o false si no
+     * 					* Puede lanzar IOException si hay algun error al leer
      */
     public boolean isPropietario(String dni_cliente, String iban_cuenta)
     {
@@ -600,6 +614,7 @@ public class GestionBancoComercial {
      * Salida: String que es el dni del cliente
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve el DNI del cliente al que pertenece la cuenta
+     * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerClientePorIBAN(String iban_cuenta){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(iban_cuenta);
@@ -634,6 +649,7 @@ public class GestionBancoComercial {
      * Salida: String que es el IBAN de la cuenta
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve el IBAN de la cuenta que pertenece a dicho cliente
+     * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerIBANPorCliente(String nombre_banco, String dni_cliente){
         File fichero_clientes_cuentas = new File("./Files/BancosComerciales/"+nombre_banco+"/Clientes_Cuentas_"+nombre_banco+"_Maestro.txt");
@@ -668,6 +684,8 @@ public class GestionBancoComercial {
      * Salida:
      * Entrada/Salida:
      * Postcondiciones: Se modifica el fichero y se deja ordenado de forma descendente
+     * 					* Puede lanzar IOException si hay algun error al leer o escribir
+     * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
     public void ordenarMovimientosPorFecha(String iban){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(iban);
@@ -737,6 +755,7 @@ public class GestionBancoComercial {
      * Salida:
      * Entrada/Salida:
      * Postcondiciones: Se modifica el fichero de movimientos de cuentas, aÃƒÂ±adiendo un movimiento nuevo.
+     * 					* Puede lanzar IOException si hay algun error al escribir
      * */
      public boolean insertarMovimientoEnFicheroMovimientos(String ID_Cuenta,boolean isIngresoOrRetirada, String concepto, double cantidad,GregorianCalendar fecha){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(ID_Cuenta);
@@ -787,6 +806,7 @@ public class GestionBancoComercial {
      * Salida:
      * Entrada/Salida:
      * Postcondiciones: Se modifica el fichero de Cuentas y se actualiza el saldo pertinente.
+     * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * */
     
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad){
@@ -828,6 +848,7 @@ public class GestionBancoComercial {
      * Precondiciones: No hay
      * Salida: Un boolean indicando si el DNI estÃ¡ registrado en el banco o no
      * Postcondiciones: Asociado al nombre deuvelve true si el DNI estÃ¡ registrado en el banco (BIC), o false si no lo estÃ¡.
+     * 					* Puede lanzar IOException si hay algun error al leer
      */
     public boolean DNIRegistrado(String DNI, String BIC)
     {
@@ -877,6 +898,7 @@ public class GestionBancoComercial {
      * Salida: Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
      * Postcondiciones: Asociado al nombre devuelve un String, que serÃ¡ el IBAN de la cuenta asociada al cliente nuevo, o null
      * 					Si no se creÃ³ correctamente.
+     * 					* Puede lanzar IOException si hay algun error al leer o escribir
      */
     public String insertarCliente(String BIC, String DNI, double ingresosMensuales)
     {
@@ -963,6 +985,7 @@ public class GestionBancoComercial {
 	 * Entrada: el IBAN de la cuenta.
 	 * Salida: un String con los datos de la cuenta
 	 * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta
+	 * 					* Puede lanzar IOException si hay algun error al leer
 	 */
 	public String datosCuenta(String IBAN)
 	{
@@ -1007,6 +1030,7 @@ public class GestionBancoComercial {
 	 * Postcondiciones: Asociado al nombre devuelve:
 	 * 					-> True si se ha escrito correctamente el registro en el fichero correspondiente
 	 * 					-> False si no se ha escrito correctamente.
+	 * 					* Puede lanzar IOException si hay algun error al escribir.
 	 */
 	public boolean escribirRegistroEnMovimientos(String registro, String rutaFichero)
 	{
@@ -1045,6 +1069,7 @@ public class GestionBancoComercial {
      * Salida: String BIC
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve un String
+     * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerBICporNombre(String nombre_banco){
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
@@ -1122,6 +1147,7 @@ public class GestionBancoComercial {
      * Salida: String nombre
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve un String
+     * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerNombrePorBIC(String bic){
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
@@ -1159,6 +1185,7 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre devuelve:
      * 				-> true si se ha ingresado el dinero con exito, insertando el movimiento en el fichero de movimientos y modificando el saldo en el fichero de cuentas
      * 				-> false si no se ha podido realizar con exito la operacion
+     * 				* Puede lanzar IOException si hay algun error al escribir
      * */
     public boolean ingresarDinero(String IBAN,String concepto, double cantidad, GregorianCalendar fecha){
 
@@ -1185,6 +1212,7 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre devuelve:
      * 					-> true si se ha realizado bien el movimiento
      * 					-> false si no se ha realizado bien el movimiento
+     * 					* Puede lanzar IOException si hay algun error al escribir
      * */
     public boolean realizarMovimiento(String IBANOrigen,String IBANDestino, String concepto,double cantidad, GregorianCalendar fecha){
 
@@ -1210,6 +1238,7 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre devuelve:
      * 					-> true si se ha sacado bien el dinero de la cuenta, insertando el movimiento en el fichero de movimientos y modificando el saldo en el fichero de cuentas
      * 					-> false si no se ha podido realizar bien la operacion.
+     * 					* Puede lanzar IOException si hay algun error al escribir
      * */
     public boolean sacarDinero(String IBAN,String concepto, double cantidad, GregorianCalendar fecha){
 
@@ -1229,10 +1258,13 @@ public class GestionBancoComercial {
     /* INTERFAZ
      * Comentario: Actualiza un fichero maestro determinado, mirando los registros de su fichero de movimiento correspondiente.
      * Prototipo: public boolean actualizarFichero(String fichero)
-     * Entrada: Un string con la ruta del fichero
-     * Precondiciones:
-     * Salida:
-     * Postcondiciones:
+     * Entrada: Un string con la ruta (sin especificar la parte de "_Maestro.txt" o "_Movimientos.txt) del fichero
+     * Precondiciones: Los ficheros deben existir
+     * Salida: No hay
+     * Postcondiciones: Asociado al nombre devuelve:
+     * 					-> True si la sincronizacion tuvo exito, por lo tanto, los registros del fichero de movimientos quedan actualizados al maestro.
+     * 					-> False si hubo algun error y no se pudo sincronizar.
+     * 					* Puede lanzar IOException si hay algun error al leer o escribir
      */
     public boolean actualizarFichero(String fichero, int posicionCampoClave)
     {
