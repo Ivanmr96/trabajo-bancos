@@ -4,18 +4,23 @@
 *
 * PSEUDOCODIGO MAIN - VISTA DEL CLIENTE
 * inicio
-*   pedirValidarInicioSesion    //pide el DNI del cliente y el IBAN de la cuenta propia
-*   repetir
-*       mostrarMenuPedirValidarOpcion
-*       si (opcion no es salir)
-*           segun(opcion)
-*               caso 1: realizar transferencia bancaria
-*               caso 2: ver datos de la cuenta propia
-*               caso 3: buscar movimientos
-*               caso 4: cancelar cuenta
-*           finSegun
-*       finSi
-*   mientras(opcion no sea salir)
+*   preguntarLogInOrSignUp
+*   si la respuesta es log in
+*       pedirValidarInicioSesion    //pide el DNI del cliente y el IBAN de la cuenta propia
+*       repetir
+*           mostrarMenuPedirValidarOpcion
+*               si (opcion no es salir)
+*                   segun(opcion)
+*                       caso 1: realizar transferencia bancaria
+*                       caso 2: ver datos de la cuenta propia
+*                       caso 3: buscar movimientos
+*                       caso 4: cancelar cuenta
+*                   finSegun
+*               finSi
+*       mientras(opcion no sea salir)
+*   si la respuesta es sign up
+*       pedirValidarDatos
+*       solicitarAltaCliente
 * fin
 * */
 package main;
