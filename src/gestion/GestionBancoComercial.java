@@ -122,7 +122,7 @@ public class GestionBancoComercial {
 
     /* INTERFAZ
      * Comentario: registra un nuevo cliente en el fichero de Movimientos. Es una solicitud de alta.
-     * Prototipo: public boolean solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
+     * Prototipo: public String solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
      * Entrada:
      * 		-> Un string con el BIC del banco donde se insertara el nuevo cliente
      * 		-> un String con el DNI del cliente
@@ -133,7 +133,7 @@ public class GestionBancoComercial {
      * 					Si no se crea correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      */
-    public boolean solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
+    public String solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
     {
         //Insertar marca de alta en el fichero de movimientos
         String registroCliente = new ClienteImpl(BIC, DNI,ingresosMensuales).toString();
@@ -142,7 +142,7 @@ public class GestionBancoComercial {
         File ficheroCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
         File ficheroClientesCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Clientes_Cuentas_" + nombreBanco + "_Movimientos.txt");
 
-        boolean exito = false;
+
         String IBAN = this.obtenerNuevoNumeroCuenta(BIC);
 
         CuentaImpl cuenta = new CuentaImpl(IBAN);
@@ -152,10 +152,10 @@ public class GestionBancoComercial {
             escribirRegistroEnMovimientos(registroCliente, ficheroClientes.getPath());
             escribirRegistroEnMovimientos(registroCuenta, ficheroCuentas.getPath());
             escribirRegistroEnMovimientos(registroClienteCuenta, ficheroClientesCuentas.getPath());
-            exito = true;
+
         }
 
-      return exito;
+      return IBAN;
     }
 
 
@@ -543,7 +543,7 @@ public class GestionBancoComercial {
     /*
      * INTERFAZ
      * Signatura: public boolean isIBANvalido(String iban_cuenta)
-     * Comentario: Dado un iban devuelve true si este existe o false si no
+     * Comentario: Dado un iban devuelve true si este existe o false si no. Mira solo en MAESTRO
      * Precondiciones: Se pasa el iban de la cuenta
      * Entrada: String iban_cuenta
      * Salida: boolean
@@ -554,8 +554,10 @@ public class GestionBancoComercial {
     public boolean isIBANvalido(String iban_cuenta){
         String nombre_banco = " ";
         File f_cuentas = null;
+        File f_cuentasMov = null;
         FileReader fr = null;
         BufferedReader br = null;
+        String registro = " ";
         boolean isValido = false;
 
         if(iban_cuenta.length() >= 13) {
@@ -570,12 +572,58 @@ public class GestionBancoComercial {
                             isValido = true;
                         }
                     }
+                    br.close();
+                    fr.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        }
+            }
         }
         return isValido;
+    }
+
+    /*
+     * INTERFAZ
+     * Signatura: public boolean isIBANParaBorrar(String iban_cuenta)
+     * Comentario: Dado un iban devuelve true si est� marcado como borrado
+     * Precondiciones: Se pasa el iban de la cuenta
+     * Entrada: String iban_cuenta
+     * Salida: boolean
+     * Entrada/Salida:
+     * Postcondiciones: asociado al nombre se devuelve un boolean que devuelve true si esta marcada como borrada y false si no
+     * 					* Puede lanzar IOException si hay algun error al leer
+     * */
+    public boolean isIBANParaBorrar(String iban_cuenta){
+        String nombre_banco = " ";
+        File f_cuentas = null;
+        File f_cuentasMov = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        String registro = " ";
+        boolean isMarcado = false;
+
+        if(iban_cuenta.length() >= 13) {
+            nombre_banco = obtenerNombreBancoComercialPorIBAN(iban_cuenta);
+            f_cuentasMov = new File("./Files/BancosComerciales/" + nombre_banco + "/Cuentas_" + nombre_banco + "_Movimientos.txt");
+            if (f_cuentasMov.exists()){
+                try {
+                    fr = new FileReader(f_cuentasMov);
+                    br = new BufferedReader(fr);
+                    while (br.ready()) {
+                        registro = br.readLine();
+
+                        if (registro.split(",")[0].equals(iban_cuenta) && registro.contains("*")) {
+                            isMarcado = true;
+                        }
+                    }
+                    br.close();
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return isMarcado;
     }
 
     /*
@@ -932,7 +980,7 @@ public class GestionBancoComercial {
     }
     
     /* INTERFAZ
-     * Comentario: Comprueba si un cliente (DNI) estÃ¡ registrado en un banco(BIC)
+     * Comentario: Comprueba si un cliente (DNI) estÃ¡ registrado en un banco(BIC), mira tanto en maestro como en movimientos.
      * Prototipo: public boolean DNIRegistrado(String DNI, String BIC)
      * Entrada: Un string con el DNI a comprobar, y un String con el BIC del banco donde se quiere comprobar
      * Precondiciones: No hay
@@ -945,6 +993,7 @@ public class GestionBancoComercial {
     	boolean registrado = false;
     	String nombreBanco = this.obtenerNombrePorBIC(BIC);
     	File ficheroClientes = new File ("./Files/BancosComerciales/"+nombreBanco+"/Clientes_"+nombreBanco+"_Maestro.txt");
+        File ficheroClientesMov = new File ("./Files/BancosComerciales/"+nombreBanco+"/Clientes_"+nombreBanco+"_Maestro.txt");
 		FileReader leer = null;
 	    BufferedReader br = null;
 	    String campos[] = null;
@@ -972,6 +1021,30 @@ public class GestionBancoComercial {
         catch (IOException e)
         {
         	e.printStackTrace();
+        }
+
+        try
+        {
+            leer = new FileReader(ficheroClientesMov);
+            br = new BufferedReader(leer);
+
+            while(br.ready())
+            {
+                registro = br.readLine();
+
+                if(registro != null)
+                {
+                    campos = registro.split(",");
+                    if(campos[1].equals(DNI))
+                        registrado = true;
+                }
+            }
+
+            br.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     	
     	return registrado;
@@ -1452,9 +1525,8 @@ public class GestionBancoComercial {
             while(registroMaestro != null)
             {
                 //Escribir registro de maestro en maestroAct
-                if(!registroMovimientos.contains("*")) {
-                    bwMaestroAct.write(registroMaestro + "\n");
-                }
+                bwMaestroAct.write(registroMaestro + "\n");
+
                 //leer registro de maestro
                 registroMaestro = brMaestro.readLine();
 
