@@ -56,10 +56,10 @@ public class GestionBancoComercialTest {
 //        System.out.println("ingresarDinero -> ESPCAIXESBBXXX0000003, conceptoingreso, 15, new GregorianCalendar() :"+ gbc.ingresarDinero("ESPCAIXESBBXXX0000003", "conceptoingreso", 15, new GregorianCalendar()) );
 //        System.out.println("datos cuenta DESPUES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000003"));
 //
-//        System.out.println("datos cuenta origen ANTES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000003"));
+//        System.out.println("datos cuenta origen ANTES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000001"));
 //        System.out.println("datos cuenta dest ANTES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000002"));
-//        System.out.println("realizarMovimiento -> ESPCAIXESBBXXX0000003, ESPCAIXESBBXXX0000002, conceptoMov, 1500, new GregorianCalendar() :"+ gbc.realizarMovimiento("ESPCAIXESBBXXX0000003","ESPCAIXESBBXXX0000002", "conceptoMov", 1500, new GregorianCalendar()) );
-//        System.out.println("datos cuenta origen DESPUES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000003"));
+//        System.out.println("realizarMovimiento -> ESPCAIXESBBXXX0000001, ESPCAIXESBBXXX0000002, conceptoMov, 1500, new GregorianCalendar() :"+ gbc.realizarMovimiento("ESPCAIXESBBXXX0000001","ESPCAIXESBBXXX0000002", "conceptoMov", 1500, new GregorianCalendar()) );
+//        System.out.println("datos cuenta origen DESPUES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000001"));
 //        System.out.println("datos cuenta dest DESPUES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000002"));
 //
 //        System.out.println("datos cuenta ANTES: " + gbc.datosCuenta("ESPCAIXESBBXXX0000003"));
@@ -69,7 +69,10 @@ public class GestionBancoComercialTest {
 //        System.out.println("actualizarFichero Clientes_Cuentas La Caixa :" + gbc.actualizarFichero("./Files/BancosComerciales/LaCaixa/Clientes_Cuentas_LaCaixa",0 ));
 
           //System.out.println(u.borrarFichero("./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt"));
-          System.out.println(u.renombrarFichero("./Files/BancoCentral/Cuentas_BancoCentral_Maestro_act.txt", "./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt"));
+          //System.out.println(u.renombrarFichero("./Files/BancoCentral/Cuentas_BancoCentral_Maestro_act.txt", "./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt"));
+        
+//        gbc.modificarSaldoEnFicheroCuentas("ESPCAIXESBBXXX0000001", true, 200);
+//        gbc.modificarSaldoEnFicheroCuentas("ESPCAIXESBBXXX0000002", false, 1200);
 
     }
 }

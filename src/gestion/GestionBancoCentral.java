@@ -1,4 +1,5 @@
 package gestion;
+import clasesBasicas.CuentaImpl;
 import clasesBasicas.TransferenciaImpl;
 import utilidades.Utilidades;
 import java.io.*;
@@ -50,6 +51,82 @@ public class GestionBancoCentral {
 
         return escrito;
     }
+    
+    public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
+    {
+    	File ficheroCuentas = null;
+    	RandomAccessFile randAccessFile = null;
+    	boolean modificado = false;
+               
+        
+        //TODO El campo del dinero en los registros de las cuentas debería ser de longitud fija (para que no sobreescriba)
+        
+        //Abrir fichero de las cuentas del banco
+        try
+        {
+        	ficheroCuentas = new File("./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt");
+        	randAccessFile = new RandomAccessFile(ficheroCuentas, "rw");
+        	
+        	//Leer registro de la cuenta cuenta
+        	String linea = randAccessFile.readLine();
+        	long puntero = 0;
+        	CuentaImpl cuenta = null;
+        	boolean encontrado = false;
+        	String[] campos = null;
+        	
+        	while(linea != null && encontrado == false)
+        	{
+        		//Dividir el registro en campos separados por coma
+        		campos = linea.split(",");
+        		
+        		//Si el campo del IBAN es igual al IBAN a buscar
+        		if(campos[0].equals(IBAN))
+        		{
+        			randAccessFile.seek(puntero);
+        			
+        			//Modificar el saldo de la cuenta
+        			cuenta = new CuentaImpl(campos[0], Double.parseDouble(campos[1]));
+        			if(sumaOresta)
+        				cuenta.setCantidadDinero(cuenta.getCantidadDinero() + cantidad);
+        			else
+        				cuenta.setCantidadDinero(cuenta.getCantidadDinero() - cantidad);
+        			
+        			linea = cuenta.toString();
+        			
+        			//Sobreescribir el registro
+        			randAccessFile.writeBytes(linea);
+//        			for(int i = campos[1].length() ; i < 20 ; i++)
+//        			{
+//        				randAccessFile.write(32);
+//        			}
+        			
+        			modificado = true;
+        			encontrado = true;
+        		}
+        		
+        		puntero = randAccessFile.getFilePointer();	//guarda la posicion del puntero
+        		linea = randAccessFile.readLine();			//Lee el siguiente registro
+        	}
+        }
+        catch(IOException e)
+        {
+        	e.printStackTrace();
+        }
+        finally
+        {
+        	try
+        	{
+        		randAccessFile.close();
+        	}
+        	catch(IOException e)
+        	{
+        		e.printStackTrace();
+        	}
+        }
+        
+        return modificado;
+    }
+
 
     /* INTERFAZ
      * Signatura: public void modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad)
@@ -63,9 +140,9 @@ public class GestionBancoCentral {
      * 					-> false si no se ha modificado correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
-    public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad) {
-        String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
-
+    public boolean modificarSaldoEnFicheroCuentas2(String IBAN, boolean sumaOresta, double cantidad) 
+    {
+    	/*
         File ficheroCuentas = new File("./Files/BancoCentral/Cuentas_BancoCentral_Movimientos.txt");
         String registro = " ";
         boolean saldoModificado = false;
@@ -87,7 +164,22 @@ public class GestionBancoCentral {
         if (anhadidoEnMovimientos) {
             actualizarFichero("./Files/BancoCentral/Cuentas_BancoCentral", 0);
             saldoModificado = true;
-        }
+        }*/
+    	
+    	boolean saldoModificado = false;
+    	File ficheroCuentas = new File("./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt");
+    	RandomAccessFile randAccFile = null;
+    	
+    	try
+    	{
+    		randAccFile = new RandomAccessFile(ficheroCuentas, "rw");
+    		
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
 
         return saldoModificado;
     }
