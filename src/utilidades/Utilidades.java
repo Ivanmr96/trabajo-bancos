@@ -3,6 +3,7 @@ package utilidades;
 import clasesBasicas.TransferenciaImpl;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Utilidades {
@@ -12,12 +13,15 @@ public class Utilidades {
      * Comentario: imprime un movimiento. MÃ©todo sobrecargado
      * */
     public void imprimirMovimientos(TransferenciaImpl element){
-
+    	DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
+    	String cantidad;
+    	
         String tipo = " ";
             System.out.println("-------------------------------");
             System.out.println("Fecha: " + element.toStringFecha());
             System.out.println("Tipo: " + ((element.isIngresoOrRetirada())?"INGRESO":"RETIRADA"));
-            System.out.println("Cantidad: " + element.getCantidad());
+            cantidad = df.format(element.getCantidad());
+            System.out.println("Cantidad: " + cantidad + " €");
             System.out.println("Concepto: " + element.getConcepto());
 
     }
@@ -26,15 +30,22 @@ public class Utilidades {
     *Signatura: public void imprimirMovimientos(List<String> movimientos)
     * Comentario: imprime una lista de Strings en pantalla
     * */
-    public void imprimirMovimientos(List<TransferenciaImpl> movimientos){
-
+    public void imprimirMovimientos(List<TransferenciaImpl> movimientos) {
+    	DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
+    	//df.setGroupingSize(3);
+    	
+    	String cantidad;
         String tipo = " ";
         for(TransferenciaImpl element:movimientos)
         {
             System.out.println("-------------------------------");
             System.out.println("Fecha: " + element.toStringFecha());
             System.out.println("Tipo: " + ((element.isIngresoOrRetirada())?"INGRESO":"RETIRADA"));
-            System.out.println("Cantidad: " + element.getCantidad());
+            
+            //cantidad = String.valueOf(element.getCantidad());
+            cantidad = df.format(element.getCantidad());
+            
+            System.out.println("Cantidad: " + cantidad + " €");
             System.out.println("Concepto: " + element.getConcepto());
         }
     }
@@ -42,9 +53,12 @@ public class Utilidades {
     public void imprimirDatosCuenta(String datosCuenta)
     {
     	String[] campos = datosCuenta.split(",");
+    	DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
+    	//df.setGroupingSize(3);
     	
     	System.out.println("Numero de cuenta: " + campos[0]);
-    	System.out.println("Saldo: " + campos[1]);
+    	campos[1] = df.format(Double.parseDouble(campos[1]));
+    	System.out.println("Saldo: " + campos[1] + " €");
     }
 
     /*
