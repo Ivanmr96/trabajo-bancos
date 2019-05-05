@@ -54,13 +54,14 @@ public class ValidacionesProgramaBancoComercial
 		System.out.println("3) Buscar movimientos de la cuenta en el banco central");
 		System.out.println("4) Cliente nuevo");
 		System.out.println("5) Gestionar una cuenta determinada");
+		System.out.println("6) Actualizar altas y bajas");
 		System.out.println("0) Salir del programa");
 		
 		do
 		{
 			System.out.println("Elige una opcion:");
 			opcion = teclado.nextInt();
-		}while(opcion < 0 || opcion > 5);
+		}while(opcion < 0 || opcion > 6);
 		
 		return opcion;
 	}
@@ -182,8 +183,13 @@ public class ValidacionesProgramaBancoComercial
 			BICInsertado = gestion.obtenerBICporIBAN(IBAN);			//TODO Aqui salta StringIndexOutOfBoundsException si se introduce una cadena mas pequeña.
 			
 		}while(gestion.isIBANvalido(IBAN) == false || BICInsertado.equals(BIC) == false );
-		
+
+
+
 		System.out.println("Cuenta de cliente " + IBAN + " correcta.");
+		if(gestion.isIBANParaBorrar(IBAN)){
+			System.out.println("Esta cuenta está marcada como borrada.");
+		}
 		
 		return IBAN;
 	}
