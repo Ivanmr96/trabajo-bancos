@@ -2,9 +2,29 @@ package utilidades;
 
 import gestion.GestionBancoComercial;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ValidacionProgramaCliente {
+
+
+    public int logInORSignUp(){
+        Scanner sc = new Scanner(System.in);
+        int op;
+        do {
+            System.out.println("¿Que desea hacer?");
+            System.out.println("0. Salir");
+            System.out.println("1. Iniciar sesion con mi cuenta\n" +
+                    "2. Crear una cuenta nueva" );
+            op = sc.nextInt();
+        }while(op < 0 && op >2);
+        return op;
+    }
 
 
     public int menu(){
@@ -21,6 +41,118 @@ public class ValidacionProgramaCliente {
             op = sc.nextInt();
         }while(op < 0 && op >5);
         return op;
+    }
+
+
+    /*
+     * INTERFAZ
+     * Signatura: public String dniCliente(String bic)
+     * Comentario: pide, lee y valida un DNI de un nuevo cliente. Revisa que no exista ya en ese banco.
+     * Precondiciones:
+     * Entradas:   String bic del banco donde debe comprobar si existe o no ya
+     * Salidas: String
+     * Postcondiciones: asociado al nombre se devuelve un String que es el DNI del nuevo cliente validado
+     * */
+    public String dniCliente (String bic){        //TODO mejorar validacion de DNI
+        Scanner sc = new Scanner(System.in);
+        String dni= " ";
+        String letra=" ";
+        GestionBancoComercial g = new GestionBancoComercial();
+        boolean valido = false;
+        boolean registrado = false;
+        do{
+        System.out.println("Introduce un DNI valido en formato: 12345678-A");
+        dni = sc.next();
+        dni = dni.toUpperCase();
+            if(dni.contains("-") && dni.length() == 10){
+                letra= dni.split("-")[1];
+                valido = true;
+            }
+        }while(valido  && g.DNIRegistrado(dni,bic));
+
+        return dni;
+    }
+
+    /*
+     * INTERFAZ
+     * Signatura: public double ingresosCliente()
+     * Comentario: pide, lee y valida unos ingresos mensuales
+     * Precondiciones:
+     * Entradas:
+     * Salidas: double
+     * Postcondiciones: asociado al nombre se devuelve un double que es el valor de los ingresos del cliente
+     * */
+    public double ingresosCliente(){
+        Scanner sc = new Scanner(System.in);
+        double ingresos= 0.0;
+        do{
+            System.out.println("Introduce tus ingresos netos mensuales");
+            ingresos = sc.nextDouble();
+
+        }while(ingresos < 0.0);
+
+        return ingresos;
+    }
+
+    /*
+     * INTERFAZ
+     * Signatura: public String bancoCentral()
+     * Comentario: pide, lee y valida un banco central
+     * Precondiciones:
+     * Entradas:
+     * Salidas: String
+     * Postcondiciones: asociado al nombre se devuelve un String que es el BIC del banco central elegido o "NOVALUE" si el usuario desea salir
+     * */
+    public String bancoCentral(){
+        Scanner sc = new Scanner(System.in);
+        File ficheroClientesBancoCentral = new File("./Files/BancoCentral/Clientes_Cuentas_BancoCentral_Maestro.txt");
+        List<String> bancosDisponibles = new ArrayList<String>();
+        List<String> bicsBancosDisponibles = new ArrayList<String>();
+        GestionBancoComercial g = new GestionBancoComercial();
+        FileReader fr = null;
+        BufferedReader br = null;
+        String registro = " ";
+        String bic = " ";
+        String banco = " ";
+        int op = 0;
+        String ret = " ";
+
+        try{
+            fr = new FileReader(ficheroClientesBancoCentral);
+            br = new BufferedReader(fr);
+            while(br.ready()){
+                registro = br.readLine();
+                banco = registro.split(",")[0];
+                bancosDisponibles.add(banco);
+
+                bic = g.obtenerBICporIBAN(registro.split(",")[1]);
+                bicsBancosDisponibles.add(bic);
+            }
+
+            br.close();
+            fr.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        do{
+            System.out.println("Indica en qué banco deseas crear una cuenta");
+            System.out.println("Actualmente los disponibles son: ");
+            for(int i = 0; i < bancosDisponibles.size() ; i ++){
+                System.out.println((i+1) + ". "+ bancosDisponibles.get(i) );
+            }
+            System.out.println("0. Salir");
+            op = sc.nextInt();
+            op -= 1;
+        }while (op < -1 || op > bancosDisponibles.size() );
+
+        if(op == -1){
+            ret = "NOVALUE";
+        }else{
+            ret = bicsBancosDisponibles.get(op);
+        }
+
+       return ret;
     }
 
     /*
@@ -70,7 +202,7 @@ public class ValidacionProgramaCliente {
             do {
                 System.out.println("IBAN: ");
                 iban_cuenta = sc.next().toUpperCase();
-            } while (!gbc.isIBANvalido(iban_cuenta));
+            } while (!gbc.isIBANvalido(iban_cuenta) || gbc.isIBANParaBorrar(iban_cuenta) );
 
         return iban_cuenta;
     }
