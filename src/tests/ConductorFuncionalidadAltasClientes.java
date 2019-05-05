@@ -10,9 +10,14 @@ public class ConductorFuncionalidadAltasClientes {
         g.solicitarAltaCliente("CAIXESBBXXX", "22345678-L",499.9);
         g.solicitarAltaCliente("CAIXESBBXXX", "32345678-L",5999.9);
         g.solicitarAltaCliente("CAIXESBBXXX", "42345678-L",199.9);
+
+
+
+        g.marcarCuentaComoBorrada("ESPCAIXESBBXXX0000001");
 */
+    g.aceptarAltasClientes("CAIXESBBXXX");
 
-
-        g.aceptarAltasClientes("CAIXESBBXXX");
+       // String prueba = "SDFSDF,*";
+        //System.out.println(prueba.contains("*"));
     }
 }
