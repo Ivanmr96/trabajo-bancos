@@ -795,6 +795,83 @@ public class GestionBancoComercial {
     {
     	return Double.parseDouble(datosCuenta(IBAN).split(",")[1]);
     }
+    
+    public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
+    {
+    	File ficheroCuentas = null;
+    	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
+    	RandomAccessFile randAccessFile = null;
+    	boolean modificado = false;
+               
+        
+        //TODO El campo del dinero en los registros de las cuentas debería ser de longitud fija (para que no sobreescriba)
+        
+        //Abrir fichero de las cuentas del banco
+        try
+        {
+        	ficheroCuentas = new File("./Files/BancosComerciales/"+nombreBanco+"/Cuentas_"+nombreBanco+"_Maestro.txt");
+        	randAccessFile = new RandomAccessFile(ficheroCuentas, "rw");
+        	
+        	//Leer registro de la cuenta cuenta
+        	String linea = randAccessFile.readLine();
+        	long puntero = 0;
+        	CuentaImpl cuenta = null;
+        	boolean encontrado = false;
+        	String[] campos = null;
+        	
+        	while(linea != null && encontrado == false)
+        	{
+        		//Dividir el registro en campos separados por coma
+        		campos = linea.split(",");
+        		
+        		//Si el campo del IBAN es igual al IBAN a buscar
+        		if(campos[0].equals(IBAN))
+        		{
+        			randAccessFile.seek(puntero);
+        			
+        			//Modificar el saldo de la cuenta
+        			cuenta = new CuentaImpl(campos[0], Double.parseDouble(campos[1]));
+        			if(sumaOresta)
+        				cuenta.setCantidadDinero(cuenta.getCantidadDinero() + cantidad);
+        			else
+        				cuenta.setCantidadDinero(cuenta.getCantidadDinero() - cantidad);
+        			
+        			linea = cuenta.toString();
+        			
+        			//Sobreescribir el registro
+        			randAccessFile.writeBytes(linea);
+//        			for(int i = campos[1].length() ; i < 20 ; i++)
+//        			{
+//        				randAccessFile.write(32);
+//        			}
+//        			
+        			modificado = true;
+        			encontrado = true;
+        		}
+        		
+        		puntero = randAccessFile.getFilePointer();	//guarda la posicion del puntero
+        		linea = randAccessFile.readLine();			//Lee el siguiente registro
+        	}
+        }
+        catch(IOException e)
+        {
+        	e.printStackTrace();
+        }
+        finally
+        {
+        	try
+        	{
+        		randAccessFile.close();
+        	}
+        	catch(IOException e)
+        	{
+        		e.printStackTrace();
+        	}
+        }
+        
+        return modificado;
+    }
+
 
 
     /*
@@ -809,7 +886,7 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * */
     
-    public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad){
+    public boolean modificarSaldoEnFicheroCuentas2(String IBAN, boolean sumaOresta,double cantidad){
     	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
     	File ficheroCuentas = new File ("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
 
