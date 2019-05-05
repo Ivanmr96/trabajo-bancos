@@ -18,6 +18,7 @@
  * 			caso 3: buscar movimientos de la cuenta en el banco central
  * 			caso 4: cliente nuevo
  * 			caso 5: gestionar una cuenta determinada
+ * 			caso 6: actualizar altas y bajas
  * 		FinSegun
  * 		Mostrar menu y validar opcion elegida
  * 	FinMientras
@@ -137,8 +138,9 @@ public class ProgramaBancoComercial
 		  			break;
 		  		case 5: 
 		  			//gestionar una cuenta determinada
+
 	  				//Leer y validar IBAN de cliente
-		  			IBANCliente = validaciones.LeerYValidarIBANCliente(BIC);
+		  			IBANCliente = validaciones.LeerYValidarIBANCliente(BIC);	//El banco si puede entrar en las que estan marcadas como borradas porque es el banco el gestor
 		  			
 	  				//Mostrar menu y validar opcionMenuCliente
 		  			opcionMenuCliente = validaciones.mostrarMenuYValidarOpcionMenuCliente();
@@ -215,8 +217,12 @@ public class ProgramaBancoComercial
 		  			}
 		  			cuentaBorrada = false;
 		  			break;
-		  		//case 6:		//TODO 6ta opcion: actualizar altas/bajas.
-		  			//break;
+		  		case 6:
+		  			//actualizar altas y bajas
+					gestionComercial.aceptarAltasClientes(BIC);
+					System.out.println("Se han actualizado las nuevas altas y bajas del banco.");
+					System.out.println("Ahora los nuevos clientes podrán iniciar sesión con su cuenta ");
+		  			break;
     		}
 	  		
 	  		//Mostrar menu y validar opcion elegida
