@@ -30,7 +30,7 @@ public class GestionBancoComercial {
         String nombreBanco = this.obtenerNombrePorBIC(bic);
         File ficheroCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Maestro.txt");
         File ficheroCuentasMov = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
-
+        Utilidades util = new Utilidades();
         FileReader fr = null;
         BufferedReader br = null;
         String registro = null;
@@ -40,6 +40,9 @@ public class GestionBancoComercial {
         String numeroCuentaUltima = null;
         String numeroCuentaUltimaMov = null;
         String IBAN = null;
+
+        util.ordenarFicheroPorClave(ficheroCuentas.getPath(), 0);
+        util.ordenarFicheroPorClave(ficheroCuentasMov.getPath(), 0);
 
         //Ultima numero de cuenta
         try {
@@ -282,7 +285,7 @@ public class GestionBancoComercial {
      * INTERFAZ
      * Signatura: public void marcarCuentaComoBorrada(String iban_cuenta)
      * Comentario: Comentario: Marca como borrada con * una cuenta
-     * Precondiciones: Se pasa un iban que debera existir en el Maestro.
+     * Precondiciones: Se pasa un iban que debera existir en el fichero Maestro de cuentas.
      * Entrada: String iban
      * Salida:
      * Entrada/Salida:
@@ -1367,7 +1370,8 @@ public class GestionBancoComercial {
         BufferedWriter bwMaestroAct = null;
         Utilidades utils = new Utilidades();
         
-        utils.ordenarFicheroPorClave(ficheroMaestro.getPath(), 0);
+        utils.ordenarFicheroPorClave(ficheroMaestro.getPath(), posicionCampoClave);
+        utils.ordenarFicheroPorClave(ficheroMovimientos.getPath(), posicionCampoClave);
 
         try
         {
@@ -1419,7 +1423,7 @@ public class GestionBancoComercial {
                     while(campoClaveMovimientos.compareTo(campoClaveMaestro) > 0 && registroMaestro != null)
                     {
                         //Escribir registro de maestro en maestroAct
-                        if(!registroMaestro.contains("*")) {
+                        if(!registroMovimientos.contains("*")) {
                             bwMaestroAct.write(registroMaestro + "\n");
                         }
                         //leer registro de maestro
@@ -1448,7 +1452,7 @@ public class GestionBancoComercial {
             while(registroMaestro != null)
             {
                 //Escribir registro de maestro en maestroAct
-                if(!registroMaestro.contains("*")) {
+                if(!registroMovimientos.contains("*")) {
                     bwMaestroAct.write(registroMaestro + "\n");
                 }
                 //leer registro de maestro

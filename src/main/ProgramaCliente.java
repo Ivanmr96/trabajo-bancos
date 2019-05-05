@@ -49,7 +49,7 @@ public class ProgramaCliente {
         List<TransferenciaImpl> movimientos = new ArrayList<TransferenciaImpl>();
 
         //pedirValidarInicioSesion
-        iban_cuenta = validar.inicioSesion();
+        iban_cuenta = validar.inicioSesion();   //TODO Revisar que no deje iniciar sesion con un IBAN que esté marcado como borrado
         do{
             opcion = validar.menu();
             switch (opcion){
