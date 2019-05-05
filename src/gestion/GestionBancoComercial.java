@@ -158,15 +158,15 @@ public class GestionBancoComercial {
 
     /*
     * Signatura: public void aceptarAltasClientes (String bic)
-    * Comentario: Este método da de alta todos los clientes que estuvieran en el fichero de movimientos pasándolos al maestro.
-    * Precondiciones: debe haber solicitudes de alta
+    * Comentario: Este metodo da de alta todos los clientes que estuvieran en el fichero de movimientos pasándolos al maestro.
+    * Precondiciones: debe haber solicitudes de alta o baja.
     * Entradas: String bic del banco
     * Salidas:
     * Postcondiciones: quedarán añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
     *					* Puede lanzar IOException si hay algun error al leer o escribir
     * */
     public void aceptarAltasClientes (String BIC) {
-
+        Utilidades utils = new Utilidades();
         String nombreBanco = this.obtenerNombrePorBIC(BIC);
         File ficheroCuentas = new File("./Files/BancosComerciales/"+nombreBanco+"/Cuentas_"+nombreBanco+"_Movimientos.txt");
         String IBAN = " ";
@@ -177,10 +177,20 @@ public class GestionBancoComercial {
         try{
             fr = new FileReader(ficheroCuentas);
             br = new BufferedReader(fr);
-            while(br.ready()){
+            while(br.ready() ){
                 registro = br.readLine();
                 IBAN = registro.split(",")[0];
-                this.crearFicheroCuentaTransferencias(IBAN);
+                if (registro.contains("*")) {
+
+                    //Eliminar el fichero de las transferencias si es una baja
+                    utils.borrarFichero("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
+
+                }else{
+
+                    //Crear fichero transferencias si es un alta
+                    this.crearFicheroCuentaTransferencias(IBAN);
+
+                }
             }
 
             br.close();
@@ -272,7 +282,7 @@ public class GestionBancoComercial {
      * INTERFAZ
      * Signatura: public void marcarCuentaComoBorrada(String iban_cuenta)
      * Comentario: Comentario: Marca como borrada con * una cuenta
-     * Precondiciones: Se pasa un iban
+     * Precondiciones: Se pasa un iban que debera existir en el Maestro.
      * Entrada: String iban
      * Salida:
      * Entrada/Salida:
@@ -283,7 +293,7 @@ public class GestionBancoComercial {
     {
         boolean borrada = false;
         
-        String registroCuenta = iban_cuenta + ",*\n";
+        String registroCuenta = iban_cuenta + ",*";
         String registroCliente = this.obtenerBICporIBAN(iban_cuenta) + "," + this.obtenerClientePorIBAN(iban_cuenta) + ",*," + this.obtenerSaldoPorIBAN(iban_cuenta);
         String registroClientesCuentas = this.obtenerClientePorIBAN(iban_cuenta) + "," + iban_cuenta + ",*";
         
@@ -885,7 +895,7 @@ public class GestionBancoComercial {
      * Postcondiciones: Se modifica el fichero de Cuentas y se actualiza el saldo pertinente.
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * */
-    
+    @Deprecated
     public boolean modificarSaldoEnFicheroCuentas2(String IBAN, boolean sumaOresta,double cantidad){
     	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
     	File ficheroCuentas = new File ("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
@@ -1409,10 +1419,10 @@ public class GestionBancoComercial {
                     while(campoClaveMovimientos.compareTo(campoClaveMaestro) > 0 && registroMaestro != null)
                     {
                         //Escribir registro de maestro en maestroAct
-                        bwMaestroAct.write(registroMaestro + "\n");
-
+                        if(!registroMaestro.contains("*")) {
+                            bwMaestroAct.write(registroMaestro + "\n");
+                        }
                         //leer registro de maestro
-
                         registroMaestro = brMaestro.readLine();
 
                         if(registroMaestro != null)
@@ -1424,8 +1434,9 @@ public class GestionBancoComercial {
                 else if(campoClaveMovimientos.compareTo(campoClaveMaestro) < 0)
                 {
                     //Es un alta o un error
-                    bwMaestroAct.write(registroMovimientos + "\n");
-
+                    if(!registroMovimientos.contains("*")) {
+                        bwMaestroAct.write(registroMovimientos + "\n");
+                    }
                     //Leer registro de movimiento
                     registroMovimientos = brMovimientos.readLine();
 
@@ -1437,8 +1448,9 @@ public class GestionBancoComercial {
             while(registroMaestro != null)
             {
                 //Escribir registro de maestro en maestroAct
-                bwMaestroAct.write(registroMaestro + "\n");
-
+                if(!registroMaestro.contains("*")) {
+                    bwMaestroAct.write(registroMaestro + "\n");
+                }
                 //leer registro de maestro
                 registroMaestro = brMaestro.readLine();
 
@@ -1449,7 +1461,9 @@ public class GestionBancoComercial {
             while(registroMovimientos != null)
             {
                 //Escribir registro de movimientos en maestroAct
-                bwMaestroAct.write(registroMovimientos + "\n");
+                if(!registroMovimientos.contains("*")) {
+                    bwMaestroAct.write(registroMovimientos + "\n");
+                }
 
                 //leer registro de movimientos
                 registroMovimientos = brMovimientos.readLine();
