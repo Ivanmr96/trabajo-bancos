@@ -74,5 +74,9 @@ public class GestionBancoComercialTest {
 //        gbc.modificarSaldoEnFicheroCuentas("ESPCAIXESBBXXX0000001", true, 200);
 //        gbc.modificarSaldoEnFicheroCuentas("ESPCAIXESBBXXX0000002", false, 1200);
 
+        System.out.println("Umbral numeros rojos para cuenta ESPCAIXESBBXXX0000001: ");
+        System.out.println(gbc.umbralNumerosRojos("ESPCAIXESBBXXX0000001"));
+
+
     }
 }

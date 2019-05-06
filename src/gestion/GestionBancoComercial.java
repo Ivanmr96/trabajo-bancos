@@ -5,17 +5,81 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import clasesBasicas.ClienteImpl;
 import clasesBasicas.CuentaImpl;
 import clasesBasicas.TransferenciaImpl;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import utilidades.MyObjectOutputStream;
 import utilidades.Utilidades;
 
 
 public class GestionBancoComercial {
+
+    /*
+     * INTERFAZ
+     * Signatura: public double obtenerIngresosPorCliente(String dniCliente, String iban)
+     * Comentario: Devuelve los ingresos mensuales de un cliente dado su DNI.
+     * Precondiciones: Que el dni exista en el fichero maestro
+     * Entradas: String dniCliente
+     * Salida: double
+     * Postcondiciones: asociado al nombre se devuelve un double que es el ingreso que tiene un cliente al mes
+     * */
+
+///Con el iban valdría pero
+//     *              pasamos el dni tambien para cuando en un futuro los clientes puedan tener varias cuentas y las
+//     *              cuentas puedan pertenecer a varios clientes.
+    public double obtenerIngresosPorClientes(String dniCliente, String iban){
+        double ingresos = 0.0;
+        String nombreBanco = obtenerNombreBancoComercialPorIBAN(iban);
+        File ficheroClientes = new File("./Files/BancosComerciales/"+nombreBanco+"/Clientes_"+nombreBanco+"_Maestro.txt");
+        FileReader fr = null;
+        BufferedReader br = null;
+        String registro = " ";
+        try{
+            fr = new FileReader(ficheroClientes);
+            br = new BufferedReader(fr);
+
+            while (br.ready()){
+                registro = br.readLine();
+
+                if(registro.split(",")[1].equals(dniCliente)){
+                    ingresos = Double.parseDouble(registro.split(",")[2]);
+                }
+            }
+
+            br.close();
+            fr.close();
+        }catch (IOException e){
+            e.getStackTrace();
+        }
+        return ingresos;
+    }
+
+    /*
+    * INTERFAZ
+    * Signatura: public double umbralNumerosRojos(String iban)
+    * Comentario: Este método controla el umbral de saldo negativo que puede tener una cuenta.
+    *               Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un
+    *               cliente.
+    * Precondiciones:
+    * Entradas: TransferenciaImpl transferencia
+    * Salida: boolean
+    * Postcondiciones: asociado al nombre se devuelve un double que es el saldo minimo que puede tener una cuenta
+    * */
+    public double umbralNumerosRojos(String iban){
+        double saldoMinimo = 0.0;
+        String dniCliente = this.obtenerClientePorIBAN(iban);
+        double ingresosCliente = obtenerIngresosPorClientes(dniCliente, iban);
+        saldoMinimo = (ingresosCliente * 0.2) * -1;    //saca el 20% y lo convierte en negativo
+
+        return saldoMinimo;
+    }
+
+
     /*
     * INTERFAZ
     * Signatura: public String obtenerNuevoNumeroCuenta(String bic)

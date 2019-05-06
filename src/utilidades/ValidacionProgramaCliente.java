@@ -1,5 +1,6 @@
 package utilidades;
 
+import clasesBasicas.TransferenciaImpl;
 import gestion.GestionBancoComercial;
 
 import java.io.BufferedReader;
@@ -41,6 +42,27 @@ public class ValidacionProgramaCliente {
             op = sc.nextInt();
         }while(op < 0 && op >5);
         return op;
+    }
+    /*
+    * INTERFAZ
+    * Signatura: public boolean umbralNumerosRojos(TransferenciaImpl trans)
+    * Comentario: Comprueba si una transferencia puede hacerse atentiendo a criterios economicos
+    * Precondiciones:
+    * Entradas: TransferenciaImpl trans
+    * Salidas: boolean
+    * Postcondiciones: asociado al nombre se devuelve un boolean que es true si se puede efectuar la transferencia
+    *                   y false si no
+    *
+    * */
+    public boolean umbralNumerosRojos(TransferenciaImpl trans){
+        boolean isPosible = false;
+        GestionBancoComercial gestion = new GestionBancoComercial();
+        double saldoMinimo = gestion.umbralNumerosRojos(trans.getID_Cuenta());
+        double saldoActual = Double.parseDouble(gestion.datosCuenta(trans.getID_Cuenta()).split(",")[1]);
+        if (!trans.isIngresoOrRetirada() && ((saldoActual - trans.getCantidad()) >= saldoMinimo )  ){
+            isPosible = true;
+        }
+        return isPosible;
     }
 
 
