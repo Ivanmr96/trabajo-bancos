@@ -206,6 +206,28 @@ public class ValidacionProgramaCliente {
 
         return iban_cuenta;
     }
+    
+    /*
+     * INTERFAZ
+     * Signatura: public String iban()
+     * Comentario: pide, lee y valida un IBAN
+     * Precondiciones:
+     * Entradas:
+     * Salidas: String
+     * Postcondiciones: asociado al nombre se devuelve un String que es el IBAN de la cuenta
+     * */
+    public String ibanDestino(String IBANOrigen)
+    {
+    	Scanner sc = new Scanner(System.in);
+        GestionBancoComercial gbc = new GestionBancoComercial();
+        String IBANDestino;
+            do {
+                System.out.println("IBAN: ");
+                IBANDestino = sc.next().toUpperCase();
+            } while (IBANOrigen.equals(IBANDestino) || !gbc.isIBANvalido(IBANDestino) || gbc.isIBANParaBorrar(IBANDestino) );
+
+        return IBANDestino;
+    }
 
     /*
      * INTERFAZ

@@ -60,14 +60,12 @@ public class ProgramaCliente {
         List<TransferenciaImpl> movimientos = new ArrayList<TransferenciaImpl>();
         int inicioSesionORegistro = 0;
 
-
         do{
             //preguntarLogInOrSignUp
             inicioSesionORegistro = validar.logInORSignUp();
             switch(inicioSesionORegistro) {
                 case 1:
-
-
+                	
                     //pedirValidarInicioSesion
                     iban_cuenta = validar.inicioSesion();   //TODO Revisar que no deje iniciar sesion con un IBAN que esté marcado como borrado
                     do {
@@ -76,7 +74,7 @@ public class ProgramaCliente {
                             case 1:
                                 //realizar transferencia bancaria
                                 System.out.println("Va a realizar una transferencia bancaria.");
-                                iban_destino = validar.iban();
+                                iban_destino = validar.ibanDestino(iban_cuenta);
                                 concepto = validar.concepto();
                                 cantidad = validar.cantidadATransferir();
                                 fecha = new GregorianCalendar();
@@ -118,6 +116,7 @@ public class ProgramaCliente {
                                 } else {
                                     System.out.println("No existen movimientos con esas caracteristicas.");
                                 }
+                                
                                 break;
                             case 5:
                                 //cancelar cuenta
@@ -134,8 +133,8 @@ public class ProgramaCliente {
                                 } else {
                                     System.out.println("No se borrara su cuenta.");
                                 }
+                                
                                 break;
-
                         }
 
                     } while (opcion != 0);
