@@ -78,7 +78,12 @@ public class ProgramaCliente {
                                 concepto = validar.concepto();
                                 cantidad = validar.cantidadATransferir();
                                 fecha = new GregorianCalendar();
-                                mensajeUsuario = (gestion.realizarMovimiento(iban_cuenta, iban_destino, concepto, cantidad, fecha)) ? "Transferencia realizada con exito" : "Problemas en su operacion. Vuelva a intentarlo mas tarde";
+
+                                if(!validar.umbralNumerosRojos(new TransferenciaImpl(iban_cuenta, false, concepto, cantidad, fecha))){
+                                    mensajeUsuario = "Saldo insuficiente para realizar ese movimiento";
+                                }else{
+                                    mensajeUsuario = (gestion.realizarMovimiento(iban_cuenta, iban_destino, concepto, cantidad, fecha)) ? "Transferencia realizada con exito" : "Problemas en su operacion. Vuelva a intentarlo mas tarde";
+                                }
 
                                 System.out.println(mensajeUsuario);
 
