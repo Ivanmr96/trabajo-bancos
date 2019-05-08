@@ -1,16 +1,75 @@
 /* ANALISIS
  * Comentario: Programa destinado al uso por trabajadores de un banco comercial para que gestionen su cuenta en el banco central o bien
  * 				que puedan gestionar las cuentas de sus clientes.
- * Entradas: entradas del usuario: opcion menus, iban de la cuenta en el banco central para iniciar sesion, iban de la cuenta en el banco comercial para gestionar la cuenta de un cliente
- * Salidas: eco de los datos, mensajes de ayuda al usuario
- * Restricciones: No se podra iniciar sesion con un IBAN que no pertenezca a una cuenta del banco central. No se podra gestionar
- * 					una cuenta que no esté creada. Las opciones de los menus estarán delimitadas por el programador.
+ * 
+ * Entradas: 
+ * 		- entradas del usuario: 
+ * 			> Para validar el inicio de sesion:
+ * 				* un IBAN
+ * 			> Una opcion para el menu principal
+ * 			> Para realizar una transferencia:
+ * 				* Un IBAN de destino
+ * 				* Una cantidad
+ * 				* Un concepto
+ * 			> Para buscar movimientos por fecha:
+ * 				* Un dia (opcional)
+ * 				* Un mes (opcional)
+ * 				* Un año
+ * 			> Para crear un cliente nuevo:
+ * 				* Un DNI
+ * 				* Unos ingresos mensuales
+ * 			> Para iniciar sesion en una cuenta de un cliente determinado:
+ * 				* Un IBAN
+ * 			> Una opcion para el submenu de gestion de una cuenta determinada
+ * 			> Para modificar el dinero de una cuenta de un cliente determinado:
+ * 				* Una opcion (insertar o sacar)
+ * 				* Una cantidad
+ * 			> iban de la cuenta en el banco central para iniciar sesion
+ * 			> iban de la cuenta en el banco comercial para gestionar la cuenta de un cliente
+ * 
+ * Salidas: 
+ * 		- Eco de los datos y distintos mensajes de ayuda al usuario, comunicando cuando las distintas operaciones se realicen con exito o no.
+ * 		- Dos menus, un menu principal con estas opciones:
+ * 				0) Salir
+ * 				1) Realizar transferencia bancaria
+ * 				2) Ver datos de la cuenta en el banco central
+ * 				3) Buscar movimientos de la cuenta en el banco central
+ * 				4) Cliente nuevo
+ * 				5) Gestionar una cuenta determinada
+ * 				6) Actualizar altas y bajas
+ * 			Así como un submenu para la opcion numero 5 "Gestionar una cuenta determinada", con estas opciones:
+ * 				0) Volver atras
+ * 				1) Ver datos de la cuenta
+ * 				2) Ver movimientos de la cuenta
+ * 				3) Modificar dinero de la cuenta
+ * 				4) Eliminar cuenta
+ * 
+ * Restricciones: 
+ * 		- Inicio de sesion:
+ * 			> el IBAN debe ser un IBAN existente en las cuentas del banco central.
+ * 		- La opcion del menu principal debe ser un numero entre 0 y 6 (0 para salir)
+ * 		- Para realizar una transferencia:
+ * 			> El IBAN de destino debe ser un IBAN de un cliente del banco central, es decir, otro banco comercial.
+ * 			> La cantidad de dinero a enviar en la transferencia debe ser un numero positivo
+ * 		- Para buscar movimientos por fecha:
+ * 			> El dia debe ser un numero entre 0 y 31 (0 indica que busque en todos los dias del mes)
+ * 			> El mes debe ser un numero entre 0 y 12 (0 indica que busque en todos los meses del año)
+ * 			> El año debe ser un numero mayor que 1582
+ * 		- Para crear un cliente nuevo:
+ * 			> El DNI debe ser un DNI que no este registrado ya en el banco como un cliente
+ * 			> Los ingresos mensuales no pueden ser negativos
+ * 		- Para iniciar sesion en una cuenta de un cliente determinado:
+ * 			> El IBAN debe estar registrado en el banco
+ * 		- La opcion del submenu "Gestionar una cuenta determinada" debe ser un numero entre 0 y 4 (0 para volver al menu principal)
+ * 		- Para modificar el dinero de una cuenta de un cliente determinado:
+ * 			> La opcion de ingresar o sacar dinero debe ser un numero entre 0 y 2 (0 para volver al menu anterior)
+ * 			> La cantida debe ser un numero positivo.
  */
 
 /* PSEUDOCODIGO
  * Inicio
- * 	pedirValidarInicioSesion
- * 	mostrarMenuPedirValidarOpcion
+ * 	Leer y validar inicio de sesion
+ * 	Mostrar menu y validar opcion elegida
  * 	Mientras (opcionElegida no sea salir)
  * 		Segun(opcionElegida)
  * 			caso 1: realizar transferencia bancaria
@@ -64,9 +123,8 @@ public class ProgramaBancoComercial
     	GestionBancoComercial gestionComercial = new GestionBancoComercial();
     	GestionBancoCentral gestionCentral = new GestionBancoCentral();
     	String cuentaDestino, IBAN, DNI, BIC, concepto, IBANNuevoCliente, IBANCliente;
-    	GregorianCalendar fecha, fechaActual;
-    	char respuestaBorrarCuentas;
-    	boolean borradoDefinitivo, ingresado;
+    	GregorianCalendar fechaActual;
+    	boolean ingresado;
     	boolean cuentaBorrada = false;
     	int dia, mes, anyo;
     	List<TransferenciaImpl> movimientos = new ArrayList<TransferenciaImpl>();
@@ -198,6 +256,7 @@ public class ProgramaBancoComercial
 	  			  				break;
 	  			  				
 	  			  			case 4: 
+	  			  				//TODO Debe marcar como borrada, no borrar directamente (no funciona correctamente)
 	  			  				//Eliminar cuenta
 	  			  				cuentaBorrada = gestionComercial.eliminarCuenta(IBANCliente);
 	  			  				if(cuentaBorrada)

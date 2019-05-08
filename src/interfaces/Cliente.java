@@ -2,6 +2,7 @@
 * Nombre: Cliente
 * Propiedades:
 *   -Basicas:
+*   	private String BIC_Banco consultable y modificable
 *       private String DNI  consultable y no modificable
 *       private double ingresoMensual consultable y modificable
 *
@@ -13,15 +14,9 @@
 * Metodos interface:
 *   public String getDNI();
 *   public double getIngresoMensual();
+*   public String getBIC_Banco();
 *
 *   public void setIngresoMensual(double ingresoMensual);
-* Metodos añadidos:
-*   public void sacarDinero(Cuenta cuenta)
-*   public void ingresarDinero(Cuenta cuenta)
-*   public void realizarTransferencia(Cuenta origen, Cuenta destino)
-*   public void verHistorialTransferencias(Cuenta cuenta)
-* Metodos object:
-*   public String toString();
 * */
 package interfaces;
 public interface Cliente {

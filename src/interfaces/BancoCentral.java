@@ -2,7 +2,7 @@ package interfaces;
 /* ESTUDIO DE INTERFAZ
 *
 * Propiedades basicas:
-*    ->  ID: String, consultable, modificable //se necesita el set
+*       -> ID: String, consultable, modificable //se necesita el set
 * 		-> tasaInteres: double, consultable, modificable
 * 		-> coeficienteCaja: double, consultable, modificable
 *

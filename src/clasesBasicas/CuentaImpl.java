@@ -8,7 +8,7 @@
  *
  *   -Derivadas:
  *         codigo_bancoCentral es derivada de IBAN
- *          codigo_bancoComercial es derivada de IBAN
+ *         codigo_bancoComercial es derivada de IBAN
  *
  *   -Compartidas:
  *
@@ -56,6 +56,7 @@ public class CuentaImpl implements Cuenta {
         String cod_bancoCentral = this.IBAN.substring(0,3);
         return cod_bancoCentral;
     }
+    
     public String getCodigoBancoComercial() {
         String cod_bancoComercial = this.IBAN.substring(3,14);
         return cod_bancoComercial;

@@ -2,7 +2,7 @@
  * Nombre: Cliente
  * Propiedades:
  *   -Basicas:
- *      private String BIC_Banco consultable y modificable
+ *       private String BIC_Banco consultable y modificable
  *       private String DNI  consultable y no modificable
  *       private double ingresoMensual consultable y modificable
  *
@@ -50,8 +50,11 @@ public class ClienteImpl implements Cliente{
     public String getDNI() {
         return DNI;
     }
+    
     public String getBIC_Banco(){return BIC_Banco;}
+    
     public void setBIC_Banco(String BIC_Banco){this.BIC_Banco = BIC_Banco;}
+    
     public double getIngresoMensual() {
         return ingresoMensual;
     }

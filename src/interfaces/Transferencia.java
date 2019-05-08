@@ -25,10 +25,6 @@
     public void setCantidad(double cantidad)
     public GregorianCalendar getFecha()
     public void setFecha(GregorianCalendar fecha)
- *
- * Metodos añadidos:
- * Metodos object:
- *   public String toString();
  * */
 package interfaces;
 import java.util.GregorianCalendar;

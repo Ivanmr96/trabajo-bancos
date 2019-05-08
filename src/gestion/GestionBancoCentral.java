@@ -18,12 +18,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-
 public class GestionBancoCentral {
     /* INTERFAZ
      * Comentario: Escribe un registro nuevo en un fichero determinado
      * Prototipo: public boolean escribirRegistroEnFichero(String registro, String rutaFichero)
-     * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribirï¿½.
+     * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribira
      * Precondiciones: No hay
      * Salida: Un boolean indicando si se ha escrito correctamente o no.
      * Postcondiciones: Asociado al nombre devuelve:
@@ -52,14 +51,24 @@ public class GestionBancoCentral {
         return escrito;
     }
     
+    /* INTERFAZ
+     * Signatura: public void modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad)
+     * Comentario: modifica, en el fichero de Cuentas, el registro del saldo total.
+     * Precondiciones: Se pasa por referencia el ID de la cuenta a modificar y por valor la cantidad a añadir o substraer. Se pasa boolean que es true si añade la cantidad o false si la resta
+     * Entrada: String IBAN, boolean sumaOresta,double cantidad
+     * Salida: Un boolean indicando si se ha modificado correctamente o no el saldo
+     * Entrada/Salida: No hay
+     * Postcondiciones: Asociado al nombre devuelve:
+     * 					-> true si se ha modificado correctamente el saldo de la cuenta en el fichero de cuentas
+     * 					-> false si no se ha modificado correctamente.
+     * 					* Puede lanzar IOException si hay algun error al escribir
+     * */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
     {
     	File ficheroCuentas = null;
     	RandomAccessFile randAccessFile = null;
     	boolean modificado = false;
                
-        
-        //TODO El campo del dinero en los registros de las cuentas debería ser de longitud fija (para que no sobreescriba)
         
         //Abrir fichero de las cuentas del banco
         try
@@ -95,10 +104,6 @@ public class GestionBancoCentral {
         			
         			//Sobreescribir el registro
         			randAccessFile.writeBytes(linea);
-//        			for(int i = campos[1].length() ; i < 20 ; i++)
-//        			{
-//        				randAccessFile.write(32);
-//        			}
         			
         			modificado = true;
         			encontrado = true;
@@ -127,69 +132,11 @@ public class GestionBancoCentral {
         return modificado;
     }
 
-
-    /* INTERFAZ
-     * Signatura: public void modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad)
-     * Comentario: modifica, en el fichero de Cuentas, el registro del saldo total.
-     * Precondiciones: Se pasa por referencia el ID de la cuenta a modificar y por valor la cantidad a aÃƒÂ±adir o substraer. Se pasa boolean que es true si aÃƒÂ±ade la cantidad o false si la resta
-     * Entrada: String IBAN, boolean sumaOresta,double cantidad
-     * Salida: Un boolean indicando si se ha modificado correctamente o no el saldo
-     * Entrada/Salida: No hay
-     * Postcondiciones: Asociado al nombre devuelve:
-     * 					-> true si se ha modificado correctamente el saldo de la cuenta en el fichero de cuentas
-     * 					-> false si no se ha modificado correctamente.
-     * 					* Puede lanzar IOException si hay algun error al escribir
-     * */
-    public boolean modificarSaldoEnFicheroCuentas2(String IBAN, boolean sumaOresta, double cantidad) 
-    {
-    	/*
-        File ficheroCuentas = new File("./Files/BancoCentral/Cuentas_BancoCentral_Movimientos.txt");
-        String registro = " ";
-        boolean saldoModificado = false;
-        boolean anhadidoEnMovimientos = false;
-        double nuevaCantidad;
-
-        //Escribe el registro en el fichero de movimientos
-        if (sumaOresta) {
-            nuevaCantidad = obtenerSaldoPorIBAN(IBAN) + cantidad;
-            registro = IBAN + "," + nuevaCantidad;
-            anhadidoEnMovimientos = escribirRegistroEnFichero(registro + "\n", ficheroCuentas.getPath());
-        } else {
-            nuevaCantidad = obtenerSaldoPorIBAN(IBAN) - cantidad;
-            registro = IBAN + "," + nuevaCantidad;
-            anhadidoEnMovimientos = escribirRegistroEnFichero(registro + "\n", ficheroCuentas.getPath());
-        }
-
-        //Si se ha aÃ±adido en el fichero de movimientos, ahora sincronizar ambos ficheros
-        if (anhadidoEnMovimientos) {
-            actualizarFichero("./Files/BancoCentral/Cuentas_BancoCentral", 0);
-            saldoModificado = true;
-        }*/
-    	
-    	boolean saldoModificado = false;
-    	File ficheroCuentas = new File("./Files/BancoCentral/Cuentas_BancoCentral_Maestro.txt");
-    	RandomAccessFile randAccFile = null;
-    	
-    	try
-    	{
-    		randAccFile = new RandomAccessFile(ficheroCuentas, "rw");
-    		
-    	}
-    	catch(IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    	
-
-        return saldoModificado;
-    }
-
-
     /* INTERFAZ
      * Signatura: public void insertarMovimientoEnFicheroMovimientos(String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha)
-     * Comentario: Aï¿½ade un nuevo movimiento en el fichero de movimientos de la cuenta.
+     * Comentario: Añade un nuevo movimiento en el fichero de movimientos de la cuenta.
      * Precondiciones: Se pasa por referencia el ID de la cuenta y por valor la cantidad de dinero a mover. Se pasa
-     *                  un boolean que es true si el movimiento es un ingreso o false si es una retirada de dinero. Tambien se pasa la fecha como tres valores enteros (se supone vÃƒÂ¡lida)
+     *                  un boolean que es true si el movimiento es un ingreso o false si es una retirada de dinero. Tambien se pasa la fecha como tres valores enteros (se supone valida)
      * Entrada: String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha
      * Salida: Un boolean que indica si se ha insertado correctamente el movimiento o no
      * Entrada/Salida:
@@ -205,7 +152,7 @@ public class GestionBancoCentral {
         MyObjectOutputStream oos = null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setCalendar(fecha);
-        String fechaformateada = sdf.format(fecha.getTime());
+        
         try {
             oos = new MyObjectOutputStream(new FileOutputStream(ficheroCuentas, true));
             oos.writeObject(trans);
@@ -225,7 +172,7 @@ public class GestionBancoCentral {
      * Entrada: el IBAN de la cuenta
      * Salida: un String con los datos de la cuenta
      * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta separados por comas, o null
-     * 					Si el IBAN no estï¿½ registrado en el fichero.
+     * 					Si el IBAN no esta registrado en el fichero.
      * 					* Puede lanzar IOException si hay algun error al leer.
      */
     public String datosCuenta(String IBAN) {
@@ -261,7 +208,7 @@ public class GestionBancoCentral {
      * Entrada: un String con el BIC del cliente a comprobar
      * Precondiciones: No hay
      * Salida: un boolean indicando si el BIC esta registrado ya o no
-     * Postcondiciones: Asociado al nombre devuelve true si el BIC estï¿½ ya registrado en el banco o false de lo contrario.
+     * Postcondiciones: Asociado al nombre devuelve true si el BIC esta ya registrado en el banco o false de lo contrario.
      * 					* Puede lanzar IOException si hay algun error al leer
      */
     public boolean BICRegistrado(String BIC) {
@@ -302,7 +249,7 @@ public class GestionBancoCentral {
      * Entrada: un String con el IBAN de la cuenta a comprobar
      * Precondiciones: No hay
      * Salida: un boolean indicando si el IBAN esta registrado ya o no
-     * Postcondiciones: Asociado al nombre devuelve true si el IBAN estï¿½ ya registrado en el banco o false de lo contrario.
+     * Postcondiciones: Asociado al nombre devuelve true si el IBAN esta ya registrado en el banco o false de lo contrario.
      * 					* Puede lanzar IOException si hay algun error al leer
      */
     public boolean IBANRegistrado(String IBAN) {
@@ -338,7 +285,9 @@ public class GestionBancoCentral {
      * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta,int dia_buscado, int mes_buscado, int anyo_buscado)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
      * Precondiciones: Se pasa un iban y tres int
-     * Entrada: String iban,int dia_buscado, int mes_buscado, int anyo_buscado
+     * Entrada: 
+     * 			-> un String con el IBAN del que se buscaran los movimientos
+     * 			-> un int para el año.
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -377,7 +326,10 @@ public class GestionBancoCentral {
      * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta, int mes_buscado, int anyo_buscado)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
      * Precondiciones: Se pasa un iban y dos int
-     * Entrada: String iban, int mes_buscado, int anyo_buscado
+     * Entrada: 
+     * 			-> un String con el IBAN del que se buscaran los movimientos
+     * 			-> un int para el mes
+     * 			-> un int para el año
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -390,15 +342,12 @@ public class GestionBancoCentral {
         List<TransferenciaImpl> registros_buscados = new ArrayList<TransferenciaImpl>();
         TransferenciaImpl registro = null;
         boolean cont = true;
-        //System.out.println("Mes pasado por parametro: "+mes);
-        //System.out.println("AÃ±o pasado por parametro: "+anyo);
 
         try {
             leer = new ObjectInputStream(new FileInputStream(file_movimientos));
             while (cont) {
                 registro = (TransferenciaImpl) leer.readObject();
-                // System.out.println("Mes a comparar: "+registro.getFecha().get(Calendar.MONTH) );
-                //System.out.println("AÃ±o a comparar: "+registro.getFecha().get(Calendar.YEAR));
+                
                 if (registro.getFecha().get(Calendar.YEAR) == anyo && registro.getFecha().get(Calendar.MONTH) == mes - 1) {   /*Se pone asÃ­ porque los meses de Calendar van de 0(enero) a 11(diciembre)*/
                     registros_buscados.add(registro);
                 }
@@ -421,7 +370,11 @@ public class GestionBancoCentral {
      * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta,int dia_buscado, int mes_buscado, int anyo_buscado)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
      * Precondiciones: Se pasa un iban y tres int
-     * Entrada: String iban,int dia_buscado, int mes_buscado, int anyo_buscado
+     * Entrada: 
+     * 			-> String con el IBAN del que se buscaran los movimientos
+     * 			-> int para el dia
+     * 			-> int para el mes
+     * 			-> int para el año
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -457,7 +410,7 @@ public class GestionBancoCentral {
     /*
      * INTERFAZ
      * Signatura: public boolean isCuentaBorrada(String iban)
-     * Comentario: Comprueba si el iban pertenece a una cuenta del fichero CuentasBorradas
+     * Comentario: Comprueba si el iban pertenece a una cuenta marcada como borrada (?)
      * Precondiciones: Se pasa un iban
      * Entrada: String iban
      * Salida: boolean
@@ -465,6 +418,7 @@ public class GestionBancoCentral {
      * Postcondiciones: asociado al nombre devuelve true si el iban corresponde a una cuenta del fichero CuentasBorradas y false si no
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+    //TODO Comprobar esto
     @Deprecated
     public boolean isCuentaBorrada(String iban) {
         File f_cuentasBorradas = new File("./Files/BancoCentral/CuentasBorradas_BancoCentral_Movimientos.txt");
@@ -499,6 +453,7 @@ public class GestionBancoCentral {
      * Postcondiciones: modifica el fichero de cuentas borradas
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+    //TODO revisar esto
     @Deprecated
     public boolean marcarCuentaComoBorrada(String iban_cuenta) {
         boolean borrada = false;
@@ -596,7 +551,7 @@ public class GestionBancoCentral {
      * Entrada: String nombre
      * Salida: String BIC
      * Entrada/Salida:
-     * Postcondiciones: Asociado al nombre se devuelve un String
+     * Postcondiciones: Asociado al nombre se devuelve un String con el BIC del banco o un espacio en blanco si no existe el banco buscado.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerBICporNombre(String nombre_banco) {
@@ -633,7 +588,7 @@ public class GestionBancoCentral {
      * Entrada: String iban_cuenta
      * Salida: String nombre
      * Entrada/Salida:
-     * Postcondiciones: Asociado al nombre se devuelve un String
+     * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco comercial o un espacio en blanco si no existe el banco.
      * */
     public String obtenerNombreBancoComercialPorIBAN(String iban_cuenta) {
 
@@ -672,7 +627,7 @@ public class GestionBancoCentral {
      * Entrada: String BIC
      * Salida: String nombre
      * Entrada/Salida:
-     * Postcondiciones: Asociado al nombre se devuelve un String
+     * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco segun el BIC dado, o un espacio en blanco si no existe el banco.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerNombrePorBIC(String bic) {
@@ -904,10 +859,6 @@ public class GestionBancoCentral {
 
             //utils.borrarFichero(ficheroMaestro.getPath());
             utils.renombrarFichero(ficheroMaestroAct.getPath(), ficheroMaestro.getPath());
-            
-//            ficheroMaestro.delete();
-//            if (ficheroMaestroAct.renameTo(ficheroMaestro))
-//                actualizado = true;
 
             ficheroMovimientos.delete();
             ficheroMovimientos.createNewFile();

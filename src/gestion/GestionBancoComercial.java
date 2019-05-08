@@ -1,18 +1,11 @@
 package gestion;
+
 import java.io.*;
-import java.nio.file.FileSystemException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import clasesBasicas.ClienteImpl;
 import clasesBasicas.CuentaImpl;
 import clasesBasicas.TransferenciaImpl;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import utilidades.MyObjectOutputStream;
 import utilidades.Utilidades;
 
@@ -83,7 +76,7 @@ public class GestionBancoComercial {
     /*
     * INTERFAZ
     * Signatura: public String obtenerNuevoNumeroCuenta(String bic)
-    * Comentario: Obtiene un nuevo numero de cuenta, siguiente al último actual
+    * Comentario: Obtiene un nuevo numero de cuenta, siguiente al ultimo actual
     * Precondiciones:
     * Entradas: String bic
     * Salidas: String numero de cuenta
@@ -108,7 +101,7 @@ public class GestionBancoComercial {
         util.ordenarFicheroPorClave(ficheroCuentas.getPath(), 0);
         util.ordenarFicheroPorClave(ficheroCuentasMov.getPath(), 0);
 
-        //Ultima numero de cuenta
+        //Ultimo numero de cuenta
         try {
             fr = new FileReader(ficheroCuentas);
             br = new BufferedReader(fr);
@@ -123,7 +116,6 @@ public class GestionBancoComercial {
 
                         numeroCuentaUltima = this.obtenerNumCuentaPorIBAN(IBANUltimaCuenta);
                     }
-                    // System.out.println( "Cuenta ->"+IBANUltimaCuenta);
                 }
             }
             br.close();
@@ -182,8 +174,6 @@ public class GestionBancoComercial {
 
     }
 
-
-
     /* INTERFAZ
      * Comentario: registra un nuevo cliente en el fichero de Movimientos. Es una solicitud de alta.
      * Prototipo: public String solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
@@ -191,9 +181,9 @@ public class GestionBancoComercial {
      * 		-> Un string con el BIC del banco donde se insertara el nuevo cliente
      * 		-> un String con el DNI del cliente
      * 		-> un double con los ingresos mensuales del cliente
-     * Precondiciones: Los datos del cliente deben ser válidos (se validará el DNI en el main)
+     * Precondiciones: Los datos del cliente deben ser validos (se validara el DNI en el main)	//TODO <- eso no lo pondria, el main es independiente
      * Salida: Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
-     * Postcondiciones: Asociado al nombre devuelve un String, que serÃ¡ el IBAN de la cuenta asociada al cliente nuevo, o null
+     * Postcondiciones: Asociado al nombre devuelve un String, que sera el IBAN de la cuenta asociada al cliente nuevo, o null
      * 					Si no se crea correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      */
@@ -225,13 +215,14 @@ public class GestionBancoComercial {
 
     /*
     * Signatura: public void aceptarAltasClientes (String bic)
-    * Comentario: Este metodo da de alta todos los clientes que estuvieran en el fichero de movimientos pasándolos al maestro.
+    * Comentario: Este metodo da de alta todos los clientes que estuvieran en el fichero de movimientos pasandolos al maestro.
     * Precondiciones: debe haber solicitudes de alta o baja.
     * Entradas: String bic del banco
     * Salidas:
-    * Postcondiciones: quedarán añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
+    * Postcondiciones: quedaran añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
     *					* Puede lanzar IOException si hay algun error al leer o escribir
     * */
+    //TODO El m�todo tambien hace las bajas, habria que cambiarle el nombre y retocar la interfaz
     public void aceptarAltasClientes (String BIC) {
         Utilidades utils = new Utilidades();
         String nombreBanco = this.obtenerNombrePorBIC(BIC);
@@ -277,21 +268,18 @@ public class GestionBancoComercial {
       /*
      * INTERFAZ
      * Signatura: public boolean crearFicheroCuentaTransferencias(String nuevo_iban)
-     * Comentario: Crea un fichero de transferencias para el IBAN dado. Devuelve false si el fichero ya existe o si no se pudo crear. True si sí lo creó.
+     * Comentario: Crea un fichero de transferencias para el IBAN dado. Devuelve false si el fichero ya existe o si no se pudo crear. True si lo creo.
      * Precondiciones: Se pasa un iban
      * Entrada: String iban
      * Salida: boolean
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve false si el fichero ya existe o si no se pudo crear. True si sí lo creó.
+     * Postcondiciones: asociado al nombre devuelve false si el fichero ya existe o si no se pudo crear. True si lo creo.
      * 					* Puede lanzar IOException si hay algun error al leer.
      * */
     public boolean crearFicheroCuentaTransferencias(String nuevo_iban){
         String nombreBanco = obtenerNombreBancoComercialPorIBAN(nuevo_iban);
         File carpetaTransferencias = new File("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/");
-        File ficheroCuentas = new File("./Files/BancosComerciales/"+nombreBanco+"/Cuentas_"+nombreBanco+"_Maestro.txt");
         File fichero_nuevo = null;
-        FileReader fr = null;
-        BufferedReader br = null;
         ObjectOutputStream oos = null;
         boolean exito = false;
 
@@ -349,7 +337,7 @@ public class GestionBancoComercial {
      * INTERFAZ
      * Signatura: public void marcarCuentaComoBorrada(String iban_cuenta)
      * Comentario: Comentario: Marca como borrada con * una cuenta
-     * Precondiciones: Se pasa un iban que debera existir en el fichero Maestro de cuentas.
+     * Precondiciones: Se pasa un iban que debera existir en el fichero Maestro de cuentas.		//TODO que pasa si no existe?
      * Entrada: String iban
      * Salida:
      * Entrada/Salida:
@@ -375,6 +363,7 @@ public class GestionBancoComercial {
         return borrada;
     }
 
+    //TODO Revisar este metodo y esta interfaz
     /*
      * INTERFAZ
      * Signatura: public void eliminarCuentasBorradasDefinitivamente(String bic)
@@ -538,7 +527,7 @@ public class GestionBancoComercial {
      * Entrada: String iban
      * Salida: una lista de String
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve una lista de String
+     * Postcondiciones: asociado al nombre devuelve una lista de String con los ultimos dies movimientos de la cuenta
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -582,6 +571,7 @@ public class GestionBancoComercial {
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre se devuelve un boolean que devuelve true si este pertenece a un cliente existente del banco y false si no
      * */
+ 	//TODO este metodo se usa?
     @Deprecated
     public boolean isDNIvalido(String nombre_banco,String dni_cliente){
         File f_clientes = new File("./Files/BancosComerciales/"+nombre_banco+"/Clientes_"+nombre_banco+".txt");
@@ -618,10 +608,8 @@ public class GestionBancoComercial {
     public boolean isIBANvalido(String iban_cuenta){
         String nombre_banco = " ";
         File f_cuentas = null;
-        File f_cuentasMov = null;
         FileReader fr = null;
         BufferedReader br = null;
-        String registro = " ";
         boolean isValido = false;
 
         if(iban_cuenta.length() >= 13) {
@@ -659,7 +647,6 @@ public class GestionBancoComercial {
      * */
     public boolean isIBANParaBorrar(String iban_cuenta){
         String nombre_banco = " ";
-        File f_cuentas = null;
         File f_cuentasMov = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -773,7 +760,7 @@ public class GestionBancoComercial {
      * Entrada: String nombre_banco, String dni_cliente
      * Salida: String que es el IBAN de la cuenta
      * Entrada/Salida:
-     * Postcondiciones: Asociado al nombre se devuelve el IBAN de la cuenta que pertenece a dicho cliente
+     * Postcondiciones: Asociado al nombre se devuelve el IBAN de la cuenta que pertenece a dicho cliente o un espacio en blanco si no existe.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
     public String obtenerIBANPorCliente(String nombre_banco, String dni_cliente){
@@ -808,7 +795,7 @@ public class GestionBancoComercial {
      * Entrada: String IBAN
      * Salida:
      * Entrada/Salida:
-     * Postcondiciones: Se modifica el fichero y se deja ordenado de forma descendente
+     * Postcondiciones: Se modifica el fichero y se deja ordenado de forma descendente por fecha
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -873,13 +860,13 @@ public class GestionBancoComercial {
     /*
      * INTERFAZ
      * Signatura: public void insertarMovimientoEnFicheroMovimientos(String ID_Cuenta,boolean isIngresoOrRetirada, String concepto, double cantidad,GregorianCalendar fecha)
-     * Comentario: Este metodo se encarga de modificar en el fichero de movimientos de la cuenta, aÃƒÂ±ade un nuevo movimiento.
+     * Comentario: Este metodo se encarga de modificar en el fichero de movimientos de la cuenta, a�adiendo un nuevo movimiento.
      * Precondiciones: Se pasa por referencia el ID de la cuenta y por valor la cantidad de dinero a mover. Se pasa
      *                  un boolean que es true si el movimiento es un ingreso o false si es una retirada de dinero. Tambien se pasa la fecha
      * Entrada: (String ID_Cuenta,boolean isIngresoOrRetirada, double cantidad,GregorianCalendar fecha)
      * Salida:
      * Entrada/Salida:
-     * Postcondiciones: Se modifica el fichero de movimientos de cuentas, aÃƒÂ±adiendo un movimiento nuevo.
+     * Postcondiciones: Se modifica el fichero de movimientos de cuentas, a�adiendo un movimiento nuevo.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
      public boolean insertarMovimientoEnFicheroMovimientos(String ID_Cuenta,boolean isIngresoOrRetirada, String concepto, double cantidad,GregorianCalendar fecha){
@@ -892,7 +879,7 @@ public class GestionBancoComercial {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setCalendar(fecha);
-        String fechaformateada = sdf.format(fecha.getTime());
+        
         try
         {
             oos = new MyObjectOutputStream(new FileOutputStream(ficheroCuentas,true));
@@ -914,13 +901,26 @@ public class GestionBancoComercial {
      * Entrada: Un String con el IBAN del que se quiere obtener su saldo
      * Precondiciones: El IBAN ha de ser de una cuenta existente            <- Esto es interesante
      * Salida: un double con el saldo de la cuenta
-     * Postcondiciones: Asociado al nombre devuelve un double con el saldo de la cuenta.
+     * Postcondiciones: Asociado al nombre devuelve un double con el saldo de la cuenta o null si no existe.
      */
     public double obtenerSaldoPorIBAN(String IBAN)
     {
     	return Double.parseDouble(datosCuenta(IBAN).split(",")[1]);
     }
     
+    /* INTERFAZ
+     * Comentario: Modifica el saldo de una cuenta
+     * Prototipo: public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
+     * Entrada:	
+     * 			-> Un String con el IBAN del que se modificar� su saldo
+     * 			-> Un boolean indicando si se sumar� (true) o restar� (false) la cantidad
+     * 			-> Un double con la cantidad
+     * Precondiciones: No hay
+     * Salida: Un boolean indicando si la modificaci�n del saldo tuvo exito o no
+     * Postcondiciones: asociado al nombre devuelve:
+     * 					-> true si se modific� correctamente el saldo de la cuenta
+     * 					-> false si no se pudo modificar el saldo (Por ejemplo, en caso de que el IBAN no exista)
+     */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
     {
     	File ficheroCuentas = null;
@@ -965,11 +965,7 @@ public class GestionBancoComercial {
         			
         			//Sobreescribir el registro
         			randAccessFile.writeBytes(linea);
-//        			for(int i = campos[1].length() ; i < 20 ; i++)
-//        			{
-//        				randAccessFile.write(32);
-//        			}
-//        			
+     			
         			modificado = true;
         			encontrado = true;
         		}
@@ -996,60 +992,14 @@ public class GestionBancoComercial {
         
         return modificado;
     }
-
-
-
-    /*
-     * INTERFAZ
-     * Signatura: public void modificarSaldoEnFicheroCuentas(String iban_cuenta, boolean sumaOresta,double cantidad)
-     * Comentario: Este metodo se encarga de modificar en el fichero de Cuentas, el registro del saldo total (campo 2).
-     * Precondiciones: Se pasa por referencia el ID de la cuenta a modificar y por valor la cantidad a aÃƒÂ±adir o substraer. Se pasa boolean que es true si aÃƒÂ±ade la cantidad o false si la resta
-     * Entrada: String ID_Cuenta, boolean sumaOresta, double cantidad
-     * Salida:
-     * Entrada/Salida:
-     * Postcondiciones: Se modifica el fichero de Cuentas y se actualiza el saldo pertinente.
-     * 					* Puede lanzar IOException si hay algun error al leer o escribir
-     * */
-    @Deprecated
-    public boolean modificarSaldoEnFicheroCuentas2(String IBAN, boolean sumaOresta,double cantidad){
-    	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
-    	File ficheroCuentas = new File ("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Movimientos.txt");
-
-        String registro = " ";
-        boolean saldoModificado = false;
-        boolean anhadidoEnMovimientos = false;
-        double nuevaCantidad;
-
-        //Escribe el registro en el fichero de movimientos
-        if(sumaOresta)
-        {
-        	nuevaCantidad = obtenerSaldoPorIBAN(IBAN) + cantidad;
-            registro = IBAN + "," + nuevaCantidad;
-            anhadidoEnMovimientos = escribirRegistroEnMovimientos(registro + "\n",ficheroCuentas.getPath());
-        }
-        else
-        {
-        	nuevaCantidad = obtenerSaldoPorIBAN(IBAN) - cantidad;
-            registro = IBAN + "," + nuevaCantidad;
-            anhadidoEnMovimientos = escribirRegistroEnMovimientos(registro + "\n",ficheroCuentas.getPath());
-        }
-
-        //Si se ha añadido en el fichero de movimientos, ahora sincronizar ambos ficheros
-        if(anhadidoEnMovimientos)
-        {
-            saldoModificado = actualizarFichero("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco, 0);
-        }
-
-        return saldoModificado;
-    }
     
     /* INTERFAZ
-     * Comentario: Comprueba si un cliente (DNI) estÃ¡ registrado en un banco(BIC), mira tanto en maestro como en movimientos.
+     * Comentario: Comprueba si un cliente (DNI) esta registrado en un banco(BIC), mira tanto en maestro como en movimientos.
      * Prototipo: public boolean DNIRegistrado(String DNI, String BIC)
      * Entrada: Un string con el DNI a comprobar, y un String con el BIC del banco donde se quiere comprobar
      * Precondiciones: No hay
-     * Salida: Un boolean indicando si el DNI estÃ¡ registrado en el banco o no
-     * Postcondiciones: Asociado al nombre deuvelve true si el DNI estÃ¡ registrado en el banco (BIC), o false si no lo estÃ¡.
+     * Salida: Un boolean indicando si el DNI esta registrado en el banco o no
+     * Postcondiciones: Asociado al nombre deuvelve true si el DNI esta registrado en el banco (BIC), o false si no lo esta.
      * 					* Puede lanzar IOException si hay algun error al leer
      */
     public boolean DNIRegistrado(String DNI, String BIC)
@@ -1115,16 +1065,16 @@ public class GestionBancoComercial {
     }
     
     /* INTERFAZ
-     * Comentario: crea un nuevo cliente y una cuenta asociada a Ã©l en un banco determinado.
+     * Comentario: crea un nuevo cliente y una cuenta asociada a el en un banco determinado.
      * Prototipo: public boolean insertarCliente(String BIC, String DNI, double ingresosMensuales)
      * Entrada:
-     * 		-> Un string con el BIC del banco donde se insertarÃ¡ el nuevo cliente
+     * 		-> Un string con el BIC del banco donde se insertara el nuevo cliente
      * 		-> un String con el DNI del cliente
      * 		-> un double con los ingresos mensuales del cliente
      * Precondiciones: El BIC debe ser de un banco existente.
      * Salida: Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
-     * Postcondiciones: Asociado al nombre devuelve un String, que serÃ¡ el IBAN de la cuenta asociada al cliente nuevo, o null
-     * 					Si no se creÃ³ correctamente.
+     * Postcondiciones: Asociado al nombre devuelve un String, que sera el IBAN de la cuenta asociada al cliente nuevo, o null
+     * 					Si no se creo correctamente.
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
      */
     public String insertarCliente(String BIC, String DNI, double ingresosMensuales)
@@ -1211,7 +1161,7 @@ public class GestionBancoComercial {
 	 * Precondiciones: No hay
 	 * Entrada: el IBAN de la cuenta.
 	 * Salida: un String con los datos de la cuenta
-	 * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta
+	 * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta o null si no existe la cuenta
 	 * 					* Puede lanzar IOException si hay algun error al leer
 	 */
 	public String datosCuenta(String IBAN)
@@ -1251,7 +1201,7 @@ public class GestionBancoComercial {
 	/* INTERFAZ
 	 * Comentario: Escribe un registro nuevo en un fichero de movimientos determinado
 	 * Prototipo: public boolean escribirRegistroEnMovimientos(String registro, String rutaFichero)
-	 * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribirá.
+	 * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribira.
 	 * Precondiciones: No hay
 	 * Salida: Un boolean indicando si se ha escrito correctamente o no.
 	 * Postcondiciones: Asociado al nombre devuelve:
@@ -1285,7 +1235,6 @@ public class GestionBancoComercial {
 		
 		return escrito;
 	}
-
 
     /*
      * INTERFAZ
@@ -1430,8 +1379,8 @@ public class GestionBancoComercial {
 
     /* INTERFAZ
      * Signatura: public void realizarMovimiento(String nombre_banco_origen,String cuenta_origen,String nombre_banco_destino, String cuenta_destino, String concepto,double cantidad, int dia, int mes, int anyo)
-     * Comentario: Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresÃ¡ndola en la cuenta destino.
-     *              Llama a los mÃ©todos sacarDinero e ingresarDinero.
+     * Comentario: Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresandola en la cuenta destino.
+     *              Llama a los meodos sacarDinero e ingresarDinero.
      * Precondiciones: Por referencia se pasan las ID de las cuentas y los nombres de los bancos de origen y destino, por valor se pasa la cantidad y dia mes y anyo. Tambien se pasa por referencia el concepto
      * Entrada: (String nombre_banco_origen,String cuenta_origen,String nombre_banco_destino, String cuenta_destino, String concepto,double cantidad, int dia, int mes, int anyo)
      * Salida: Un boolean indicando si se ha realizado bien el movimiento o no
@@ -1458,7 +1407,7 @@ public class GestionBancoComercial {
     /*INTERFAZ
      * Signatura: public void sacarDinero(String nombre_banco, String ID_Cuenta, String concepto,double cantidad, int dia, int mes, int anyo)
      * Comentario: saca una cantidad dada de una cuenta
-     * Precondiciones: Por valor se pasa una cantidad, por referencia la ID de una cuenta y el nombre del banco. Se pasa por valor dia mes y aÃ±o
+     * Precondiciones: Por valor se pasa una cantidad, por referencia la ID de una cuenta y el nombre del banco. Se pasa por valor dia mes y a�o
      * Entrada: String nombre_banco, String ID_Cuenta, double cantidad, int dia, int mes, int anyo
      * Salida: Un boolean indicando si se ha sacado bien el dinero
      * Entrada/Salida:
@@ -1620,8 +1569,6 @@ public class GestionBancoComercial {
             //utils.borrarFichero(ficheroMaestro.getPath());
             utils.renombrarFichero(ficheroMaestroAct.getPath(), ficheroMaestro.getPath());
             
-//            ficheroMaestro.delete();
-//            ficheroMaestroAct.renameTo(ficheroMaestro);
 
             ficheroMovimientos.delete();
             ficheroMovimientos.createNewFile();
