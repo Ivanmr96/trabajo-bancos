@@ -269,7 +269,7 @@ public class ValidacionesProgramaBancoComercial
 			System.out.println("1) Ver datos de la cuenta");
 			System.out.println("2) Ver movimientos de la cuenta");
 			System.out.println("3) Modificar dinero de la cuenta");
-			System.out.println("4) Eliminar cuenta");
+			System.out.println("4) Marcar cuenta como borrada");
 			System.out.println("0) Volver atras");
 			
 			do

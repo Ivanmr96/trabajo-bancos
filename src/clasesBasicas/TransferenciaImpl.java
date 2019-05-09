@@ -25,10 +25,6 @@
     public void setCantidad(double cantidad)
     public GregorianCalendar getFecha()
     public void setFecha(GregorianCalendar fecha)
- *
- * Metodos añadidos:
- * Metodos object:
- *   public String toString();
  * */
 package clasesBasicas;
 import java.io.Serializable;
@@ -41,6 +37,15 @@ public class TransferenciaImpl implements Serializable {
     String concepto;
     double cantidad;
     GregorianCalendar fecha;
+    
+    public TransferenciaImpl()
+    {
+    	this.ID_Cuenta = "ESPBANCOESBBXX0000000";
+    	this.isIngresoOrRetirada = true;
+    	this.concepto = " ";
+    	this.cantidad = 0.0;
+    	this.fecha = new GregorianCalendar();
+    }
 
     public TransferenciaImpl(String ID_Cuenta, boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha) {
         this.ID_Cuenta = ID_Cuenta;
@@ -48,6 +53,24 @@ public class TransferenciaImpl implements Serializable {
         this.concepto = concepto;
         this.cantidad = cantidad;
         this.fecha = fecha;
+    }
+    
+    public TransferenciaImpl(String ID_Cuenta, boolean isIngresoOrRetirada, String concepto, double cantidad)
+    {
+    	this.ID_Cuenta = ID_Cuenta;
+        this.isIngresoOrRetirada = isIngresoOrRetirada;
+        this.concepto = concepto;
+        this.cantidad = cantidad;
+        this.fecha = new GregorianCalendar();
+    }
+    
+    public TransferenciaImpl(TransferenciaImpl otra)
+    {
+    	this.ID_Cuenta = otra.ID_Cuenta;
+        this.isIngresoOrRetirada = otra.isIngresoOrRetirada;
+        this.concepto = otra.concepto;
+        this.cantidad = otra.cantidad;
+        this.fecha = otra.fecha;
     }
 
     public String getID_Cuenta() {
@@ -89,8 +112,6 @@ public class TransferenciaImpl implements Serializable {
     public void setFecha(GregorianCalendar fecha) {
         this.fecha = fecha;
     }
-
-
 
     @Override
     public String toString() {
