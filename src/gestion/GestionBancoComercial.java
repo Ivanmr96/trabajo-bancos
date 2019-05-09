@@ -12,7 +12,6 @@ import java.util.*;
 import clasesBasicas.ClienteImpl;
 import clasesBasicas.CuentaImpl;
 import clasesBasicas.TransferenciaImpl;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import utilidades.MyObjectOutputStream;
 import utilidades.Utilidades;
 
@@ -29,7 +28,7 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre se devuelve un double que es el ingreso que tiene un cliente al mes
      * */
 
-///Con el iban valdría pero
+///Con el iban valdrï¿½a pero
 //     *              pasamos el dni tambien para cuando en un futuro los clientes puedan tener varias cuentas y las
 //     *              cuentas puedan pertenecer a varios clientes.
     public double obtenerIngresosPorClientes(String dniCliente, String iban){
@@ -62,7 +61,7 @@ public class GestionBancoComercial {
     /*
     * INTERFAZ
     * Signatura: public double umbralNumerosRojos(String iban)
-    * Comentario: Este método controla el umbral de saldo negativo que puede tener una cuenta.
+    * Comentario: Este mï¿½todo controla el umbral de saldo negativo que puede tener una cuenta.
     *               Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un
     *               cliente.
     * Precondiciones:
@@ -649,7 +648,7 @@ public class GestionBancoComercial {
     /*
      * INTERFAZ
      * Signatura: public boolean isIBANParaBorrar(String iban_cuenta)
-     * Comentario: Dado un iban devuelve true si está marcado como borrado
+     * Comentario: Dado un iban devuelve true si estï¿½ marcado como borrado
      * Precondiciones: Se pasa el iban de la cuenta
      * Entrada: String iban_cuenta
      * Salida: boolean
@@ -929,7 +928,7 @@ public class GestionBancoComercial {
     	boolean modificado = false;
                
         
-        //TODO El campo del dinero en los registros de las cuentas debería ser de longitud fija (para que no sobreescriba)
+        //TODO El campo del dinero en los registros de las cuentas deberï¿½a ser de longitud fija (para que no sobreescriba)
         
         //Abrir fichero de las cuentas del banco
         try
