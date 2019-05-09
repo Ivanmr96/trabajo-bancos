@@ -51,7 +51,7 @@ public class GestionBancoComercial {
     /*
     * INTERFAZ
     * Signatura: public double umbralNumerosRojos(String iban)
-    * Comentario: Este m�todo controla el umbral de saldo negativo que puede tener una cuenta.
+    * Comentario: Este metodo controla el umbral de saldo negativo que puede tener una cuenta.
     *               Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un
     *               cliente.
     * Precondiciones: El IBAN debe estar registrado.
