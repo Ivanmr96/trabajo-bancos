@@ -54,7 +54,8 @@ public class GestionBancoCentral {
     /* INTERFAZ
      * Signatura: public void modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta,double cantidad)
      * Comentario: modifica, en el fichero de Cuentas, el registro del saldo total.
-     * Precondiciones: Se pasa por referencia el ID de la cuenta a modificar y por valor la cantidad a añadir o substraer. Se pasa boolean que es true si añade la cantidad o false si la resta
+     * Precondiciones: Se pasa por referencia el ID de la cuenta a modificar y por valor la cantidad a añadir o substraer. Se pasa boolean que es true si añade la cantidad o 
+     * 				   false si la resta
      * Entrada: String IBAN, boolean sumaOresta,double cantidad
      * Salida: Un boolean indicando si se ha modificado correctamente o no el saldo
      * Entrada/Salida: No hay
@@ -133,7 +134,7 @@ public class GestionBancoCentral {
     }
 
     /* INTERFAZ
-     * Signatura: public void insertarMovimientoEnFicheroMovimientos(String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha)
+     * Signatura: public boolean insertarMovimientoEnFicheroMovimientos(String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha)
      * Comentario: Añade un nuevo movimiento en el fichero de movimientos de la cuenta.
      * Precondiciones: Se pasa por referencia el ID de la cuenta y por valor la cantidad de dinero a mover. Se pasa
      *                  un boolean que es true si el movimiento es un ingreso o false si es una retirada de dinero. Tambien se pasa la fecha como tres valores enteros (se supone valida)
@@ -229,8 +230,6 @@ public class GestionBancoCentral {
                 registro = br.readLine();
                 campos = registro.split(",");
 
-                //campos[0] = campos[0].substring(3, campos[0].length());
-
                 if (campos[0].equals("ESP" + BIC))
                     registrado = true;
             }
@@ -282,15 +281,15 @@ public class GestionBancoCentral {
 
     /*
      * INTERFAZ
-     * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta,int dia_buscado, int mes_buscado, int anyo_buscado)
+     * Signatura: public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int anyo)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
-     * Precondiciones: Se pasa un iban y tres int
+     * Precondiciones: El IBAN debe ser un IBAN registrado.
      * Entrada: 
      * 			-> un String con el IBAN del que se buscaran los movimientos
      * 			-> un int para el año.
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve un arraylist
+     * Postcondiciones: Asociado al nombre devuelve un arraylist de TransferenciaImpl con los movimientos del año indicado.
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -323,16 +322,16 @@ public class GestionBancoCentral {
 
     /*
      * INTERFAZ
-     * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta, int mes_buscado, int anyo_buscado)
+     * Signatura: public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int mes, int anyo)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
-     * Precondiciones: Se pasa un iban y dos int
+     * Precondiciones: El IBAN debe ser un IBAN registrado.
      * Entrada: 
      * 			-> un String con el IBAN del que se buscaran los movimientos
      * 			-> un int para el mes
      * 			-> un int para el año
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve un arraylist
+     * Postcondiciones: Asociado al nombre devuelve un arraylist con los movimientos del mes en el año indicado.
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -367,9 +366,9 @@ public class GestionBancoCentral {
 
     /*
      * INTERFAZ
-     * Signatura: public ArrayList<String> buscarMovimientosPorFecha(String iban_cuenta,int dia_buscado, int mes_buscado, int anyo_buscado)
+     * Signatura: public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int dia, int mes, int anyo)
      * Comentario: busca los movimientos que se hicieron en una cuenta en la fecha dada
-     * Precondiciones: Se pasa un iban y tres int
+     * Precondiciones: El IBAN debe ser un IBAN registrado.
      * Entrada: 
      * 			-> String con el IBAN del que se buscaran los movimientos
      * 			-> int para el dia
@@ -377,7 +376,7 @@ public class GestionBancoCentral {
      * 			-> int para el año
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve un arraylist
+     * Postcondiciones: Asociado al nombre devuelve un arraylist con los movimientos en el dia indicado
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -405,41 +404,6 @@ public class GestionBancoCentral {
         }
 
         return registros_buscados;
-    }
-
-    /*
-     * INTERFAZ
-     * Signatura: public boolean isCuentaBorrada(String iban)
-     * Comentario: Comprueba si el iban pertenece a una cuenta marcada como borrada (?)
-     * Precondiciones: Se pasa un iban
-     * Entrada: String iban
-     * Salida: boolean
-     * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve true si el iban corresponde a una cuenta del fichero CuentasBorradas y false si no
-     * 					* Puede lanzar IOException si hay algun error al leer
-     * */
-    //TODO Comprobar esto
-    @Deprecated
-    public boolean isCuentaBorrada(String iban) {
-        File f_cuentasBorradas = new File("./Files/BancoCentral/CuentasBorradas_BancoCentral_Movimientos.txt");
-        FileReader fr = null;
-        BufferedReader br = null;
-        boolean isBorrada = false;
-
-        try {
-            fr = new FileReader(f_cuentasBorradas);
-            br = new BufferedReader(fr);
-
-            while (br.ready()) {
-                if (br.readLine().equals(iban)) {
-                    isBorrada = true;
-                }
-            }
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return isBorrada;
     }
 
     /*
@@ -474,40 +438,13 @@ public class GestionBancoCentral {
 
     /*
      * INTERFAZ
-     * Signatura: public void eliminarCuenta(String IBAN)
-     * Comentario: Elimina definitivamente el rastro de una cuenta.
-     *              (borra la cuenta del fichero de cuentas, borra su historial de movimientos, borra al cliente ya que de momento cada cliente solo puede tener una cuenta, borra del fichero cuentas-clientes...)
-     * Precondiciones: No hay
-     * Entrada: String IBAN
-     * Salida: un boolean indicando si se borro correctamente la cuenta o no
-     * Entrada/Salida:
-     * Postcondiciones: Modifica los ficheros de cuentas, clientes, clientes_cuenta borrando al cliente y a la cuenta determinada
-     * 					* Puede lanzar IOException si hay algun error al leer o escribir
-     * */
-    public boolean eliminarCuenta(String IBAN) {
-        boolean eliminada = false;
-
-        if (marcarCuentaComoBorrada(IBAN)) {
-            boolean cuentaEliminada = actualizarFichero("./Files/BancoCentral/Cuentas_BancoCentral", 0);
-            boolean clienteEliminado = actualizarFichero("./Files/BancoCentral/Clientes_BancoCentral", 0);
-            boolean cuentaClienteEliminado = actualizarFichero("./Files/BancoCentral/Clientes_Cuentas_BancoCentral", 1);
-
-            if (cuentaEliminada && clienteEliminado && cuentaClienteEliminado)
-                eliminada = true;
-        }
-
-        return eliminada;
-    }
-
-    /*
-     * INTERFAZ
-     * Signatura: public List<String> ultimosDiezMovimientos(String iban_cuenta)
+     * Signatura: public List<TransferenciaImpl> ultimosDiezMovimientos(String iban_cuenta)
      * Comentario: devuelve los ultimos diez movimientos de la cuenta
-     * Precondiciones: Se pasa un iban
+     * Precondiciones: El IBAN debe estar registrado
      * Entrada: String iban
-     * Salida: una lista de String
+     * Salida: una lista de TransferenciaImpl
      * Entrada/Salida:
-     * Postcondiciones: asociado al nombre devuelve una lista de String
+     * Postcondiciones: asociado al nombre devuelve una lista de TransferenciaImpl con los ultimos 10 movimientos
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
@@ -547,7 +484,7 @@ public class GestionBancoCentral {
      * INTERFAZ
      * Signatura: public String obtenerBICporNombre(String nombre_banco)
      * Comentario: devuelve el BIC de un banco dado su nombre
-     * Precondiciones: por referencia se pasa un string
+     * Precondiciones: No hay
      * Entrada: String nombre
      * Salida: String BIC
      * Entrada/Salida:
@@ -584,7 +521,7 @@ public class GestionBancoCentral {
      * INTERFAZ
      * Signatura: public String obtenerNombreBancoComercialPorIBAN(String iban_cuenta)
      * Comentario: devuelve el nombre de un banco dado el IBAN de una cuenta
-     * Precondiciones: por referencia se pasa un string
+     * Precondiciones: El IBAN debe tener una longitud minima de 14 caracteres
      * Entrada: String iban_cuenta
      * Salida: String nombre
      * Entrada/Salida:
@@ -599,7 +536,7 @@ public class GestionBancoCentral {
      * Comentario: A partir de un IBAN, obtiene el BIC del banco central al que pertenece el banco que gestiona la cuenta
      * Prototipo: public String obtenerBICporIBAN(String IBAN)
      * Entrada: Un String con el IBAN
-     * Precondiciones: No hay
+     * Precondiciones: El IBAN debe tener una longitud minima de 14 caracteres
      * Salida: Un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
      * Postcondiciones: Asociado al nombre devuelve un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
      */
@@ -611,7 +548,7 @@ public class GestionBancoCentral {
      * Comentario: Obtiene el numero de cuenta de un IBAN
      * Prototipo: public String obtenerNumCuentaPorIBAN(String IBAN)
      * Entrada: Un String con el IBAN del que se quiere obtener su numero de cuenta
-     * Precondiciones: No hay
+     * Precondiciones: El IBAN debe tener una longitud minima de 21 caracteres
      * Salida: Un String con el numero de cuenta del IBAN especificado
      * Postcondiciones: Asociado al nombre devuelve un String con el numero de cuenta del IBAN especificado
      */
@@ -623,7 +560,7 @@ public class GestionBancoCentral {
      * INTERFAZ
      * Signatura: public String obtenerNombrePorBIC(String BIC)
      * Comentario: devuelve el nombre de un banco dando su BIC
-     * Precondiciones: por referencia se pasa un string
+     * Precondiciones: 
      * Entrada: String BIC
      * Salida: String nombre
      * Entrada/Salida:
@@ -657,9 +594,9 @@ public class GestionBancoCentral {
     }
 
     /* INTERFAZ
-     * Signatura: public void ingresarDinero(String IBAN,String concepto, double cantidad, GregorianCalendar fecha)
+     * Signatura: public boolean ingresarDinero(String IBAN, String concepto, double cantidad, GregorianCalendar fecha)
      * Comentario: ingresa una cantidad dada de una cuenta
-     * Precondiciones: Por valor se pasa una cantidad, por referencia la ID de una cuenta y el nombre del banco. Por valor se pasa dia, mes y aÃƒÂ±o
+     * Precondiciones: el IBAN tiene que estar registrado, y la cantidad debe ser positiva.
      * Entrada:
      * 				- String con el IBAN donde se hara el ingreso
      * 				- String con el concepto del ingreso
@@ -685,11 +622,15 @@ public class GestionBancoCentral {
     }
 
     /* INTERFAZ
-     * Signatura: public void realizarMovimiento(String IBANOrigen,String IBANDestino, String concepto,double cantidad, GregorianCalendar fecha)
+     * Signatura: public boolean realizarMovimiento(String IBANOrigen, String IBANDestino, String concepto, double cantidad, GregorianCalendar fecha)
      * Comentario: Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresÃƒÂ¡ndola en la cuenta destino.
-     *              Llama a los mÃƒÂ©todos sacarDinero e ingresarDinero.
-     * Precondiciones: Por referencia se pasan las ID de las cuentas y los nombres de los bancos de origen y destino, por valor se pasa la cantidad y dia mes y anyo. Tambien se pasa por referencia el concepto
-     * Entrada: (String nombre_banco_origen,String cuenta_origen,String nombre_banco_destino, String cuenta_destino, String concepto,double cantidad, int dia, int mes, int anyo)
+     *              Llama a los metodos sacarDinero e ingresarDinero.
+     * Precondiciones: el IBAN tiene que estar registrado, y la cantidad debe ser positiva.
+     * Entrada: -> Un String con el el IBAN de origen
+     * 			-> Un string con el IBAN de destino
+     * 			-> Un string para el concepto de la transferencia
+     * 			-> Un double para la cantidad
+     * 			-> Un GregorianCalendar con la fecha de la transferencia
      * Salida: Un boolean indicando si se ha realizado bien el movimiento o no
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre devuelve:
@@ -712,16 +653,15 @@ public class GestionBancoCentral {
     }
 
     /*INTERFAZ
-     * Signatura: public void sacarDinero(String nombre_banco, String ID_Cuenta, String concepto,double cantidad, int dia, int mes, int anyo)
+     * Signatura: public boolean sacarDinero(String IBAN, String concepto, double cantidad, GregorianCalendar fecha)
      * Comentario: saca una cantidad dada de una cuenta
-     * Precondiciones: Por valor se pasa una cantidad, por referencia la ID de una cuenta y el nombre del banco. Se pasa por valor dia mes y aÃƒÂ±o
+     * Precondiciones: el IBAN tiene que estar registrado, y la cantidad debe ser positiva.
      * Entrada:
-     * 					- String nombre_banco
-     * 					- String ID_Cuenta
-     * 					- double cantidad
-     * 					- int dia
-     * 					- int mes
-     * 					- int anyo
+     * 			-> Un String con el el IBAN de origen
+     * 			-> Un string con el IBAN de destino
+     * 			-> Un string para el concepto de la transferencia
+     * 			-> Un double para la cantidad
+     * 			-> Un GregorianCalendar con la fecha de la transferencia
      * Salida: Un boolean indicando si se ha sacado bien el dinero
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre devuelve:
@@ -765,7 +705,6 @@ public class GestionBancoCentral {
         BufferedWriter bwMaestroAct = null;
         Utilidades utils = new Utilidades();
 
-        //utils.ordenarFicheroPorClave(ficheroMovimientos.getPath(), 0);
         utils.ordenarFicheroPorClave(ficheroMaestro.getPath(), 0);
 
         try {
@@ -873,7 +812,7 @@ public class GestionBancoCentral {
      * Comentario: Obtiene el saldo de una cuenta(IBAN)
      * Prototipo: public double obtenerSaldoPorIBAN(String IBAN)
      * Entrada: Un String con el IBAN del que se quiere obtener su saldo
-     * Precondiciones: El IBAN ha de ser de una cuenta existente			<- Esto es interesante
+     * Precondiciones: El IBAN ha de ser de una cuenta existente
      * Salida: un double con el saldo de la cuenta
      * Postcondiciones: Asociado al nombre devuelve un double con el saldo de la cuenta.
      */

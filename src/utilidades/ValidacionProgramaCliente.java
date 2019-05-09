@@ -52,7 +52,6 @@ public class ValidacionProgramaCliente {
     * Salidas: boolean
     * Postcondiciones: asociado al nombre se devuelve un boolean que es true si se puede efectuar la transferencia
     *                   y false si no
-    *
     * */
     public boolean umbralNumerosRojos(TransferenciaImpl trans){
         boolean isPosible = false;

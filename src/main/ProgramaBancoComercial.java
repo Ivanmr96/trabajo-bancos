@@ -95,7 +95,7 @@
  * 			caso 1: ver datos de la cuenta
  * 			caso 2: ver movimientos de la cuenta
  * 			caso 3: modificar dinero de la cuenta
- * 			caso 4: Eliminar cuenta
+ * 			caso 4: Marcar cuenta como borrada
  * 		FinSegun
  * 	FinMientras
  * Fin
@@ -256,15 +256,15 @@ public class ProgramaBancoComercial
 	  			  				break;
 	  			  				
 	  			  			case 4: 
-	  			  				//TODO Debe marcar como borrada, no borrar directamente (no funciona correctamente)
-	  			  				//Eliminar cuenta
-	  			  				cuentaBorrada = gestionComercial.eliminarCuenta(IBANCliente);
+	  			  				//Marcar cuenta como borrada
+	  			  				cuentaBorrada = gestionComercial.marcarCuentaComoBorrada(IBANCliente);
+	  			  				//cuentaBorrada = gestionComercial.eliminarCuenta(IBANCliente);
 	  			  				if(cuentaBorrada)
 	  			  				{
-	  			  					System.out.println("Cuenta con IBAN " + IBANCliente + " borrada");
+	  			  					System.out.println("Cuenta con IBAN " + IBANCliente + " ha sido marcada como borrada. Actualiza las altas/bajas para confirmar la baja.");
 	  			  				}
 	  			  				else
-	  			  					System.out.println("La cuenta no pudo borrarse, vuelva a intentarlo");
+	  			  					System.out.println("La cuenta no pudo marcarse como borrada, vuelva a intentarlo.");
 	  			  				
 	  			  				break;
 	  			  				
@@ -278,7 +278,7 @@ public class ProgramaBancoComercial
 		  			break;
 		  		case 6:
 		  			//actualizar altas y bajas
-					gestionComercial.aceptarAltasClientes(BIC);
+					gestionComercial.aceptarAltasBajasClientes(BIC);
 					System.out.println("Se han actualizado las nuevas altas y bajas del banco.");
 					System.out.println("Ahora los nuevos clientes podrán iniciar sesión con su cuenta ");
 		  			break;
