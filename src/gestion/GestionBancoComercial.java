@@ -21,7 +21,6 @@ public class GestionBancoComercial {
      * Salida: double
      * Postcondiciones: asociado al nombre se devuelve un double que es el ingreso que tiene un cliente al mes
      * */
-
     public double obtenerIngresosPorClientes(String dniCliente, String iban){
         double ingresos = 0.0;
         String nombreBanco = obtenerNombreBancoComercialPorIBAN(iban);
@@ -52,7 +51,7 @@ public class GestionBancoComercial {
     /*
     * INTERFAZ
     * Signatura: public double umbralNumerosRojos(String iban)
-    * Comentario: Este método controla el umbral de saldo negativo que puede tener una cuenta.
+    * Comentario: Este mï¿½todo controla el umbral de saldo negativo que puede tener una cuenta.
     *               Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un
     *               cliente.
     * Precondiciones: El IBAN debe estar registrado.
@@ -219,7 +218,7 @@ public class GestionBancoComercial {
     * Precondiciones: el BIC debe estar registrado.
     * Entradas: String bic del banco
     * Salidas:
-    * Postcondiciones: quedaran añadidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
+    * Postcondiciones: quedaran aï¿½adidos todos los nuevos clientes, con sus correspondientes cuentas, y ficheros necesarios creados y/o modificados.
     * 				   Tambien quedaran eliminados las cuentas que tuvieran solicitud de baja.
     *					* Puede lanzar IOException si hay algun error al leer o escribir
     * */
@@ -338,7 +337,7 @@ public class GestionBancoComercial {
      * Precondiciones: El IBAN debe ser un IBAN registrado.
      * Entrada: 
      * 			-> un String con el IBAN del que se buscaran los movimientos
-     * 			-> un int para el año.
+     * 			-> un int para el aï¿½o.
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -379,7 +378,7 @@ public class GestionBancoComercial {
      * Entrada: 
      * 			-> un String con el IBAN del que se buscaran los movimientos
      * 			-> un int para el mes
-     * 			-> un int para el año
+     * 			-> un int para el aï¿½o
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -423,7 +422,7 @@ public class GestionBancoComercial {
      * 			-> String con el IBAN del que se buscaran los movimientos
      * 			-> int para el dia
      * 			-> int para el mes
-     * 			-> int para el año
+     * 			-> int para el aï¿½o
      * Salida: arraylist de cadenas con el / los movimientos requeridos
      * Entrada/Salida:
      * Postcondiciones: asociado al nombre devuelve un arraylist
@@ -541,7 +540,7 @@ public class GestionBancoComercial {
     /*
      * INTERFAZ
      * Signatura: public boolean isIBANParaBorrar(String iban_cuenta)
-     * Comentario: Dado un iban devuelve true si está marcado como borrado
+     * Comentario: Dado un iban devuelve true si estï¿½ marcado como borrado
      * Precondiciones: No hay
      * Entrada: String iban_cuenta
      * Salida: Un boolean indicando si esta marcado para borrar o no.
@@ -763,7 +762,7 @@ public class GestionBancoComercial {
     /*
      * INTERFAZ
      * Signatura: public boolean insertarMovimientoEnFicheroMovimientos(String ID_Cuenta,boolean isIngresoOrRetirada, String concepto, double cantidad,GregorianCalendar fecha)
-     * Comentario: Este metodo se encarga de modificar en el fichero de movimientos de la cuenta, añadiendo un nuevo movimiento.
+     * Comentario: Este metodo se encarga de modificar en el fichero de movimientos de la cuenta, aï¿½adiendo un nuevo movimiento.
      * Precondiciones: La Cuenta debe existir.
      * Entrada: (String ID_Cuenta,boolean isIngresoOrRetirada, double cantidad,GregorianCalendar fecha)
      * Salida: boolean indicando si se inserto correctamente o no.
@@ -814,13 +813,13 @@ public class GestionBancoComercial {
      * Comentario: Modifica el saldo de una cuenta
      * Prototipo: public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
      * Entrada:	
-     * 			-> Un String con el IBAN del que se modificará su saldo
-     * 			-> Un boolean indicando si se sumará (true) o restará (false) la cantidad
+     * 			-> Un String con el IBAN del que se modificarï¿½ su saldo
+     * 			-> Un boolean indicando si se sumarï¿½ (true) o restarï¿½ (false) la cantidad
      * 			-> Un double con la cantidad
      * Precondiciones: No hay
-     * Salida: Un boolean indicando si la modificación del saldo tuvo exito o no
+     * Salida: Un boolean indicando si la modificaciï¿½n del saldo tuvo exito o no
      * Postcondiciones: asociado al nombre devuelve:
-     * 					-> true si se modificó correctamente el saldo de la cuenta
+     * 					-> true si se modificï¿½ correctamente el saldo de la cuenta
      * 					-> false si no se pudo modificar el saldo (Por ejemplo, en caso de que el IBAN no exista)
      */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
@@ -829,7 +828,7 @@ public class GestionBancoComercial {
     	String nombreBanco = obtenerNombreBancoComercialPorIBAN(IBAN);
     	RandomAccessFile randAccessFile = null;
     	boolean modificado = false;
-               
+
         //Abrir fichero de las cuentas del banco
         try
         {
