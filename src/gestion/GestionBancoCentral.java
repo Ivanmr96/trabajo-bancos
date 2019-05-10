@@ -19,6 +19,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class GestionBancoCentral {
+	
     /* INTERFAZ
      * Comentario: Escribe un registro nuevo en un fichero determinado
      * Prototipo: public boolean escribirRegistroEnFichero(String registro, String rutaFichero)
