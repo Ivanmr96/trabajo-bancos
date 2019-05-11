@@ -41,8 +41,6 @@ public class GestionBancoCentral {
      * @param sumaOresta Indica si se le sumar� o se le restar� la cantidad.
      * @param cantidad La cantidad de dinero a sumar/restar.
      * @return Devuelve true si se ha modificado correctamente el saldo de la cuenta en el fichero de cuentas, o false si no se ha modificado correctamente.
-     * 
-     * @throws IOException si hay alg�n error al escribir en el fichero.
      */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
     {
@@ -136,8 +134,7 @@ public class GestionBancoCentral {
      * @param fecha La fecha de la transferencia.
      * 
      * @return Devuelve true si se ha insertado correctamente el registro del movimiento en el fichero de transferencias, o false si no se ha insertado correctamente.
-     * 
-     * @throws IOException si hay alg�n error al escribir
+     *
      */
     public boolean insertarTransferenciaEnFicheroTransferencias(String IBAN, boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha) {
         File ficheroCuentas = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
@@ -175,8 +172,7 @@ public class GestionBancoCentral {
      * @param IBAN El IBAN de la cuenta que se desea buscar.
      * 
      * @return Devuelve los datos de la cuenta. <b>(Ejemplo: "ESPCAIXESBBXXX0000000,8673155.35")</b>
-     * 
-     * @throws IOException si hay algun error al leer.
+     *
      */
     public String datosCuenta(String IBAN) {
         String cuenta = null;
@@ -220,8 +216,6 @@ public class GestionBancoCentral {
      * @param BIC El BIC del cliente a comprobar.
      * 
      * @return Devuelve true si el BIC est� registrado en el banco o false si no lo est�.
-     * 
-     * @throws IOException si hay alg�n error al leer el fichero.
      */
     public boolean BICRegistrado(String BIC) {
         boolean registrado = false;
@@ -268,8 +262,6 @@ public class GestionBancoCentral {
      * @param IBAN El IBAN de la cuenta a comprobar.
      * 
      * @return Devuelve true si el IBAN est� registrado en el banco o false de lo contrario
-     * 
-     * @throws IOException si hay alg�n error al leer del fichero.
      */
     public boolean IBANRegistrado(String IBAN) {
         boolean registrado = false;
@@ -320,9 +312,7 @@ public class GestionBancoCentral {
      * @param anyo El a�o en el que se buscar�n los movimientos.
      * 
      * @return Devuelve una lista de transferencias con los movimientos del a�o indicado.
-     * 
-     * @throws IOException si hay alg�n error al leer
-     * @throws ClassNotFoundException si la clase le�da no est� definida.
+     *
      */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
@@ -373,9 +363,7 @@ public class GestionBancoCentral {
      * @param anyo El a�o en el que se buscar�n los movimientos.
      * 
      * @return Devuelve una lista con las transferencias del mes en el a�o indicado.
-     * 
-     * @throws IOException si hay alg�n error al leer.
-     * @throws ClassNotFoundException si la clase le�da no est� definida.
+     *
      */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int mes, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
@@ -431,9 +419,6 @@ public class GestionBancoCentral {
      * @param anyo El a�o en el que se buscar�n los movimientos.
      * 
      * @return Devuelve una lista con las transferencias en el d�a indicado.
-     * 
-     * @throws IOException si hay alg�n error al leer del fichero.
-     * @throws ClassNotFoundException si la clase le�da no est� definida.
      */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int dia, int mes, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
@@ -509,9 +494,7 @@ public class GestionBancoCentral {
      * 
      * @param iban_cuenta el IBAN de la cuenta 
      * @return Devuelve una lista de transferencias con los �ltimos 10 movimientos.
-     * 
-     * @throws IOException si hay alg�n error al leer
-     * @throws ClassNotFoundException si la clase le�da no est� definidia
+     *
      */
     public List<TransferenciaImpl> ultimosDiezMovimientos(String iban_cuenta) {
 
@@ -562,8 +545,7 @@ public class GestionBancoCentral {
      * @param nombre_banco El nombre del banco del que se desea saber su nombre.
      * 
      * @return Devuelve el BIC del banco o un espacio en blanco si no existe el banco buscado.
-     * 
-     * @throws IOException si hay alg�n error al leer.
+     *
      */
     public String obtenerBICporNombre(String nombre_banco) {
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
@@ -664,8 +646,7 @@ public class GestionBancoCentral {
      * Devuelve el nombre de un banco dando su BIC.
      * @param bic El BIC del banco del que se desea obtener su nombre.
      * @return Devuelve el nombre del banco seg�n el BIC dado, o un espacio en blanco si no existe el banco.
-     * 
-     * @throws IOException si hay alg�n error al leer.
+     *
      */
     public String obtenerNombrePorBIC(String bic) {
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
@@ -828,8 +809,6 @@ public class GestionBancoCentral {
      * @param posicionCampoClave La posici�n en cada registro del fichero donde se encuentra el campo clave, la primera posici�n es 0.
      * 					<br><b>Ejemplo: "ESPCAIXESBBXXX0000000,712542.22". Su campo clave ser�a 0.</b>
      * @return Devuelve true si se sincroniz� correctamente, false si no se sincroniz� bien.
-     * 
-     * @throws IOException si hay alg�n error al leer o escribir en alg�n fichero.
      */
     public boolean actualizarFichero(String fichero, int posicionCampoClave) {
         boolean actualizado = false;
