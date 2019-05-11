@@ -31,6 +31,14 @@ public class GestionBancoCentral {
      * 					-> False si no se ha escrito correctamente
      * 					* Puede lanzar IOException si hay algun error al escribir
      */
+	/**
+	 * Escribe un registro nuevo en un fichero determinado
+	 * 
+	 * @param registro El registro a escribir.
+	 * @param rutaFichero La ruta del fichero donde se escribirá el registro.
+	 * @return Devuelve true si se ha escrito correctamente el registro en el fichero correspondiente, o false si no se ha escrito correctamente
+	 * @throws IOException Si hay algún error al escribir en el fichero.
+	 */
     public boolean escribirRegistroEnFichero(String registro, String rutaFichero) {
         boolean escrito = false;
 
@@ -65,6 +73,16 @@ public class GestionBancoCentral {
      * 					-> false si no se ha modificado correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+    /**
+     * Modifica el registro del saldo total en el fichero de cuentas del banco central.
+     * 
+     * @param IBAN El IBAN de la cuenta que se desea modificar su saldo.
+     * @param sumaOresta Indica si se le sumará o se le restará la cantidad.
+     * @param cantidad La cantidad de dinero a sumar/restar.
+     * @return Devuelve true si se ha modificado correctamente el saldo de la cuenta en el fichero de cuentas, o false si no se ha modificado correctamente.
+     * 
+     * @throws IOException si hay algún error al escribir en el fichero.
+     */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
     {
     	File ficheroCuentas = null;
@@ -136,7 +154,7 @@ public class GestionBancoCentral {
 
     /* INTERFAZ
      * Signatura: public boolean insertarMovimientoEnFicheroMovimientos(String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha)
-     * Comentario: Añade un nuevo movimiento en el fichero de movimientos de la cuenta.
+     * Comentario: Añade un nuevo movimiento en el fichero de transferencias de la cuenta.
      * Precondiciones: Se pasa por referencia el ID de la cuenta y por valor la cantidad de dinero a mover. Se pasa
      *                  un boolean que es true si el movimiento es un ingreso o false si es una retirada de dinero. Tambien se pasa la fecha como tres valores enteros (se supone valida)
      * Entrada: String IBAN,boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha
@@ -147,6 +165,19 @@ public class GestionBancoCentral {
      * 					-> false si no se ha insertado correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+    /**
+     * Añade un nuevo movimiento en el fichero de transferencias de la cuenta.
+     * 
+     * @param IBAN El IBAN de la cuenta donde se desea añadir el movimiento.
+     * @param isIngresoOrRetirada Indica si la transferencia es un ingreso o una retirada de dinero.
+     * @param concepto El concepto de la transferencia.
+     * @param cantidad La cantidad de dinero a ingresar/retirar.
+     * @param fecha La fecha de la transferencia.
+     * 
+     * @return Devuelve true si se ha insertado correctamente el registro del movimiento en el fichero de transferencias, o false si no se ha insertado correctamente.
+     * 
+     * @throws IOException si hay algún error al escribir
+     */
     public boolean insertarMovimientoEnFicheroMovimientos(String IBAN, boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha) {
         File ficheroCuentas = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
         TransferenciaImpl trans = new TransferenciaImpl(IBAN, isIngresoOrRetirada, concepto, cantidad, fecha);
@@ -176,6 +207,15 @@ public class GestionBancoCentral {
      * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta separados por comas, o null
      * 					Si el IBAN no esta registrado en el fichero.
      * 					* Puede lanzar IOException si hay algun error al leer.
+     */
+    /**
+     * Acceder al fichero de cuentas y busca una cuenta por su IBAN para leer sus datos.
+     * 
+     * @param IBAN El IBAN de la cuenta que se desea buscar.
+     * 
+     * @return Devuelve los datos de la cuenta. <b>(Ejemplo: "ESPCAIXESBBXXX0000000,8673155.35")</b>
+     * 
+     * @throws IOException si hay algun error al leer.
      */
     public String datosCuenta(String IBAN) {
         String cuenta = null;
@@ -212,6 +252,15 @@ public class GestionBancoCentral {
      * Salida: un boolean indicando si el BIC esta registrado ya o no
      * Postcondiciones: Asociado al nombre devuelve true si el BIC esta ya registrado en el banco o false de lo contrario.
      * 					* Puede lanzar IOException si hay algun error al leer
+     */
+    /**
+     * Comprueba si existe un cliente (buscando por su BIC) registrado en el banco central.
+     * 
+     * @param BIC El BIC del cliente a comprobar.
+     * 
+     * @return Devuelve true si el BIC está registrado en el banco o false si no lo está.
+     * 
+     * @throws IOException si hay algún error al leer el fichero.
      */
     public boolean BICRegistrado(String BIC) {
         boolean registrado = false;
@@ -251,6 +300,15 @@ public class GestionBancoCentral {
      * Salida: un boolean indicando si el IBAN esta registrado ya o no
      * Postcondiciones: Asociado al nombre devuelve true si el IBAN esta ya registrado en el banco o false de lo contrario.
      * 					* Puede lanzar IOException si hay algun error al leer
+     */
+    /**
+     * Comprueba si existe una cuenta (buscando por su IBAN) en el banco central.
+     * 
+     * @param IBAN El IBAN de la cuenta a comprobar.
+     * 
+     * @return Devuelve true si el IBAN está registrado en el banco o false de lo contrario
+     * 
+     * @throws IOException si hay algún error al leer del fichero.
      */
     public boolean IBANRegistrado(String IBAN) {
         boolean registrado = false;
@@ -294,6 +352,17 @@ public class GestionBancoCentral {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+    /**
+     * Busca los movimientos que se hicieron en una cuenta en el año dada.
+     * 
+     * @param IBAN El IBAN del que se buscarán los movimientos.
+     * @param anyo El año en el que se buscarán los movimientos.
+     * 
+     * @return Devuelve una lista de transferencias con los movimientos del año indicado.
+     * 
+     * @throws IOException si hay algún error al leer
+     * @throws ClassNotFoundException si la clase leída no está definida.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
         ObjectInputStream leer = null;
@@ -336,6 +405,17 @@ public class GestionBancoCentral {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+    /**
+     * busca los movimientos que se hicieron en una cuenta en el mes y año dado
+     * @param IBAN El IBAN del que se buscarán los movimientos.
+     * @param mes El mes en el que se buscarán los movimientos.
+     * @param anyo El año en el que se buscarán los movimientos.
+     * 
+     * @return Devuelve una lista con las transferencias del mes en el año indicado.
+     * 
+     * @throws IOException si hay algún error al leer.
+     * @throws ClassNotFoundException si la clase leída no está definida.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int mes, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
         ObjectInputStream leer = null;
@@ -381,6 +461,19 @@ public class GestionBancoCentral {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+    /**
+     * Busca los movimientos que se hicieron en una cuenta en la fecha dada
+     * 
+     * @param IBAN El IBAN del que se buscarán los movimientos.
+     * @param dia El dia en el que se buscarán los movimientos.
+     * @param mes El mes en el que se buscarán los movimientos.
+     * @param anyo El año en el que se buscarán los movimientos.
+     * 
+     * @return Devuelve una lista con las transferencias en el día indicado.
+     * 
+     * @throws IOException si hay algún error al leer del fichero.
+     * @throws ClassNotFoundException si la clase leída no está definida.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int dia, int mes, int anyo) {
         File file_movimientos = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + IBAN + ".dat");
         List<TransferenciaImpl> registros_buscados = new ArrayList<TransferenciaImpl>();
@@ -449,6 +542,15 @@ public class GestionBancoCentral {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+    /**
+     * Devuelve los ultimos diez movimientos de la cuenta.
+     * 
+     * @param iban_cuenta el IBAN de la cuenta 
+     * @return Devuelve una lista de transferencias con los últimos 10 movimientos.
+     * 
+     * @throws IOException si hay algún error al leer
+     * @throws ClassNotFoundException si la clase leída no está definidia
+     */
     public List<TransferenciaImpl> ultimosDiezMovimientos(String iban_cuenta) {
 
         File f_cuentas = new File("./Files/BancoCentral/TransferenciasCuentas/Transferencias_" + iban_cuenta + ".dat");
@@ -492,6 +594,15 @@ public class GestionBancoCentral {
      * Postcondiciones: Asociado al nombre se devuelve un String con el BIC del banco o un espacio en blanco si no existe el banco buscado.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+    /**
+     * Devuelve el BIC de un banco dado su nombre.
+     * 
+     * @param nombre_banco El nombre del banco del que se desea saber su nombre.
+     * 
+     * @return Devuelve el BIC del banco o un espacio en blanco si no existe el banco buscado.
+     * 
+     * @throws IOException si hay algún error al leer.
+     */
     public String obtenerBICporNombre(String nombre_banco) {
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
         FileReader leer = null;
@@ -528,6 +639,12 @@ public class GestionBancoCentral {
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco comercial o un espacio en blanco si no existe el banco.
      * */
+    /**
+     * Devuelve el nombre de un banco dado el IBAN de una cuenta.
+     * 
+     * @param iban_cuenta El IBAN de la cuenta de la que se desea saber el nombre del banco al que pertenece.
+     * @return Devuelve el nombre del banco comercial o un espacio en blanco si no existe.
+     */
     public String obtenerNombreBancoComercialPorIBAN(String iban_cuenta) {
 
         return obtenerNombrePorBIC(iban_cuenta.substring(3, 14));
@@ -541,6 +658,13 @@ public class GestionBancoCentral {
      * Salida: Un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
      * Postcondiciones: Asociado al nombre devuelve un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
      */
+    /**
+     * A partir de un IBAN, obtiene el BIC del banco central al que pertenece el banco que gestiona la cuenta.
+     * 
+     * @param IBAN El IBAN de la cuenta de la que se desea obtener el BIC del banco central al que pertenece.
+     * 
+     * @return Devuelve el BIC del banco central al que pertenece el banco comercial que gestiona esta cuenta.
+     */
     public String obtenerBICporIBAN(String IBAN) {
         return IBAN.substring(3, 14);
     }
@@ -552,6 +676,12 @@ public class GestionBancoCentral {
      * Precondiciones: El IBAN debe tener una longitud minima de 21 caracteres
      * Salida: Un String con el numero de cuenta del IBAN especificado
      * Postcondiciones: Asociado al nombre devuelve un String con el numero de cuenta del IBAN especificado
+     */
+    /**
+     * Obtiene el numero de cuenta de un IBAN.
+     * 
+     * @param IBAN El IBAN de la cuenta.
+     * @return Devuelve el número de cuenta del IBAN especificado.
      */
     public String obtenerNumCuentaPorIBAN(String IBAN) {
         return IBAN.substring(14, 21);
@@ -568,6 +698,13 @@ public class GestionBancoCentral {
      * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco segun el BIC dado, o un espacio en blanco si no existe el banco.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+    /**
+     * Devuelve el nombre de un banco dando su BIC.
+     * @param bic El BIC del banco del que se desea obtener su nombre.
+     * @return Devuelve el nombre del banco según el BIC dado, o un espacio en blanco si no existe el banco.
+     * 
+     * @throws IOException si hay algún error al leer.
+     */
     public String obtenerNombrePorBIC(String bic) {
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
         FileReader leer = null;
@@ -610,6 +747,16 @@ public class GestionBancoCentral {
      * 				-> false si no se ha podido realizar con exito la operacion
      * 				* Puede lanzar IOException si hay algun error al escribir
      * */
+    /**
+     * Ingresa una cantidad dada en una cuenta.
+     * 
+     * @param IBAN El IBAN de la cuenta donde se ingresará la cantidad.
+     * @param concepto El concepto de la transferencia.
+     * @param cantidad La cantidad de dinero a ingresar.
+     * @param fecha La fecha de la transferencia.
+     * @return Devuelve true si se ha ingresado el dinero con éxito, insertando el movimiento en el fichero de movimientos y modificando el saldo en el fichero de cuentas.
+     * 					O devuelve false si no se h apodido realizar con éxito la operación.
+     */
     public boolean ingresarDinero(String IBAN, String concepto, double cantidad, GregorianCalendar fecha) {
         boolean ingresado = false;
 
@@ -624,7 +771,7 @@ public class GestionBancoCentral {
 
     /* INTERFAZ
      * Signatura: public boolean realizarMovimiento(String IBANOrigen, String IBANDestino, String concepto, double cantidad, GregorianCalendar fecha)
-     * Comentario: Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresÃƒÂ¡ndola en la cuenta destino.
+     * Comentario: Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresandola en la cuenta destino.
      *              Llama a los metodos sacarDinero e ingresarDinero.
      * Precondiciones: el IBAN tiene que estar registrado, y la cantidad debe ser positiva.
      * Entrada: -> Un String con el el IBAN de origen
@@ -635,10 +782,20 @@ public class GestionBancoCentral {
      * Salida: Un boolean indicando si se ha realizado bien el movimiento o no
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre devuelve:
-     * 					-> true si se ha realizado bien el movimiento
-     * 					-> false si no se ha realizado bien el movimiento
+     * 					-> true si se ha realizado bien la transferencia.
+     * 					-> false si no se ha realizado bien la transferencia.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+    /**
+     * Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresándola en la cuenta destino.
+     * 
+     * @param IBANOrigen El IBAN de la cuenta de origen.
+     * @param IBANDestino El IBAN de la cuenta de destino.
+     * @param concepto El concepto de la transferencia.
+     * @param cantidad La cantida de dinero a traspasar de una cuenta a otra.
+     * @param fecha La fecha de la transferencia.
+     * @return Devuelve true si se ha realizado bien la transferencia. O false si no se ha realizado correctamente.
+     */
     public boolean realizarMovimiento(String IBANOrigen, String IBANDestino, String concepto, double cantidad, GregorianCalendar fecha) {
 
         boolean movimientoRealizado = false;
@@ -670,6 +827,15 @@ public class GestionBancoCentral {
      * 					-> false si no se ha podido realizar bien la operacion.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+    /**
+     * Saca una cantidad dada de una cuenta.
+     * @param IBAN El IBAN de la cuenta de la que se desea retirar el dinero.
+     * @param concepto El concepto de la retirada.
+     * @param cantidad La cantidad de dinero a retirar.
+     * @param fecha La fecha de la retirada.
+     * @return Devuelve true si se ha sacado bien el dinero de la cuenta, insertando el movimiento en el fichero de movimientos y modificando el saldo en el fichero de cuentas.
+     * 					O false si no se ha podido realizar bien la operación.
+     */
     public boolean sacarDinero(String IBAN, String concepto, double cantidad, GregorianCalendar fecha) {
 
         boolean dineroSacado = false;
@@ -692,6 +858,16 @@ public class GestionBancoCentral {
      * Salida: Un boolean indicando si se actualizï¿½ correctamente el fichero maestro
      * Postcondiciones: Devuelve true si se actualizaï¿½ bien, flase de lo contrario
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
+     */
+    /**
+     * Actualiza un fichero maestro determinado, mirando los registros de su fichero de movimiento correspondiente.
+     * @param fichero La ruta del fichero sin especificar la última parte.
+     * 					<b>Ejemplo: "./Files/BancoCentral/Cuentas_BancoCentral"</b>. El método dentro se encarga de trabajar con los dos ficheros ("_Maestro.txt" y "_Movimientos.txt").
+     * @param posicionCampoClave La posición en cada registro del fichero donde se encuentra el campo clave, la primera posición es 0.
+     * 					<br><b>Ejemplo: "ESPCAIXESBBXXX0000000,712542.22". Su campo clave sería 0.</b>
+     * @return Devuelve true si se sincronizó correctamente, false si no se sincronizó bien.
+     * 
+     * @throws IOException si hay algún error al leer o escribir en algún fichero.
      */
     public boolean actualizarFichero(String fichero, int posicionCampoClave) {
         boolean actualizado = false;
@@ -816,6 +992,11 @@ public class GestionBancoCentral {
      * Precondiciones: El IBAN ha de ser de una cuenta existente
      * Salida: un double con el saldo de la cuenta
      * Postcondiciones: Asociado al nombre devuelve un double con el saldo de la cuenta.
+     */
+    /**
+     * Obitene el saldo de una cuenta proporcionando su IBAN.
+     * @param IBAN El IBAN de la cuenta.
+     * @return Devuelve un double con el saldo de la cuenta.
      */
     public double obtenerSaldoPorIBAN(String IBAN) {
         String cuenta = datosCuenta(IBAN);
