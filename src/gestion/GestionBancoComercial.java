@@ -22,6 +22,13 @@ public class GestionBancoComercial {
      * Salida: double
      * Postcondiciones: asociado al nombre se devuelve un double que es el ingreso que tiene un cliente al mes
      * */
+
+    /**
+     * Devuelve los ingresos mensuales de un cliente dado su DNI.
+     * @param dniCliente El DNI del cliente del cual se desea obtener los ingresos.
+     * @param iban El IBAN de la cuenta del cliente del cual se desea obtener los ingresos.
+     * @return Asociado al nombre se devuelve un double que es el ingreso que tiene el cliente al mes
+     */
     public double obtenerIngresosPorClientes(String dniCliente, String iban){
         double ingresos = 0.0;
         String nombreBanco = obtenerNombreBancoComercialPorIBAN(iban);
@@ -56,10 +63,19 @@ public class GestionBancoComercial {
     *               Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un
     *               cliente.
     * Precondiciones: El IBAN debe estar registrado.
-    * Entradas: TransferenciaImpl transferencia
+    * Entradas: String iban
     * Salida: un double con el saldo minimo posible.
     * Postcondiciones: asociado al nombre se devuelve un double que es el saldo minimo que puede tener una cuenta
     * */
+
+    /**
+     *  Este metodo controla el umbral de saldo negativo que puede tener una cuenta.
+     *  Una cuenta puede tener un saldo negativo de hasta un 20% de los ingresos de un cliente.
+     *
+     * @param iban El IBAN debe estar registrado.
+     * @return asociado al nombre se devuelve un double que es el saldo minimo que puede tener una cuenta
+     */
+
     public double umbralNumerosRojos(String iban){
         double saldoMinimo = 0.0;
         String dniCliente = this.obtenerClientePorIBAN(iban);
@@ -80,6 +96,12 @@ public class GestionBancoComercial {
     * Postcondiciones: Asociado al nombre devuelve un String con el nuevo numero de cuenta
     *					* Puede lanzar IOException si hay algun error al leer
     * */
+
+    /**
+     * Obtiene un nuevo numero de cuenta, siguiente al ultimo actual
+     * @param bic BIC del banco del cual se va a generarl nuevo numero de cuenta.
+     * @return Asociado al nombre devuelve un String con el nuevo numero de cuenta
+     */
     public String obtenerNuevoNumeroCuenta(String bic){
         String nombreBanco = this.obtenerNombrePorBIC(bic);
         File ficheroCuentas = new File("./Files/BancosComerciales/" + nombreBanco + "/Cuentas_" + nombreBanco + "_Maestro.txt");
@@ -187,6 +209,14 @@ public class GestionBancoComercial {
      * 					Si no se crea correctamente.
      * 					* Puede lanzar IOException si hay algun error al escribir
      */
+
+    /**
+     * Realiza una solicitud de alta de un cliente.
+     * @param BIC Un string con el BIC del banco donde se insertara el nuevo cliente
+     * @param DNI un String con el DNI del cliente
+     * @param ingresosMensuales un double con los ingresos mensuales del cliente
+     * @return Un String indicando el IBAN de la cuenta asociada al cliente nuevo creado.
+     */
     public String solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
     {
         Utilidades u = new Utilidades();
@@ -224,6 +254,11 @@ public class GestionBancoComercial {
     * 				   Tambien quedaran eliminados las cuentas que tuvieran solicitud de baja.
     *					* Puede lanzar IOException si hay algun error al leer o escribir
     * */
+
+    /**
+     * Acepta las solicitudes de alta y baja.
+     * @param BIC BIC del banco de donde se van a aceptar las solicitudes.
+     */
     public void aceptarAltasBajasClientes (String BIC) {
         Utilidades utils = new Utilidades();
         String nombreBanco = this.obtenerNombrePorBIC(BIC);
@@ -277,6 +312,12 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre devuelve false si el fichero ya existe o si no se pudo crear. True si lo creo.
      * 					* Puede lanzar IOException si hay algun error al leer.
      * */
+
+    /**
+     * Crea un fichero de transferencias para el IBAN dado.
+     * @param nuevo_iban IBAN para el que se creará el fichero de transferencias.
+     * @return boolean que sera true si el fichero se ha creado correctamente y false si no o si bien ya existia.
+     */
     public boolean crearFicheroCuentaTransferencias(String nuevo_iban){
         String nombreBanco = obtenerNombreBancoComercialPorIBAN(nuevo_iban);
         File carpetaTransferencias = new File("./Files/BancosComerciales/"+nombreBanco+"/Transferencias/");
@@ -306,13 +347,22 @@ public class GestionBancoComercial {
      * Comentario: Marca como borrada con * una cuenta
      * Precondiciones: Se pasa un iban que debera existir.
      * Entrada: String con el IBAN de la cuenta a marcar como borrada.
-     * Salida:
+     * Salida: boolean
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre devuelve:
      * 					-> True si se marco correctamente la cuenta como borrada.
      * 					-> False si no se marco correctamente.
-     * 					* Puede lanzar IOException si hay algun error al escribir.
+     *
      * */
+
+    /**
+     * Marca como borrada con * una cuenta
+     * @param iban_cuenta String con el IBAN de la cuenta a marcar como borrada.
+     * @return Asociado al nombre devuelve:
+     *     -> True si se marco correctamente la cuenta como borrada.
+     *     -> False si no se marco correctamente.
+     *
+     */
     public boolean marcarCuentaComoBorrada(String iban_cuenta)
     {
         boolean borrada = false;
@@ -346,6 +396,13 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+
+    /**
+     * Busca los movimientos que se hicieron en una cuenta en la fecha dada
+     * @param IBAN  un String con el IBAN del que se buscaran los movimientos
+     * @param anyo un int para el año.
+     * @return asociado al nombre devuelve un arraylist con los movimientos buscados, o null si no hay.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
         ObjectInputStream leer = null;
@@ -387,6 +444,14 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+
+    /**
+     * Busca los movimientos que se hicieron en una cuenta en la fecha dada
+     * @param IBAN un String con el IBAN del que se buscaran los movimientos
+     * @param mes un int para el mes
+     * @param anyo un int para el año
+     * @return asociado al nombre devuelve un arraylist con los movimientos buscados, o null si no hay.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int mes, int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
         ObjectInputStream leer = null;
@@ -431,6 +496,15 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+
+    /**
+     * Busca los movimientos que se hicieron en una cuenta en la fecha dada
+     * @param IBAN un String con el IBAN del que se buscaran los movimientos
+     * @param dia un int para el dia
+     * @param mes un int para el mes
+     * @param anyo un int para el año
+     * @return asociado al nombre devuelve un arraylist con los movimientos buscados, o null si no hay.
+     */
     public List<TransferenciaImpl> buscarMovimientosPorFecha(String IBAN, int dia,int mes,int anyo){
         File file_movimientos = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(IBAN))+"/Transferencias/Transferencias_Cuenta_"+IBAN+".dat");
         List<TransferenciaImpl> registros_buscados = new ArrayList<TransferenciaImpl>();
@@ -469,6 +543,12 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+
+    /**
+     * Devuelve los ultimos diez movimientos de la cuenta
+     * @param iban_cuenta un String con el IBAN del que se buscaran los ultimos diez movimientos
+     * @return una lista de TransferenciaImpl con los ultimos diez movimientos (o menos si hay menos de diez), o null si no hay ninguno.
+     */
  public List<TransferenciaImpl> ultimosDiezMovimientos(String iban_cuenta){
 
         File f_cuentas = new File("./Files/BancosComerciales/"+obtenerNombrePorBIC(obtenerBICporIBAN(iban_cuenta))+"/Transferencias/Transferencias_Cuenta_" + iban_cuenta + ".dat");
@@ -510,6 +590,12 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre se devuelve un boolean que devuelve true si existe y false si no
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * Dado un iban devuelve true si este existe o false si no.
+     * @param iban_cuenta  IBAN de la cuenta a revisar
+     * @return asociado al nombre se devuelve un boolean que devuelve true si existe y false si no
+     */
     public boolean isIBANvalido(String iban_cuenta){
         String nombre_banco = " ";
         File f_cuentas = null;
@@ -550,6 +636,12 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre se devuelve un boolean que devuelve true si esta marcada como borrada y false si no
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * Dado un iban devuelve true si esta marcado como borrado
+     * @param iban_cuenta IBAN de la cuenta a revisar si esta marcada como borrada
+     * @return  asociado al nombre se devuelve un boolean que devuelve true si esta marcada como borrada y false si no
+     */
     public boolean isIBANParaBorrar(String iban_cuenta){
         String nombre_banco = " ";
         File f_cuentasMov = null;
@@ -593,6 +685,13 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre se devuelve true si este iban pertenece a este cliente o false si no
      * 					* Puede lanzar IOException si hay algun error al leer
      */
+
+    /**
+     * Dado un iban y un dni de cliente, devuelve true si este iban pertenece a este cliente o false si no
+     * @param dni_cliente DNI del cliente a comprobar
+     * @param iban_cuenta IBAN de la cuenta a comprobar
+     * @return asociado al nombre se devuelve true si este iban pertenece a este cliente o false si no
+     */
     public boolean isPropietario(String dni_cliente, String iban_cuenta)
     {
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(iban_cuenta);
@@ -633,6 +732,12 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre se devuelve el DNI del cliente al que pertenece la cuenta o un espacio en blanco si no lo encuentra.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * dado el iban de la cuenta, te devuelve el cliente al que pertenece la cuenta
+     * @param iban_cuenta IBAN de la cuenta a comprobar
+     * @return Asociado al nombre se devuelve el DNI del cliente al que pertenece la cuenta o un espacio en blanco si no lo encuentra.
+     */
     public String obtenerClientePorIBAN(String iban_cuenta){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(iban_cuenta);
         File fichero_clientes_cuentas = new File("./Files/BancosComerciales/"+nombre_banco+"/Clientes_Cuentas_"+nombre_banco+"_Maestro.txt");
@@ -668,6 +773,13 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre se devuelve el IBAN de la cuenta que pertenece a dicho cliente o un espacio en blanco si no existe.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * dado el nombre del banco y el dni del propietario de la cuenta, te devuelve el IBAN de la cuenta
+     * @param nombre_banco Nombre del banco donde mirara el IBAN
+     * @param dni_cliente DNI del cliente cuya cuenta buscara
+     * @return Asociado al nombre se devuelve el IBAN de la cuenta que pertenece a dicho cliente o un espacio en blanco si no existe.
+     */
     public String obtenerIBANPorCliente(String nombre_banco, String dni_cliente){
         File fichero_clientes_cuentas = new File("./Files/BancosComerciales/"+nombre_banco+"/Clientes_Cuentas_"+nombre_banco+"_Maestro.txt");
         FileReader fr = null;
@@ -704,6 +816,11 @@ public class GestionBancoComercial {
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
      * 					* Puede lanzar ClassNotFoundException si la clase leida no se encuentra definida.
      * */
+
+    /**
+     * Ordena un fichero de movimientos de una cuenta en base a las fechas, deja primero los mas recientes.
+     * @param iban IBAN de la cuenta cuyos movimientos ordeanara por fecha
+     */
     public void ordenarMovimientosPorFecha(String iban){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(iban);
         File ficheroMovimientosCuenta = new File ("./Files/BancosComerciales/"+nombre_banco+"/Transferencias/Transferencias_Cuenta_"+iban+".dat");
@@ -772,6 +889,16 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre devuelve true si el movimiento se inserto correctamente o false si no.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+
+    /**
+     *  Este metodo se encarga de modificar en el fichero de movimientos de la cuenta, a�adiendo un nuevo movimiento.
+     * @param ID_Cuenta IBAN de la cuenta
+     * @param isIngresoOrRetirada boolean que es true si el movimiento es un ingreso y false si es una retirada de saldo
+     * @param concepto Concepto de la transferencia
+     * @param cantidad Cantidad de la transferencia
+     * @param fecha Fecha de la transferencia
+     * @return Asociado al nombre devuelve true si el movimiento se inserto correctamente o false si no.
+     */
      public boolean insertarMovimientoEnFicheroMovimientos(String ID_Cuenta,boolean isIngresoOrRetirada, String concepto, double cantidad,GregorianCalendar fecha){
         String nombre_banco = obtenerNombreBancoComercialPorIBAN(ID_Cuenta);
         File ficheroCuentas = new File ("./Files/BancosComerciales/"+nombre_banco+"/Transferencias/Transferencias_Cuenta_"+ID_Cuenta+".dat");
@@ -806,6 +933,12 @@ public class GestionBancoComercial {
      * Salida: un double con el saldo de la cuenta
      * Postcondiciones: Asociado al nombre devuelve un double con el saldo de la cuenta.
      */
+
+    /**
+     * Obtiene el saldo de una cuenta(IBAN)
+     * @param IBAN IBAN de la cuenta de la que se desea obtener el saldo
+     * @return Asociado al nombre devuelve un double con el saldo de la cuenta.
+     */
     public double obtenerSaldoPorIBAN(String IBAN)
     {
     	return Double.parseDouble(datosCuenta(IBAN).split(",")[1]);
@@ -823,6 +956,14 @@ public class GestionBancoComercial {
      * Postcondiciones: asociado al nombre devuelve:
      * 					-> true si se modific� correctamente el saldo de la cuenta
      * 					-> false si no se pudo modificar el saldo (Por ejemplo, en caso de que el IBAN no exista)
+     */
+
+    /**
+     * Modifica el saldo de una cuenta
+     * @param IBAN Un String con el IBAN de la cuenta en de la que se modificara su saldo
+     * @param sumaOresta Un boolean indicando si se sumar� (true) o restar� (false) la cantidad
+     * @param cantidad Un double con la cantidad
+     * @return Un boolean indicando si la modificacion del saldo tuvo exito(true) o no(false)
      */
     public boolean modificarSaldoEnFicheroCuentas(String IBAN, boolean sumaOresta, double cantidad)
     {
@@ -902,6 +1043,13 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre deuvelve true si el DNI esta registrado en el banco (BIC), o false si no lo esta.
      * 					* Puede lanzar IOException si hay algun error al leer
      */
+
+    /**
+     * Comprueba si un cliente (DNI) esta registrado en un banco(BIC), ya sea porque este dado de alta, o la haya solicitado.
+     * @param DNI DNI del cliente que se comprobara
+     * @param BIC BIC del banco donde se comprobara la existencia del cliente
+     * @return Asociado al nombre deuvelve true si el DNI esta registrado en el banco (BIC), o false si no lo esta.
+     */
     public boolean DNIRegistrado(String DNI, String BIC)
     {
     	boolean registrado = false;
@@ -974,6 +1122,12 @@ public class GestionBancoComercial {
 	 * Postcondiciones: Asociado al nombre devuelve un String con los datos de la cuenta o null si no existe la cuenta
 	 * 					* Puede lanzar IOException si hay algun error al leer
 	 */
+
+    /**
+     * Accede al fichero de cuentas y busca una cuenta por su IBAN para leer sus datos
+     * @param IBAN el IBAN de la cuenta.
+     * @return Asociado al nombre devuelve un String con los datos de la cuenta o null si no existe la cuenta
+     */
 	public String datosCuenta(String IBAN)
 	{
 		String cuenta = null;
@@ -1018,6 +1172,12 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre se devuelve un String con el BIC del banco. Si no existe devuelve un espacio en blanco.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * devuelve el BIC de un banco dando su nombre
+     * @param nombre_banco Nombre del banco del cual se quiere obtener el BIC
+     * @return Asociado al nombre se devuelve un String con el BIC del banco. Si no existe devuelve un espacio en blanco.
+     */
     public String obtenerBICporNombre(String nombre_banco){
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
         FileReader leer = null;
@@ -1054,6 +1214,12 @@ public class GestionBancoComercial {
      * Entrada/Salida:
      * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco comercial.
      * */
+
+    /**
+     * devuelve el nombre de un banco dado el IBAN de una cuenta
+     * @param iban_cuenta IBAN de la cuenta de la que se quiere obtener el nombre del banco al que pertenece dicha cuenta
+     * @return Asociado al nombre se devuelve un String con el nombre del banco comercial al que pertenece
+     */
     public String obtenerNombreBancoComercialPorIBAN(String iban_cuenta){
 
         return obtenerNombrePorBIC(iban_cuenta.substring(3,14));
@@ -1065,7 +1231,13 @@ public class GestionBancoComercial {
      * Entrada: Un String con el IBAN
      * Precondiciones: El IBAN debe tener minimo una longitud de 14 caracteres
      * Salida: Un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
-     * Postcondiciones: Asociado al nombre devuelve un strnig con el BIC del banco central al que pertenece el banco que gestiona la cuenta
+     * Postcondiciones: Asociado al nombre devuelve un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
+     */
+
+    /**
+     * A partir de un IBAN, obtiene el BIC del banco central al que pertenece el banco que gestiona la cuenta
+     * @param IBAN IBAN de la cuenta de la que se quiere obtener el nombre del banco central al que pertenece dicha cuenta
+     * @return Asociado al nombre devuelve un string con el BIC del banco central al que pertenece el banco que gestiona la cuenta
      */
     public String obtenerBICporIBAN(String IBAN)
     {
@@ -1079,6 +1251,12 @@ public class GestionBancoComercial {
      * Precondiciones: El IBAN debe tener minimo una longitud de 21 caracteres
      * Salida: Un String con el numero de cuenta del IBAN especificado
      * Postcondiciones: Asociado al nombre devuelve un String con el numero de cuenta del IBAN especificado
+     */
+
+    /**
+     * Obtiene el numero de cuenta de un IBAN
+     * @param IBAN Un String con el IBAN del que se quiere obtener su numero de cuenta
+     * @return Un String con el numero de cuenta del IBAN especificado
      */
     public String obtenerNumCuentaPorIBAN(String IBAN)
     {
@@ -1096,6 +1274,12 @@ public class GestionBancoComercial {
      * Postcondiciones: Asociado al nombre se devuelve un String con el nombre del banco, o un espacio en blanco si no lo encuentra.
      * 					* Puede lanzar IOException si hay algun error al leer
      * */
+
+    /**
+     * devuelve el nombre de un banco dando su BIC
+     * @param bic BIC del banco del que se quiere obtener su nombre
+     * @return Asociado al nombre se devuelve un String con el nombre del banco, o un espacio en blanco si no lo encuentra.
+     */
     public String obtenerNombrePorBIC(String bic){
         File clientesBancoCentral = new File("./Files/BancoCentral/Clientes_BancoCentral_Maestro.txt");
         FileReader leer = null;
@@ -1134,6 +1318,15 @@ public class GestionBancoComercial {
      * 				-> false si no se ha podido realizar con exito la operacion
      * 				* Puede lanzar IOException si hay algun error al escribir
      * */
+
+    /**
+     * ingresa una cantidad dada en una cuenta
+     * @param IBAN IBAN de la cuenta en la que se desea ingresar la cantidad dada
+     * @param concepto Concepto de la transferencia
+     * @param cantidad Cantidad de la transferencia
+     * @param fecha Fecha de la transferencia
+     * @return Un boolean indicando si se ha ingresado el dinero con exito (true) o no (false)
+     */
     public boolean ingresarDinero(String IBAN,String concepto, double cantidad, GregorianCalendar fecha){
 
         boolean ingresado = false;
@@ -1165,6 +1358,19 @@ public class GestionBancoComercial {
      * 					-> false si no se ha realizado bien el movimiento
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+
+    /**
+     * Realiza un movimiento bancario, sacando una cantidad de la cuenta de origen e ingresandola en la cuenta destino.
+     *    Llama a los metodos sacarDinero e ingresarDinero.
+     * @see #sacarDinero(String, String, double, GregorianCalendar)
+     * @see #ingresarDinero(String, String, double, GregorianCalendar)
+     * @param IBANOrigen IBAN de la cuenta origen que inicia la transferencia
+     * @param IBANDestino IBAN de la cuenta destino a quien va dirigida la transferencia
+     * @param concepto Concepto de la transferencia
+     * @param cantidad Cantidad de la transferencia
+     * @param fecha Fecha de la transferencia
+     * @return Un boolean indicando si se ha realizado bien el movimiento (true) o no (false)
+     */
     public boolean realizarMovimiento(String IBANOrigen,String IBANDestino, String concepto,double cantidad, GregorianCalendar fecha){
 
         boolean movimientoRealizado = false;
@@ -1194,6 +1400,15 @@ public class GestionBancoComercial {
      * 					-> false si no se ha podido realizar bien la operacion.
      * 					* Puede lanzar IOException si hay algun error al escribir
      * */
+
+    /**
+     * Saca una cantidad dada de una cuenta
+     * @param IBAN IBAN de la cuenta donde se realiza el ingreso
+     * @param concepto Concepto de la transferencia
+     * @param cantidad Cantidad de la transferencia
+     * @param fecha Fecha de la transferencia
+     * @return Un boolean indicando si se ha sacado bien el dinero (true) o no (false)
+     */
     public boolean sacarDinero(String IBAN,String concepto, double cantidad, GregorianCalendar fecha){
 
         boolean dineroSacado = false;
@@ -1213,12 +1428,20 @@ public class GestionBancoComercial {
      * Comentario: Actualiza un fichero maestro determinado, mirando los registros de su fichero de movimiento correspondiente.
      * Prototipo: public boolean actualizarFichero(String fichero, int posicionCampoClave)
      * Entrada: Un string con la ruta (sin especificar la parte de "_Maestro.txt" o "_Movimientos.txt) del fichero
+     *          Un int indicando la posicion del campo clave
      * Precondiciones: Los ficheros deben existir
      * Salida: Un boolean indicando si se ha actualizado correctamente o no.
      * Postcondiciones: Asociado al nombre devuelve:
      * 					-> True si la sincronizacion tuvo exito, por lo tanto, los registros del fichero de movimientos quedan actualizados al maestro.
      * 					-> False si hubo algun error y no se pudo sincronizar.
      * 					* Puede lanzar IOException si hay algun error al leer o escribir
+     */
+
+    /**
+     * Actualiza un fichero maestro determinado, mirando los registros de su fichero de movimiento correspondiente.
+     * @param fichero Un string con la ruta (sin especificar la parte de "_Maestro.txt" o "_Movimientos.txt) del fichero
+     * @param posicionCampoClave posicion del campo clave del fichero
+     * @return Un boolean indicando si se ha actualizado correctamente o no.
      */
     public boolean actualizarFichero(String fichero, int posicionCampoClave)
     {
