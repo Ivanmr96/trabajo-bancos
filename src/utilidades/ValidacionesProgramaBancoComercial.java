@@ -52,7 +52,7 @@ public class ValidacionesProgramaBancoComercial
 		System.out.println("1) Realizar transferencia bancaria");
 		System.out.println("2) Ver datos de la cuenta en el banco central");
 		System.out.println("3) Buscar movimientos de la cuenta en el banco central");
-		System.out.println("4) Cliente nuevo");
+		System.out.println("4) Solicitar alta de nuevo cliente");
 		System.out.println("5) Gestionar una cuenta determinada");
 		System.out.println("6) Actualizar altas y bajas");
 		System.out.println("0) Salir del programa");
@@ -119,7 +119,7 @@ public class ValidacionesProgramaBancoComercial
 	/* INTERFAZ
 	 * Comentario: Lee y valida un DNI
 	 * Prototipo: public Strnig leerYValidarDNI()
-	 * Entrada: un String con el BIC del banco donde se comprobará si el DNI existe o no
+	 * Entrada: un String con el BIC del banco donde se comprobarï¿½ si el DNI existe o no
 	 * Precondiciones: el BIC debe ser de un banco existente
 	 * Salida: Un String con un DNI
 	 * Postcondiciones: Asociado al nombre devuelve un String con un DNI validado
@@ -180,7 +180,7 @@ public class ValidacionesProgramaBancoComercial
 		{
 			System.out.print("IBAN Cliente: ");
 			IBAN = teclado.next();
-			BICInsertado = gestion.obtenerBICporIBAN(IBAN);			//TODO Aqui salta StringIndexOutOfBoundsException si se introduce una cadena mas pequeña.
+			BICInsertado = gestion.obtenerBICporIBAN(IBAN);			//TODO Aqui salta StringIndexOutOfBoundsException si se introduce una cadena mas pequeï¿½a.
 			
 		}while(gestion.isIBANvalido(IBAN) == false || BICInsertado.equals(BIC) == false );
 
@@ -188,7 +188,7 @@ public class ValidacionesProgramaBancoComercial
 
 		System.out.println("Cuenta de cliente " + IBAN + " correcta.");
 		if(gestion.isIBANParaBorrar(IBAN)){
-			System.out.println("Esta cuenta está marcada como borrada.");
+			System.out.println("Esta cuenta estï¿½ marcada como borrada.");
 		}
 		
 		return IBAN;
@@ -300,17 +300,17 @@ public class ValidacionesProgramaBancoComercial
 	/*
 	 * INTERFAZ
 	 * Signatura: public int anyo()
-	 * Comentario: pide y valida un año
+	 * Comentario: pide y valida un aï¿½o
 	 * Precondiciones:
 	 * Entradas:
 	 * Salidas: int
-	 * Postcondiciones: asociado al nombre se devuelve un año
+	 * Postcondiciones: asociado al nombre se devuelve un aï¿½o
 	 * */
 	public int anyo(){
 		Scanner sc = new Scanner(System.in);
 		int anyo_buscado = 1582;
 		do {
-			System.out.println("Introduce el año de el o los movimiento(s) a buscar: ");
+			System.out.println("Introduce el aï¿½o de el o los movimiento(s) a buscar: ");
 			anyo_buscado = sc.nextInt();
 		}while(anyo_buscado < 1582);
 
@@ -320,7 +320,7 @@ public class ValidacionesProgramaBancoComercial
 	/*
 	 * INTERFAZ
 	 * Signatura: public int mes()
-	 * Comentario: pide y valida un mes. El mes 0 significa que el usuario no desea tener en cuenta el mes en la búsqueda.
+	 * Comentario: pide y valida un mes. El mes 0 significa que el usuario no desea tener en cuenta el mes en la bï¿½squeda.
 	 * Precondiciones:
 	 * Entradas:
 	 * Salidas: int
@@ -340,7 +340,7 @@ public class ValidacionesProgramaBancoComercial
 	/*
 	 * INTERFAZ
 	 * Signatura: public int dia()
-	 * Comentario: pide y valida un dia. El dia 0 significa que el usuario no desea tener en cuenta el dia en la búsqueda.
+	 * Comentario: pide y valida un dia. El dia 0 significa que el usuario no desea tener en cuenta el dia en la bï¿½squeda.
 	 * Precondiciones:
 	 * Entradas:
 	 * Salidas: int
