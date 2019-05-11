@@ -8,10 +8,56 @@ import java.util.*;
 
 public class Utilidades {
 
+
+    /* INTERFAZ
+     * Comentario: Escribe un registro nuevo en un fichero determinado
+     * Prototipo: public boolean escribirRegistroEnFichero(String registro, String rutaFichero)
+     * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribira
+     * Precondiciones: No hay
+     * Salida: Un boolean indicando si se ha escrito correctamente o no.
+     * Postcondiciones: Asociado al nombre devuelve:
+     * 					-> True si se ha escrito correctamente el registro en el fichero correspondiente
+     * 					-> False si no se ha escrito correctamente
+     * 					* Puede lanzar IOException si hay algun error al escribir
+     */
+    /**
+     * Escribe un registro nuevo en un fichero determinado
+     *
+     * @param registro El registro a escribir.
+     * @param rutaFichero La ruta del fichero donde se escribir� el registro.
+     * @return Devuelve true si se ha escrito correctamente el registro en el fichero correspondiente, o false si no se ha escrito correctamente
+     */
+    public boolean escribirRegistroEnFichero(String registro, String rutaFichero) {
+        boolean escrito = false;
+
+        File fichero = new File(rutaFichero);
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+
+        try {
+            fw = new FileWriter(fichero, true);
+            bw = new BufferedWriter(fw);
+
+            bw.write(registro);
+            escrito = true;
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return escrito;
+    }
+
+
     /*
      *Signatura: public void imprimirMovimientos(TransferenciaImpl movimientos)
      * Comentario: imprime un movimiento. Método sobrecargado
      * */
+
+    /**
+     * Imprime un movimiento. Método sobrecargado
+     * @param element Objeto de tipo TransferenciaImpl del cual se imprimiran sus datos
+     */
     public void imprimirMovimientos(TransferenciaImpl element){
     	DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
     	String cantidad;
@@ -21,7 +67,7 @@ public class Utilidades {
             System.out.println("Fecha: " + element.toStringFecha());
             System.out.println("Tipo: " + ((element.isIngresoOrRetirada())?"INGRESO":"RETIRADA"));
             cantidad = df.format(element.getCantidad());
-            System.out.println("Cantidad: " + cantidad + " �");
+            System.out.println("Cantidad: " + cantidad + " �");
             System.out.println("Concepto: " + element.getConcepto());
 
     }
@@ -30,6 +76,11 @@ public class Utilidades {
     *Signatura: public void imprimirMovimientos(List<String> movimientos)
     * Comentario: imprime una lista de Strings en pantalla
     * */
+
+    /**
+     * Imprime una lista de transferencias en pantalla
+     * @param movimientos Lista de Transferencias que se mostraran en pantalla
+     */
     public void imprimirMovimientos(List<TransferenciaImpl> movimientos) {
     	DecimalFormat df = new DecimalFormat("###,###,###,###,###,###,##0.00");
     	//df.setGroupingSize(3);
@@ -45,11 +96,15 @@ public class Utilidades {
             //cantidad = String.valueOf(element.getCantidad());
             cantidad = df.format(element.getCantidad());
             
-            System.out.println("Cantidad: " + cantidad + " �");
+            System.out.println("Cantidad: " + cantidad + " �");
             System.out.println("Concepto: " + element.getConcepto());
         }
     }
-    
+
+    /**
+     * Imprime datos de una cuenta en pantalla bien formateados
+     * @param datosCuenta Datos a imprimir
+     */
     public void imprimirDatosCuenta(String datosCuenta)
     {
     	String[] campos = datosCuenta.split(",");
@@ -58,7 +113,7 @@ public class Utilidades {
     	
     	System.out.println("Numero de cuenta: " + campos[0]);
     	campos[1] = df.format(Double.parseDouble(campos[1]));
-    	System.out.println("Saldo: " + campos[1] + " �");
+    	System.out.println("Saldo: " + campos[1] + " �");
     }
 
     /*
@@ -70,6 +125,12 @@ public class Utilidades {
     * Salidas:
     * Postcondiciones: El fichero quedará ordenado en base a ese campo lexicográficamente.
     * */
+
+    /**
+     * Ordena el fichero de una ruta en base a la lexicografía de un campo de un fichero
+     * @param ruta ruta del fichero que se desea ordenar
+     * @param campoClave posicion del campo por el que se desea ordenar el fichero
+     */
     public void ordenarFicheroPorClave(String ruta, int campoClave){
         File ficheroAOrdenar = new File(ruta);
         FileReader fr = null;
@@ -121,7 +182,12 @@ public class Utilidades {
         }
 
     }
-    
+
+    /**
+     * Borra un fichero dada su ruta
+     * @param fichero ruta del fichero a borrar
+     * @return Boolean que es true si se ha borrado correctamente y false si no
+     */
     public boolean borrarFichero(String fichero)
     {
     	boolean borrado = false;
@@ -143,6 +209,12 @@ public class Utilidades {
     *   no existen, no se renombrará el fichero.
     * */
 
+    /**
+     * Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda.
+     * @param fichero Es el fichero de origen
+     * @param nuevoNombre Es la nueva ruta o fichero de destino
+     * @return asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas no existen, no se renombrará el fichero.
+     */
     public boolean renombrarFichero(String fichero, String nuevoNombre)
     {
     	boolean renombrado = false;
@@ -224,6 +296,13 @@ public class Utilidades {
      * Postcondiciones: asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas
      *   no existen, no se renombrará el fichero.
      * */
+    /**
+     * Método que sustituye a renameTo. Dadas dos rutas, una de origen y otra de destino, renombra la primera a la segunda. Renombra ficheros binarios.
+     * @param fichero Es el fichero de origen
+     * @param nuevoNombre Es la nueva ruta o fichero de destino
+     * @param obj Objeto del tipo que habra en el fichero de origen.
+     * @return asociado al nombre se devuelve un boolean que será true si se ha renombrado con éxito y false si no. Si alguna de las rutas no existen, no se renombrará el fichero.
+     */
     public boolean renombrarFicheroBinario(String fichero, String nuevoNombre, Object obj)
     {
         boolean renombrado = false;

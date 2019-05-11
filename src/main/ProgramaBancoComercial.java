@@ -34,7 +34,7 @@
  * 				1) Realizar transferencia bancaria
  * 				2) Ver datos de la cuenta en el banco central
  * 				3) Buscar movimientos de la cuenta en el banco central
- * 				4) Cliente nuevo
+ * 				4) Solicitar alta de nuevo cliente
  * 				5) Gestionar una cuenta determinada
  * 				6) Actualizar altas y bajas
  * 			As� como un submenu para la opcion numero 5 "Gestionar una cuenta determinada", con estas opciones:
@@ -183,16 +183,16 @@ public class ProgramaBancoComercial
 					}
 		  				break;
 		  		case 4: 
-		  			//cliente nuevo
+		  			//solicitar alta de nuevo cliente
 		  			DNI = validaciones.leerYValidarDNI(BIC);		
 		  			
 		  			ingresosMensuales = validaciones.leerYValidarIngresosMensuales();
 		  			
-		  			IBANNuevoCliente = gestionComercial.insertarCliente(BIC, DNI,ingresosMensuales);		//TODO Cuando el banco quiera hacer un alta nueva, que se haga directamente.
+		  			IBANNuevoCliente = gestionComercial.solicitarAltaCliente(BIC,DNI, ingresosMensuales);
 		  			if(IBANNuevoCliente != null)
-		  				System.out.println("Nuevo cliente creado, apunta el IBAN de su cuenta: " + IBANNuevoCliente);
+		  				System.out.println("Nueva alta solicitada, apunta el IBAN de su cuenta: " + IBANNuevoCliente);
 		  			else
-		  				System.out.println("El cliente no ha podido crearse, int�ntalo de nuevo");
+		  				System.out.println("La solicitud no se ha efectuado correctamente, intentalo de nuevo");
 		  			break;
 		  		case 5: 
 		  			//gestionar una cuenta determinada
