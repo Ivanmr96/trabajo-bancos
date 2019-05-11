@@ -29,6 +29,9 @@ public class PrestamoImpl implements Prestamo, Cloneable
 	private double cantidad;
 	private int tiempoMeses;
 	
+	/**
+	 * Constructor por defecto.
+	 */
 	public PrestamoImpl()
 	{
 		this.ID = 0;
@@ -36,6 +39,13 @@ public class PrestamoImpl implements Prestamo, Cloneable
 		this.tiempoMeses = 0;
 	}
 	
+	/**
+	 * Constructor con parámetros.
+	 * 
+	 * @param ID El identificador del prestamo.
+	 * @param cantidad La cantidad que se presta.
+	 * @param tiempoMeses El tiempo en meses en el que se devolverá el préstamo.
+	 */
 	public PrestamoImpl(int ID, double cantidad, int tiempoMeses)
 	{
 		this.ID = ID;
@@ -43,6 +53,11 @@ public class PrestamoImpl implements Prestamo, Cloneable
 		this.tiempoMeses = tiempoMeses;
 	}
 	
+	/**
+	 * Constructor de copia.
+	 * 
+	 * @param otro El otro préstamo del cual se desea copiar.
+	 */
 	public PrestamoImpl(PrestamoImpl otro)
 	{
 		this.ID = otro.ID;
@@ -62,7 +77,10 @@ public class PrestamoImpl implements Prestamo, Cloneable
 		return (int) (this.ID * 7 + this.cantidad * 11 + this.tiempoMeses * 13);
 	}
 	
-	//Representacion como cadena, sus atributos separados por coma.
+	/**
+	 * Representacion como cadena, sus atributos separados por coma.
+	 * <br> <b>Ejemplo: "73,25000,120"</b>
+	 */
 	@Override
 	public String toString()
 	{

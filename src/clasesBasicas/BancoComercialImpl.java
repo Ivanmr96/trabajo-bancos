@@ -27,6 +27,9 @@ public class BancoComercialImpl implements Cloneable{
     private String BIC;
     private String nombre;
 
+    /**
+     * Constructor por defecto.
+     */
     public BancoComercialImpl()
     {
     	this.ID_BancoCentral = "ESP";
@@ -34,12 +37,25 @@ public class BancoComercialImpl implements Cloneable{
     	this.nombre = " ";
     }
     
+    /**
+     * Constructor con parámetros.
+     * 
+     * @param ID_BancoCentral El identificador del banco central al que pertenece este banco.
+     * @param BIC El identificador de este banco comercial.
+     * @param nombre El nombre de este banco comercial.
+     */
     public BancoComercialImpl(String ID_BancoCentral,String BIC, String nombre) {
         this.ID_BancoCentral = ID_BancoCentral;
         this.BIC = BIC;
         this.nombre = nombre;
     }
     
+    /**
+     * Constructor de copia.
+     * 
+     * @param otro El otro banco comercial del que se desea hacer la copia.
+     * 
+     */
     public BancoComercialImpl(BancoComercialImpl otro)
     {
     	this.ID_BancoCentral = otro.ID_BancoCentral;
@@ -67,8 +83,12 @@ public class BancoComercialImpl implements Cloneable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    //Representacion como cadena: sus atributos separados por comas
+
+    /**
+     * Representación como cadena: sus atributos separados por comas
+     * .
+     * <br> <b>Ejemplo: "ESP,CAIXESBBXXX,La Caixa"</b>
+     */
     @Override
     public String toString(){
         return   getID_BancoCentral()+getBIC()+","+getNombre();

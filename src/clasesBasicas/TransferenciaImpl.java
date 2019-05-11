@@ -38,6 +38,9 @@ public class TransferenciaImpl implements Serializable {
     double cantidad;
     GregorianCalendar fecha;
     
+    /**
+     * Constructor por defecto.
+     */
     public TransferenciaImpl()
     {
     	this.ID_Cuenta = "ESPBANCOESBBXX0000000";
@@ -46,7 +49,16 @@ public class TransferenciaImpl implements Serializable {
     	this.cantidad = 0.0;
     	this.fecha = new GregorianCalendar();
     }
-
+    
+    /**
+     * Constructor con fecha
+     * 
+     * @param ID_Cuenta El identificador de la cuenta donde se ha hecho la transferencia.
+     * @param isIngresoOrRetirada Indica si la transferencia es un ingreso o una retirada de dinero.
+     * @param concepto El concepto de la transferencia.
+     * @param cantidad La cantidad de dinero.
+     * @param fecha La fecha en la que se realizó la transferencia.
+     */
     public TransferenciaImpl(String ID_Cuenta, boolean isIngresoOrRetirada, String concepto, double cantidad, GregorianCalendar fecha) {
         this.ID_Cuenta = ID_Cuenta;
         this.isIngresoOrRetirada = isIngresoOrRetirada;
@@ -55,6 +67,15 @@ public class TransferenciaImpl implements Serializable {
         this.fecha = fecha;
     }
     
+    /**
+     * Constructor sin fecha.
+     * <br>Se creará la transferencia con la fecha actual.
+     * 
+     * @param ID_Cuenta El identificador de la cuenta donde se ha hecho la transferencia.
+     * @param isIngresoOrRetirada Indica si la transferencia es un ingreso o una retirada de dinero.
+     * @param concepto El concepto de la transferencia.
+     * @param cantidad La cantidad de dinero.
+     */
     public TransferenciaImpl(String ID_Cuenta, boolean isIngresoOrRetirada, String concepto, double cantidad)
     {
     	this.ID_Cuenta = ID_Cuenta;
@@ -64,6 +85,11 @@ public class TransferenciaImpl implements Serializable {
         this.fecha = new GregorianCalendar();
     }
     
+    /**
+     * Constructor de copia.
+     * 
+     * @param otra La transferencia que se desea copiar.
+     */
     public TransferenciaImpl(TransferenciaImpl otra)
     {
     	this.ID_Cuenta = otra.ID_Cuenta;
@@ -113,6 +139,10 @@ public class TransferenciaImpl implements Serializable {
         this.fecha = fecha;
     }
 
+    /**
+     * Representación como cadena: sus atributos separados por comas. La fecha estará formateada para que sea legible.
+     * <br><b>Ejemplo: "ESPINGDESMMXXX0000008,true,Ingreso anonimo,35.20,6/9/2009"</b>
+     */
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

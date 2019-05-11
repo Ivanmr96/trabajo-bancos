@@ -26,12 +26,22 @@ public class BancoCentralImpl implements Cloneable
     private double tasaInteres;
     private double coeficienteCaja;
 
+    /**
+     * Constructor por defecto.
+     */
     public BancoCentralImpl()
     {
         this.tasaInteres = 0;
         this.coeficienteCaja = 0;
     }
 
+    /**
+     * Constructor con parámetros.
+     * 
+     * @param ID El identificador que tendrá el banco central.
+     * @param tasaInteres El porcentaje en el que está invertido el capital. Será necesario para el sistema de créditos y préstamos.
+     * @param coeficienteCaja Proporción de depósitos que deben mantener los bancos como reserva líquida. Será necesario para el sistema de créditos y préstamos.
+     */
     public BancoCentralImpl(String ID,double tasaInteres, double coeficienteCaja)
     {
         this.ID = ID;
@@ -39,6 +49,10 @@ public class BancoCentralImpl implements Cloneable
         this.coeficienteCaja = coeficienteCaja;
     }
     
+    /**
+     * Constructor de copia
+     * @param otro Banco central del que se hará la copia.
+     */
     public BancoCentralImpl(BancoCentralImpl otro)
     {
     	this.ID = otro.ID;
@@ -60,7 +74,11 @@ public class BancoCentralImpl implements Cloneable
     public void setTasaInteres(double tasaInteres) { this.tasaInteres = tasaInteres; }
     public void setCoeficienteCaja(double coeficienteCaja) { this.coeficienteCaja = coeficienteCaja; }
 
-    //Representacion como cadena: sus atributos separados por comas
+    /**
+     * Representación como cadena: sus atributos separados por comas.
+     * 
+     * <br> <b>Ejemplo: "ESP,3.5,15.0"</b>
+     */
     @Override
     public String toString()
     {

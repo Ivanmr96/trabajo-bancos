@@ -29,4 +29,7 @@ hs_err_pid*
 /Files
 /.idea
 *.iml
+
+/doc
+
 /out
