@@ -14,7 +14,7 @@
  * 			> Para buscar movimientos por fecha:
  * 				* Un dia (opcional)
  * 				* Un mes (opcional)
- * 				* Un año
+ * 				* Un aï¿½o
  * 			> Para crear un cliente nuevo:
  * 				* Un DNI
  * 				* Unos ingresos mensuales
@@ -37,12 +37,12 @@
  * 				4) Cliente nuevo
  * 				5) Gestionar una cuenta determinada
  * 				6) Actualizar altas y bajas
- * 			Así como un submenu para la opcion numero 5 "Gestionar una cuenta determinada", con estas opciones:
+ * 			Asï¿½ como un submenu para la opcion numero 5 "Gestionar una cuenta determinada", con estas opciones:
  * 				0) Volver atras
  * 				1) Ver datos de la cuenta
  * 				2) Ver movimientos de la cuenta
  * 				3) Modificar dinero de la cuenta
- * 				4) Eliminar cuenta
+ * 				4) Marcar cuenta como borrada
  * 
  * Restricciones: 
  * 		- Inicio de sesion:
@@ -53,8 +53,8 @@
  * 			> La cantidad de dinero a enviar en la transferencia debe ser un numero positivo
  * 		- Para buscar movimientos por fecha:
  * 			> El dia debe ser un numero entre 0 y 31 (0 indica que busque en todos los dias del mes)
- * 			> El mes debe ser un numero entre 0 y 12 (0 indica que busque en todos los meses del año)
- * 			> El año debe ser un numero mayor que 1582
+ * 			> El mes debe ser un numero entre 0 y 12 (0 indica que busque en todos los meses del aï¿½o)
+ * 			> El aï¿½o debe ser un numero mayor que 1582
  * 		- Para crear un cliente nuevo:
  * 			> El DNI debe ser un DNI que no este registrado ya en el banco como un cliente
  * 			> Los ingresos mensuales no pueden ser negativos
@@ -192,7 +192,7 @@ public class ProgramaBancoComercial
 		  			if(IBANNuevoCliente != null)
 		  				System.out.println("Nuevo cliente creado, apunta el IBAN de su cuenta: " + IBANNuevoCliente);
 		  			else
-		  				System.out.println("El cliente no ha podido crearse, inténtalo de nuevo");
+		  				System.out.println("El cliente no ha podido crearse, intï¿½ntalo de nuevo");
 		  			break;
 		  		case 5: 
 		  			//gestionar una cuenta determinada
@@ -280,7 +280,7 @@ public class ProgramaBancoComercial
 		  			//actualizar altas y bajas
 					gestionComercial.aceptarAltasBajasClientes(BIC);
 					System.out.println("Se han actualizado las nuevas altas y bajas del banco.");
-					System.out.println("Ahora los nuevos clientes podrán iniciar sesión con su cuenta ");
+					System.out.println("Ahora los nuevos clientes podrï¿½n iniciar sesiï¿½n con su cuenta ");
 		  			break;
     		}
 	  		
