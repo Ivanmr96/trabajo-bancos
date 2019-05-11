@@ -6,6 +6,7 @@ import java.util.*;
 import clasesBasicas.ClienteImpl;
 import clasesBasicas.CuentaImpl;
 import clasesBasicas.TransferenciaImpl;
+import jdk.jshell.execution.Util;
 import utilidades.MyObjectOutputStream;
 import utilidades.Utilidades;
 
@@ -188,6 +189,7 @@ public class GestionBancoComercial {
      */
     public String solicitarAltaCliente(String BIC, String DNI, double ingresosMensuales)
     {
+        Utilidades u = new Utilidades();
         //Insertar marca de alta en el fichero de movimientos
         String registroCliente = new ClienteImpl(BIC, DNI,ingresosMensuales).toString();
         String nombreBanco = this.obtenerNombrePorBIC(BIC);
@@ -202,9 +204,9 @@ public class GestionBancoComercial {
         String registroCuenta = cuenta.toString();
         String registroClienteCuenta = DNI + "," + cuenta.getIBAN();
         if(ficheroClientes.exists() && ficheroCuentas.exists() && ficheroClientesCuentas.exists()) {
-            escribirRegistroEnMovimientos(registroCliente, ficheroClientes.getPath());
-            escribirRegistroEnMovimientos(registroCuenta, ficheroCuentas.getPath());
-            escribirRegistroEnMovimientos(registroClienteCuenta, ficheroClientesCuentas.getPath());
+            u.escribirRegistroEnFichero(registroCliente, ficheroClientes.getPath());
+            u.escribirRegistroEnFichero(registroCuenta, ficheroCuentas.getPath());
+            u.escribirRegistroEnFichero(registroClienteCuenta, ficheroClientesCuentas.getPath());
 
         }
 
@@ -314,16 +316,16 @@ public class GestionBancoComercial {
     public boolean marcarCuentaComoBorrada(String iban_cuenta)
     {
         boolean borrada = false;
-        
+        Utilidades u = new Utilidades();
         String registroCuenta = iban_cuenta + ",*";
         String registroCliente = this.obtenerBICporIBAN(iban_cuenta) + "," + this.obtenerClientePorIBAN(iban_cuenta) + ",*," + this.obtenerSaldoPorIBAN(iban_cuenta);
         String registroClientesCuentas = this.obtenerClientePorIBAN(iban_cuenta) + "," + iban_cuenta + ",*";
         
         if(isIBANvalido(iban_cuenta))
         {
-        	escribirRegistroEnMovimientos(registroCuenta, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Cuentas_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
-        	escribirRegistroEnMovimientos(registroCliente, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Clientes_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
-        	escribirRegistroEnMovimientos(registroClientesCuentas, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Clientes_Cuentas_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
+            u.escribirRegistroEnFichero(registroCuenta, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Cuentas_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
+            u.escribirRegistroEnFichero(registroCliente, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Clientes_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
+            u.escribirRegistroEnFichero(registroClientesCuentas, "./Files/BancosComerciales/"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"/Clientes_Cuentas_"+obtenerNombreBancoComercialPorIBAN(iban_cuenta)+"_Movimientos.txt");
         	borrada = true;
         }
 
@@ -1005,49 +1007,6 @@ public class GestionBancoComercial {
 		
 		return cuenta;
 	}
-	
-	/* INTERFAZ
-	 * Comentario: Escribe un registro nuevo en un fichero de movimientos determinado
-	 * Prototipo: public boolean escribirRegistroEnMovimientos(String registro, String rutaFichero)
-	 * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribira.
-	 * Precondiciones: No hay
-	 * Salida: Un boolean indicando si se ha escrito correctamente o no.
-	 * Postcondiciones: Asociado al nombre devuelve:
-	 * 					-> True si se ha escrito correctamente el registro en el fichero correspondiente
-	 * 					-> False si no se ha escrito correctamente.
-	 * 					-> Devuelve false si el fichero no existe
-	 * 					* Puede lanzar IOException si hay algun error al escribir.
-	 */
-	public boolean escribirRegistroEnMovimientos(String registro, String rutaFichero)
-	{
-		boolean escrito = false;
-		
-		File fichero = new File(rutaFichero);
-		FileWriter fw = null;
-		BufferedWriter bw = null;
-		
-		if(fichero.exists())
-		{
-			try
-			{
-				fw = new FileWriter(fichero, true);
-				bw = new BufferedWriter(fw);
-				
-				bw.write(registro);
-				bw.newLine();
-				escrito = true;
-				
-				bw.close();
-			}
-			catch(IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		return escrito;
-	}
-
     /*
      * INTERFAZ
      * Signatura: public String obtenerBICporNombre(String nombre_banco)

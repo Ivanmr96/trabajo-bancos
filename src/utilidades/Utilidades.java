@@ -8,6 +8,48 @@ import java.util.*;
 
 public class Utilidades {
 
+
+    /* INTERFAZ
+     * Comentario: Escribe un registro nuevo en un fichero determinado
+     * Prototipo: public boolean escribirRegistroEnFichero(String registro, String rutaFichero)
+     * Entrada: Un String con el registro a escribir, y otro String con la ruta del fichero donde se escribira
+     * Precondiciones: No hay
+     * Salida: Un boolean indicando si se ha escrito correctamente o no.
+     * Postcondiciones: Asociado al nombre devuelve:
+     * 					-> True si se ha escrito correctamente el registro en el fichero correspondiente
+     * 					-> False si no se ha escrito correctamente
+     * 					* Puede lanzar IOException si hay algun error al escribir
+     */
+    /**
+     * Escribe un registro nuevo en un fichero determinado
+     *
+     * @param registro El registro a escribir.
+     * @param rutaFichero La ruta del fichero donde se escribirï¿½ el registro.
+     * @return Devuelve true si se ha escrito correctamente el registro en el fichero correspondiente, o false si no se ha escrito correctamente
+     * @throws IOException Si hay algï¿½n error al escribir en el fichero.
+     */
+    public boolean escribirRegistroEnFichero(String registro, String rutaFichero) {
+        boolean escrito = false;
+
+        File fichero = new File(rutaFichero);
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+
+        try {
+            fw = new FileWriter(fichero, true);
+            bw = new BufferedWriter(fw);
+
+            bw.write(registro);
+            escrito = true;
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return escrito;
+    }
+
+
     /*
      *Signatura: public void imprimirMovimientos(TransferenciaImpl movimientos)
      * Comentario: imprime un movimiento. MÃ©todo sobrecargado
@@ -21,7 +63,7 @@ public class Utilidades {
             System.out.println("Fecha: " + element.toStringFecha());
             System.out.println("Tipo: " + ((element.isIngresoOrRetirada())?"INGRESO":"RETIRADA"));
             cantidad = df.format(element.getCantidad());
-            System.out.println("Cantidad: " + cantidad + " €");
+            System.out.println("Cantidad: " + cantidad + " ï¿½");
             System.out.println("Concepto: " + element.getConcepto());
 
     }
@@ -45,7 +87,7 @@ public class Utilidades {
             //cantidad = String.valueOf(element.getCantidad());
             cantidad = df.format(element.getCantidad());
             
-            System.out.println("Cantidad: " + cantidad + " €");
+            System.out.println("Cantidad: " + cantidad + " ï¿½");
             System.out.println("Concepto: " + element.getConcepto());
         }
     }
@@ -58,7 +100,7 @@ public class Utilidades {
     	
     	System.out.println("Numero de cuenta: " + campos[0]);
     	campos[1] = df.format(Double.parseDouble(campos[1]));
-    	System.out.println("Saldo: " + campos[1] + " €");
+    	System.out.println("Saldo: " + campos[1] + " ï¿½");
     }
 
     /*
