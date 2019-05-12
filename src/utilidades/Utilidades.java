@@ -380,13 +380,19 @@ public class Utilidades {
      * Precondiciones: 
      * Salida: Un booleano indicando si el DNI es valido o no
      * Postcondiciones: Asociado al nombre devuelve true si el DNI es valido y false si no lo es.
-     * 				    Un DNI es válido cuando:
-     * 					- Es una cadena de tamaño 10
-     * 					- Los 8 primeros caracteres son numéricos.
+     * 				    Un DNI es vï¿½lido cuando:
+     * 					- Es una cadena de tamaï¿½o 10
+     * 					- Los 8 primeros caracteres son numï¿½ricos.
      * 					- El caracter noveno es el caracter separador, y es un "-"
-     * 					- El último caracter es una letra que se corresponde con el resto de la división de la parte númerica entre 23.
+     * 					- El ï¿½ltimo caracter es una letra que se corresponde con el resto de la divisiï¿½n de la parte nï¿½merica entre 23.
      */
-    public boolean isDNIValido(String DNI) 
+
+	/**
+	 * Comprueba si un DNI es valido
+	 * @param DNI DNI que se va a comprobar
+	 * @return Un booleano indicando si el DNI es valido o no
+	 */
+	public boolean isDNIValido(String DNI)
     {
     	boolean isValido = false;
     	char caracterSeparador;

@@ -1,6 +1,58 @@
 /*
+* ANALISIS
 * Comentario: Programa para el cliente desde donde puede realizar transferencias bancarias a otras cuentas,
 *               ver el saldo de su propia cuenta, buscar un movimiento de su cuenta y cancelar su cuenta, entre otras cosas.
+*               Tambien puede crearse una cuenta en un banco.
+* Entradas:
+*   -Entradas del usuario:
+*       Para registrarse:
+*       -BIC del banco
+*       -DNI
+*       -Ingresos mensuales
+*
+*       Para validar el inicio de sesion:
+*       -DNI
+*       -IBAN cuenta
+*
+*       -Opcion para el menu
+*
+*       Para realizar transferencia bancaria a otra cuenta
+*       -IBAN destino
+*       -Concepto
+*       -Cantidad
+*
+*       Para buscar movimientos por fecha
+*       -dia
+*       -mes
+*       -año
+*
+*       Para borrar cuenta
+*       -Respuesta a si desea borrar la cuenta
+*
+* Salidas:
+*      -Eco de los datos y distintos mensajes de ayuda al usuario, comunicando cuando las distintas operaciones se realicen con exito o no.
+*      -Menu
+*
+* Restricciones:
+*      Inicio de sesion:
+*           -DNI e IBAN deben existir en los ficheros maestros correspondientes y no estar en los de movimientos. No podrán iniciar sesión si
+*           la cuenta se encuentra en solicitud de baja.
+*      Registro:
+*           -El DNI no debe existir y debe ser valido
+*           -El banco donde se vaya a crear la cuenta debe estar registrado en el banco central
+*           -Los ingresos mensuales no pueden ser negativos
+*      Menu:
+*           -La opcion del menu debe estar en el rango de opciones validas (0 - 4)
+*
+*      Realizar transferencia:
+*           -El IBAN de destino debe ser un IBAN válido de cualquier entidad bancaria comercial registrada en el banco central. No puede ser
+*            el IBAN propio.
+*           -La cantidad de dinero a enviar no puede ser negativa.
+*
+* 	   Para buscar movimientos por fecha:
+* 			- El dia debe ser un numero entre 0 y 31 (0 indica que busque en todos los dias del mes)
+* 			- El mes debe ser un numero entre 0 y 12 (0 indica que busque en todos los meses del año)
+* 			- El año debe ser un numero mayor que 1582
 *
 * PSEUDOCODIGO MAIN - VISTA DEL CLIENTE
 * inicio
@@ -156,7 +208,7 @@ public class ProgramaCliente {
                         nuevoIBAN = gestion.solicitarAltaCliente(bic, dni, ingresos);
                         if( nuevoIBAN!= null){
                             System.out.println("Tu nuevo IBAN es: "+ nuevoIBAN);
-                            System.out.println("Tu solicitud est� enviada. En alrededor de unas horas procesaremos su nueva cuenta y podr� iniciar sesi�n con ella.");
+                            System.out.println("Tu solicitud est� enviada. En alrededor de unas horas procesaremos su nueva cuenta y podr� iniciar sesi�n con ella.");
                         }else{
                             System.out.println("Error al enviar la solicitud, intentelo de nuevo mas tarde");
                         }
