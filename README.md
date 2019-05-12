@@ -20,6 +20,7 @@ Proyecto para el módulo de 1º de CFGS Desarrollo de aplicaciones multiplatafor
     * Ver datos
     * Buscar movimientos
     * Cancelar cuenta
+    * Crear cuenta nueva
 
 ### Próximamente
    * Añadir programa para banco central
