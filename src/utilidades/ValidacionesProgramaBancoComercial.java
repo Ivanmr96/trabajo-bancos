@@ -129,12 +129,13 @@ public class ValidacionesProgramaBancoComercial
 		String DNI;
 		Scanner teclado = new Scanner(System.in);
 		GestionBancoComercial gestion = new GestionBancoComercial();
+		Utilidades u = new Utilidades();
 		
 		do
 		{
 			System.out.print("Introduce DNI: ");
 			DNI = teclado.next();
-		}while(gestion.DNIRegistrado(DNI, BIC));
+		}while(!u.isDNIValido(DNI) || gestion.DNIRegistrado(DNI, BIC));
 		
 		return DNI;
 	}
