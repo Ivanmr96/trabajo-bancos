@@ -358,8 +358,8 @@ public class GestionBancoComercial {
      * Marca como borrada con * una cuenta
      * @param iban_cuenta String con el IBAN de la cuenta a marcar como borrada.
      * @return Asociado al nombre devuelve:
-     *     -> True si se marco correctamente la cuenta como borrada.
-     *     -> False si no se marco correctamente.
+     *     -True si se marco correctamente la cuenta como borrada.
+     *     -False si no se marco correctamente.
      *
      */
     public boolean marcarCuentaComoBorrada(String iban_cuenta)
