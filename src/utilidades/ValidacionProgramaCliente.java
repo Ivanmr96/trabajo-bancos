@@ -79,17 +79,14 @@ public class ValidacionProgramaCliente {
         String dni= " ";
         String letra=" ";
         GestionBancoComercial g = new GestionBancoComercial();
+        Utilidades u = new Utilidades();
         boolean valido = false;
         boolean registrado = false;
         do{
         System.out.println("Introduce un DNI valido en formato: 12345678-A");
         dni = sc.next();
         dni = dni.toUpperCase();
-            if(dni.contains("-") && dni.length() == 10){
-                letra= dni.split("-")[1];
-                valido = true;
-            }
-        }while(valido  && g.DNIRegistrado(dni,bic));
+        }while(!u.isDNIValido(dni) || g.DNIRegistrado(dni,bic));
 
         return dni;
     }

@@ -39,6 +39,7 @@ public class Utilidades {
             bw = new BufferedWriter(fw);
 
             bw.write(registro);
+            bw.newLine();
             escrito = true;
             bw.close();
         } catch (IOException e) {
@@ -370,6 +371,126 @@ public class Utilidades {
         }
 
         return renombrado;
+    }
+    
+    /* INTERFAZ
+     * Comentario: Comprueba si un DNI es valido
+     * Prototipo: public boolean isDNIValido()
+     * Entrada: Un String con el DNI
+     * Precondiciones: 
+     * Salida: Un booleano indicando si el DNI es valido o no
+     * Postcondiciones: Asociado al nombre devuelve true si el DNI es valido y false si no lo es.
+     * 				    Un DNI es válido cuando:
+     * 					- Es una cadena de tamaño 10
+     * 					- Los 8 primeros caracteres son numéricos.
+     * 					- El caracter noveno es el caracter separador, y es un "-"
+     * 					- El último caracter es una letra que se corresponde con el resto de la división de la parte númerica entre 23.
+     */
+    public boolean isDNIValido(String DNI) 
+    {
+    	boolean isValido = false;
+    	char caracterSeparador;
+    	int parteNumerica = 0;
+    	int numeroDeLetraCorrespondiente;
+    	char letraCorrespondiente = ' ';
+    	char letra;
+    	
+    	if(DNI.length() == 10)
+    	{
+    		try
+    		{
+    			parteNumerica = Integer.parseInt(DNI.substring(0, 8));
+    			
+    			letra = DNI.charAt(9);
+    			
+    			caracterSeparador = DNI.charAt(8);
+    			
+    			numeroDeLetraCorrespondiente = parteNumerica % 23;
+    			
+    			switch(numeroDeLetraCorrespondiente)
+    			{
+    			
+    			case 0:
+    				letraCorrespondiente = 'T';
+    				break;
+    			case 1:
+    				letraCorrespondiente = 'R';
+    				break;
+    			case 2:
+    				letraCorrespondiente = 'W';
+    				break;
+    			case 3:
+    				letraCorrespondiente = 'A';
+    				break;
+    			case 4:
+    				letraCorrespondiente = 'G';
+    				break;
+    			case 5:
+    				letraCorrespondiente = 'M';
+    				break;
+    			case 6:
+    				letraCorrespondiente = 'Y';
+    				break;
+    			case 7:
+    				letraCorrespondiente = 'F';
+    				break;
+    			case 8:
+    				letraCorrespondiente = 'P';
+    				break;
+    			case 9:
+    				letraCorrespondiente = 'D';
+    				break;
+    			case 10:
+    				letraCorrespondiente = 'X';
+    				break;
+    			case 11:
+    				letraCorrespondiente = 'B';
+    				break;
+    			case 12:
+    				letraCorrespondiente = 'N';
+    				break;
+    			case 13:
+    				letraCorrespondiente = 'J';
+    				break;
+    			case 14:
+    				letraCorrespondiente = 'Z';
+    				break;
+    			case 15:
+    				letraCorrespondiente = 'S';
+    				break;
+    			case 16:
+    				letraCorrespondiente = 'Q';
+    				break;
+    			case 17:
+    				letraCorrespondiente = 'V';
+    				break;
+    			case 18:
+    				letraCorrespondiente = 'H';
+    				break;
+    			case 19:
+    				letraCorrespondiente = 'L';
+    				break;
+    			case 20:
+    				letraCorrespondiente = 'C';
+    				break;
+    			case 21:
+    				letraCorrespondiente = 'K';
+    				break;
+    			case 22:
+    				letraCorrespondiente = 'E';
+    				break;
+    			
+    			}
+    			
+    			if(caracterSeparador == '-' && letraCorrespondiente == letra)
+    			{
+    				isValido = true;
+    			}
+    		}
+    		catch(NumberFormatException e) {}
+    	}
+    	
+    	return isValido;
     }
 
 }
