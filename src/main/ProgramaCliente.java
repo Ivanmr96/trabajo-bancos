@@ -67,7 +67,7 @@ public class ProgramaCliente {
                 case 1:
                 	
                     //pedirValidarInicioSesion
-                    iban_cuenta = validar.inicioSesion();   //TODO Revisar que no deje iniciar sesion con un IBAN que esté marcado como borrado
+                    iban_cuenta = validar.inicioSesion();
                     do {
                         opcion = validar.menu();
                         switch (opcion) {
@@ -150,7 +150,7 @@ public class ProgramaCliente {
                     bic = validar.bancoCentral();
                     if (!bic.equals("NOVALUE")) {
                         //pedirValidarDatos
-                        dni = validar.dniCliente(bic);  //TODO mejorar si eso el metodo para dni valido
+                        dni = validar.dniCliente(bic);
                         ingresos = validar.ingresosCliente();
                         //solicitarAltaCliente
                         nuevoIBAN = gestion.solicitarAltaCliente(bic, dni, ingresos);
