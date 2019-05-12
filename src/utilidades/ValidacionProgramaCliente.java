@@ -162,7 +162,7 @@ public class ValidacionProgramaCliente {
             System.out.println("0. Salir");
             op = sc.nextInt();
             op -= 1;
-        }while (op < -1 || op > bancosDisponibles.size() );
+        }while (op < -1 || op >= bancosDisponibles.size() );
 
         if(op == -1){
             ret = "NOVALUE";
