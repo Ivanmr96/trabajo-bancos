@@ -1,6 +1,6 @@
 # trabajo-bancos
 
-## ¿Qué es? :grey_question:
+## ¿Qué es? :speech_balloon:
 Proyecto para el módulo de 1º de CFGS Desarrollo de aplicaciones multiplataforma, trata la gestión entre los diferentes bancos comerciales y sus clientes.
 
 ### Objetivo :point_up:
