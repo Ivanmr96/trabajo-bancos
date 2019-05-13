@@ -30,6 +30,7 @@ Los datos de los IBAN de los tres bancos comerciales que hay por defecto y que s
    * LaCaixa -> ESPCAIXESBBXXX0000000
    * Santander -> ESPBSCHESMMXXX0000000
    * INGDirect -> ESPINGDESMMXXX0000000
+   
 Todos los datos se pueden encontrar en los ficheros de esa misma carpeta Files.
 
 ### Próximamente  :grey_exclamation: 
