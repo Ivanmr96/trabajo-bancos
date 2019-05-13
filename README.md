@@ -19,9 +19,11 @@ Este proyecto se enmarca dentro del módulo de Programación de 1º del CFGS Des
         * Ver movimientos
         * Modificar saldo de la cuenta
         * Eliminar la cuenta
+    * Actualizar altas y bajas   
 * Programa para el cliente
     * Realizar transferencia bancaria
     * Ver datos
+    * Ver movimientos
     * Buscar movimientos
     * Cancelar cuenta
     * Crear cuenta nueva
