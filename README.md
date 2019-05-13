@@ -29,6 +29,6 @@ El objetivo de este proyecto es demostrar conocimiento sobre el manejo de ficher
    * Implementar préstamos y créditos
    * Añadir posibilidad de clientes con varias cuentas
 
-## Autores :busts_in_silhouette:
+### Autores :busts_in_silhouette:
 * [Iván Moreno Romero](https://github.com/Ivanmr96) 
 * [Ángela Vázquez Domínguez](https://github.com/randomkwiz) 
