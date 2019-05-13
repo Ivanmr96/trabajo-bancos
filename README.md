@@ -1,12 +1,12 @@
 # trabajo-bancos
 
-## ¿Qué es? :speech_balloon:
+## ¿Qué es? :bank:
 Proyecto para el módulo de 1º de CFGS Desarrollo de aplicaciones multiplataforma, trata la gestión entre los diferentes bancos comerciales y sus clientes.
 
-### Objetivo :point_up:
+### Objetivo :open_file_folder:
 El objetivo de este proyecto es demostrar conocimiento sobre el manejo de ficheros de texto y binarios en Java, además de saber aplicar la metodología y las fases de estudio y análisis correctamente. Este proyecto se enmarca dentro del módulo de Programación de 1º del CFGS Desarrollo de aplicaciones multiplataforma.
 
-### Funcionalidades: :eyes:
+### Funcionalidades: :heavy_check_mark:
 * Programa para el banco comercial
     * Realizar transferencias bancarias a otros bancos comerciales
     * Ver datos de la propia cuenta en el banco central
@@ -23,6 +23,14 @@ El objetivo de este proyecto es demostrar conocimiento sobre el manejo de ficher
     * Buscar movimientos
     * Cancelar cuenta
     * Crear cuenta nueva
+    
+### Cómo probarlo :computer:
+Descarga el archivo Banco.zip, descomprímelo y haz click en cualquiera de los dos programas disponibles (Banco o Cliente). Para restaurar los ficheros a su estado original, elimina la carpeta Files y haz click en el archivo llamado "Crear ficheros".
+Los datos de los IBAN de los tres bancos comerciales que hay por defecto y que son necesarios para iniciar sesión en el programa del Banco, son:
+   * LaCaixa -> ESPCAIXESBBXXX0000000
+   * Santander -> ESPBSCHESMMXXX0000000
+   * INGDirect -> ESPINGDESMMXXX0000000
+Todos los datos se pueden encontrar en los ficheros de esa misma carpeta Files.
 
 ### Próximamente  :grey_exclamation: 
    * Añadir programa para banco central
