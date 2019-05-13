@@ -208,7 +208,7 @@ public class ProgramaCliente {
                         nuevoIBAN = gestion.solicitarAltaCliente(bic, dni, ingresos);
                         if( nuevoIBAN!= null){
                             System.out.println("Tu nuevo IBAN es: "+ nuevoIBAN);
-                            System.out.println("Tu solicitud est� enviada. En alrededor de unas horas procesaremos su nueva cuenta y podr� iniciar sesi�n con ella.");
+                            System.out.println("Tu solicitud esta enviada. En alrededor de unas horas procesaremos su nueva cuenta y podra iniciar sesion con ella.");
                         }else{
                             System.out.println("Error al enviar la solicitud, intentelo de nuevo mas tarde");
                         }

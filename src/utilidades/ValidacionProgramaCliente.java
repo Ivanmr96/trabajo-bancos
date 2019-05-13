@@ -18,7 +18,7 @@ public class ValidacionProgramaCliente {
         Scanner sc = new Scanner(System.in);
         int op;
         do {
-            System.out.println("Â¿Que desea hacer?");
+            System.out.println("¿Que desea hacer?");
             System.out.println("0. Salir");
             System.out.println("1. Iniciar sesion con mi cuenta\n" +
                     "2. Crear una cuenta nueva" );
@@ -154,7 +154,7 @@ public class ValidacionProgramaCliente {
         }
 
         do{
-            System.out.println("Indica en quÃ© banco deseas crear una cuenta");
+            System.out.println("Indica en que banco deseas crear una cuenta");
             System.out.println("Actualmente los disponibles son: ");
             for(int i = 0; i < bancosDisponibles.size() ; i ++){
                 System.out.println((i+1) + ". "+ bancosDisponibles.get(i) );
@@ -300,7 +300,7 @@ public class ValidacionProgramaCliente {
         Scanner sc = new Scanner(System.in);
         int anyo_buscado = 1582;
         do {
-            System.out.println("Introduce el aÃ±o de el o los movimiento(s) a buscar: ");
+            System.out.println("Introduce el año de el o los movimiento(s) a buscar: ");
             anyo_buscado = sc.nextInt();
         }while(anyo_buscado < 1582);
 
@@ -361,7 +361,7 @@ public class ValidacionProgramaCliente {
         boolean seguro = false;
         String respuesta=" ";
         do {
-            System.out.println("Â¿EstÃ¡s seguro de que deseas eliminar tu cuenta bancaria? SI/NO");
+            System.out.println("¿Estas seguro de que deseas eliminar tu cuenta bancaria? SI/NO");
             respuesta = sc.nextLine().toUpperCase();
         }while(!respuesta.equals("SI") && !respuesta.equals("NO"));
 
