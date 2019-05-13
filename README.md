@@ -1,10 +1,12 @@
 # trabajo-bancos
 
 ## ¿Qué es? :bank:
-Proyecto para el módulo de 1º de CFGS Desarrollo de aplicaciones multiplataforma, trata la gestión entre los diferentes bancos comerciales y sus clientes.
+Proyecto de clase que consta de dos programas (el programa del banco y el programa del cliente) que en conjunto tratan la gestión entre el banco y las cuentas de los clientes.
 
 ### Objetivo :open_file_folder:
-El objetivo de este proyecto es demostrar conocimiento sobre el manejo de ficheros de texto y binarios en Java, además de saber aplicar la metodología y las fases de estudio y análisis correctamente. Este proyecto se enmarca dentro del módulo de Programación de 1º del CFGS Desarrollo de aplicaciones multiplataforma.
+El objetivo de este proyecto es demostrar conocimiento sobre el manejo de ficheros de texto y binarios en Java, además de saber aplicar la metodología y las fases de estudio y análisis correctamente. 
+
+Este proyecto se enmarca dentro del módulo de Programación de 1º del CFGS Desarrollo de aplicaciones multiplataforma.
 
 ### Funcionalidades: :heavy_check_mark:
 * Programa para el banco comercial
