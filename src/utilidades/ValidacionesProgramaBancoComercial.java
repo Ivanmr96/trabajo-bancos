@@ -311,7 +311,7 @@ public class ValidacionesProgramaBancoComercial
 		Scanner sc = new Scanner(System.in);
 		int anyo_buscado = 1582;
 		do {
-			System.out.println("Introduce el aï¿½o de el o los movimiento(s) a buscar: ");
+			System.out.println("Introduce el año de el o los movimiento(s) a buscar: ");
 			anyo_buscado = sc.nextInt();
 		}while(anyo_buscado < 1582);
 

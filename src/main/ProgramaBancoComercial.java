@@ -280,7 +280,7 @@ public class ProgramaBancoComercial
 		  			//actualizar altas y bajas
 					gestionComercial.aceptarAltasBajasClientes(BIC);
 					System.out.println("Se han actualizado las nuevas altas y bajas del banco.");
-					System.out.println("Ahora los nuevos clientes podr�n iniciar sesi�n con su cuenta ");
+					System.out.println("Ahora los nuevos clientes podran iniciar sesion con su cuenta ");
 		  			break;
     		}
 	  		

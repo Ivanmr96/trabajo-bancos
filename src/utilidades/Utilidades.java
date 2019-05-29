@@ -68,7 +68,9 @@ public class Utilidades {
             System.out.println("Fecha: " + element.toStringFecha());
             System.out.println("Tipo: " + ((element.isIngresoOrRetirada())?"INGRESO":"RETIRADA"));
             cantidad = df.format(element.getCantidad());
-            System.out.println("Cantidad: " + cantidad + " €");
+      
+            System.out.println("Cantidad: " + cantidad + " Euros");
+      
             System.out.println("Concepto: " + element.getConcepto());
 
     }
@@ -97,7 +99,8 @@ public class Utilidades {
             //cantidad = String.valueOf(element.getCantidad());
             cantidad = df.format(element.getCantidad());
             
-            System.out.println("Cantidad: " + cantidad + " €");
+            System.out.println("Cantidad: " + cantidad + " Euros");
+
             System.out.println("Concepto: " + element.getConcepto());
         }
     }
@@ -114,7 +117,9 @@ public class Utilidades {
     	
     	System.out.println("Numero de cuenta: " + campos[0]);
     	campos[1] = df.format(Double.parseDouble(campos[1]));
-    	System.out.println("Saldo: " + campos[1] + " €");
+
+    	System.out.println("Saldo: " + campos[1] + " Euros");
+
     }
 
     /*
